@@ -13,14 +13,14 @@ Creación de un CRM para una empresa de gestoria. El CRM debe permitir gestionar
 
 ## Tecnologías
 
-- [ ] Laravel
-- [ ] Vue
+- [ ] Python
+- [x] FastAPI
 - [ ] MySQL
-- [ ] Docker
+- [ ] React
+- [ ] NextJS
 - [ ] Git
 - [ ] Github
-- [ ] Trello
-- [ ] Slack
+- [ ] Notion
 
 ## Funcionalidades
 
