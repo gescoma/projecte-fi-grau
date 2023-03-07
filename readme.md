@@ -2,10 +2,10 @@
 
 ## Integrantes
 
-- [Jose Ramon](https://github.com/joseAbaldea)
 - [Alice](https://github.com/w0nd3rl4nd)
-- [Jaime](https://github.com/soviet07)
 - [Gerard](https://github.com/gescoma)
+- [Jaime](https://github.com/soviet07)
+- [Jose Ramon](https://github.com/joseAbaldea)
 
 ## Descripción
 
