@@ -9,7 +9,11 @@
 
 ## Descripción
 
-Creación de un CRM para una empresa de gestoria. El CRM debe permitir gestionar los clientes, los presupuestos, los pagos, compraventa de viviendas, proyectos, etc.
+Nuestro concepto, en resumen, consiste en la creación de un CRM multiplataforma fácil de usar y seguridad de forma predeterminada.
+
+Los objetivos de la creación de esta herramienta ad-hoc para empresas inmobiliarias que no solo permita las funcionalidades de un CRM completo, de diseño orientado hacia su modelo de negocio, sino que además contenga seguridad de forma predeterminada.
+
+Su diseño directo para el marco inmobiliario así como su filosofía “privacy by default” hacen de este CRM una implementación ideal para la pequeña y mediana inmobiliaria, que se beneficiará de su rápida implementación y su facilidad de mantenimiento.
 
 ## Tecnologías
 
@@ -22,134 +26,22 @@ Creación de un CRM para una empresa de gestoria. El CRM debe permitir gestionar
 :point_right: Github  
 :point_right: Notion
 
-## Funcionalidades
+## CLIENTE WEB 
 
-- [ ] Login
-- [ ] Registro
-- [ ] CRUD de clientes
-- [ ] CRUD de presupuestos
-- [ ] CRUD de pagos
-- [ ] CRUD de compraventa de viviendas
-- [ ] CRUD de proyectos
-- [ ] CRUD de usuarios
-- [ ] CRUD de roles
-- [ ] CRUD de permisos
-- [ ] CRUD de categorias
-- [ ] CRUD de subcategorias
-- [ ] CRUD de productos
+Escrito en JavaScript, que desde un login web podrá acceder al sistema y manipular con funcionalidad completa todas las funciones de éste. Todas las peticiones llegarán encriptadas al Servidor con su clave pública y viceversa.
 
-## Entidades
+## CLIENTE DESKTOP
 
-- [ ] Cliente
-- [ ] Presupuesto
-- [ ] Pago
-- [ ] Compraventa de vivienda
-- [ ] Proyecto
-- [ ] Usuario
-- [ ] Rol
-- [ ] Permiso
-- [ ] Categoria
-- [ ] Subcategoria
+Escrito en Python, desde el cual los ordenadores podrán conectarse directamente o mediante directorio activo al servidor, y mayoritariamente estará enfocado a los ordenadores in premises. Desarrollaremos este software con TkInter y Flask. Todas las peticiones llegarán encriptadas al Servidor con su clave pública y viceversa.
 
-## Entidades
+## API 
 
-### Cliente
+Escrita en Python haciendo uso de FastAPI, será la encargada de comunicar ambos clientes con el servidor mencionado abajo. Funcionará como una librería separada que se encargará de la lógica detrás de la comunicación por HTTP.
 
-- [ ] Nombre
-- [ ] Apellidos
-- [ ] DNI
-- [ ] Email
-- [ ] Telefono
-- [ ] Direccion
-- [ ] Localidad
-- [ ] Codigo postal
-- [ ] Provincia
-- [ ] Pais
-- [ ] Fecha de nacimiento
-- [ ] Fecha de alta
-- [ ] Fecha de baja
-- [ ] Estado
+## SERVIDOR
 
-### Presupuesto
+Escrito en Python, donde ocurrirán las acciones solicitadas por los clientes en las peticiones. Integrará el fichero principal de Python con toda la carga pesada asociada a las funciones de utilidad como CRM así como las librerías customs, que serán la  librería para comunicación con la base de datos (escrita haciendo uso de la librería SQLite3), la librería API HTTP, escrita con Flask y la librería de encriptación (usando Sequoia).
 
-- [ ] Cliente
-- [ ] Concepto
-- [ ] Importe
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de eliminacion
-- [ ] Estado
+## BASE DE DATOS SQL 
 
-### Pago
-
-- [ ] Cliente
-- [ ] Concepto
-- [ ] Importe
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de eliminacion
-- [ ] Estado
-
-### Compraventa de vivienda
-
-- [ ] Cliente
-- [ ] Vivienda
-- [ ] Importe
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de eliminacion
-- [ ] Estado
-
-### Proyecto
-
-- [ ] Cliente
-- [ ] Nombre
-- [ ] Descripcion
-- [ ] Fecha de inicio
-- [ ] Fecha de fin
-- [ ] Estado
-
-### Usuario
-
-- [ ] Nombre
-- [ ] Apellidos
-- [ ] DNI
-- [ ] Email
-- [ ] Telefono
-- [ ] Direccion
-- [ ] Localidad
-- [ ] Codigo postal
-- [ ] Provincia
-- [ ] Pais
-- [ ] Fecha de nacimiento
-- [ ] Fecha de alta
-- [ ] Fecha de baja
-- [ ] Estado
-
-### Rol
-
-- [ ] Nombre
-- [ ] Descripcion
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de eliminacion
-- [ ] Estado
-
-### Permiso
-
-- [ ] Nombre
-- [ ] Descripcion
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de eliminacion
-- [ ] Estado
-
-### Categoria
-
-- [ ] Nombre
-- [ ] Descripcion
-- [ ] Fecha de creacion
-- [ ] Fecha de actualizacion
-- [ ] Fecha de elimin
-
-[...]
+Hosteada en una máquina en la nube junto al servidor Python, conteniendo toda la información del sistema.
