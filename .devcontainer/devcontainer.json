@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/alpine
 {
-	// "name": "Edelweiss",
+	"name": "Edelweiss",
 	// "build": {
 	// 	"dockerfile": "Dockerfile",
 	// 	// Update 'VARIANT' to pick an Alpine version: 3.13, 3.14, 3.15, 3.16
@@ -13,6 +13,38 @@
 	"service": "application",
 	"workspaceFolder": "/workspace",
 	"shutdownAction": "stopCompose",
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"heybourn.headwind",
+				"ms-vsliveshare.vsliveshare",
+				"esbenp.prettier-vscode",
+				"amatiasq.sort-imports",
+				"bradlc.vscode-tailwindcss",
+				"pflannery.vscode-versionlens",
+				"csstools.postcss",
+				"usernamehw.errorlens",
+				"mikestead.dotenv"
+			]
+		},
+		"codespaces": {
+			"settings": {},
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"heybourn.headwind",
+				"ms-vsliveshare.vsliveshare",
+				"esbenp.prettier-vscode",
+				"amatiasq.sort-imports",
+				"bradlc.vscode-tailwindcss",
+				"pflannery.vscode-versionlens",
+				"csstools.postcss",
+				"usernamehw.errorlens",
+				"mikestead.dotenv"
+			]
+		}
+	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
