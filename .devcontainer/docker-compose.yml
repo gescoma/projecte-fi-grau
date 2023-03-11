@@ -24,5 +24,4 @@ services:
       - 8080:80
     environment:
       - PMA_HOST=db
-      - PMA_USER=root
-      - PMA_PASSWORD=edelweiss-dev-password
+      - PMA_ROOT_PASSWORD=edelweiss-dev-password
