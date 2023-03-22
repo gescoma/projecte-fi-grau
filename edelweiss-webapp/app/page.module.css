@@ -18,6 +18,13 @@
   font-family: var(--font-mono);
 }
 
+.main {
+  display: "grid";
+  place-items: "center";
+  height: "100vh";
+  font-family: inter;
+}
+
 .description a {
   display: flex;
   align-items: center;
@@ -97,7 +104,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -125,7 +132,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
 }

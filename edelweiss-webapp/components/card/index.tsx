@@ -1,5 +1,9 @@
-export function Card ({icon, children, link}:{icon:React.ReactNode, children:string, link:string}) {
+import styles from './card.module.css'
+
+export function Card ({ children }) {
   return (
-    <h1>Card</h1>
+    <div className={styles.card}>
+      {children}
+    </div>
   )
 }
