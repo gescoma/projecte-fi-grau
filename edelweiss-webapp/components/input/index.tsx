@@ -1,5 +1,12 @@
-export function Input ({icon, children, link}:{icon:React.ReactNode, children:string, link:string}) {
-  return (
-    <h1>Input</h1>
-  )
-}
+import styles from './input.module.css'
+
+export function Input ({children}) {
+  
+ 
+    return (
+      
+      <div className={styles.card}>
+        <input className={styles.input} type="text" placeholder={children} ></input>
+      </div>     
+    )
+  }
