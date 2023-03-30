@@ -1,5 +1,9 @@
-export function Logo ({icon, children, link}:{icon:React.ReactNode, children:string, link:string}) {
-  return (
-    <h1>Logo</h1>
-  )
-}
+import styles from './logo.module.css'
+
+export function Logo () { 
+    return (     
+      <div>
+        <img className={styles.logo} src="C:\xampp\htdocs\M9\edelweis\Js\imagenes\Untitled.png"></img>
+      </div>     
+    )
+  }
