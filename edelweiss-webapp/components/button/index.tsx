@@ -1,5 +1,12 @@
-export function Button ({icon, children, link}:{icon:React.ReactNode, children:string, link:string}) {
-  return (
-    <h1>Button</h1>
-  )
+import styles from "./button.module.css"
+export function Button ({children, isBoton}) {
+
+  
+  if (isBoton){
+    return (     
+      <button className={styles.button}>{children}</button>)
+  }
+
+  return(<a className={styles.button} href="menu.html">{children}</a>)
+  
 }
