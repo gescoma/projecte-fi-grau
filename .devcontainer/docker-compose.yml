@@ -13,6 +13,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
+    volume:
+      - edelweiss-volume: /workspace
+
     ports:
       - 8000:8000
 
@@ -35,3 +38,7 @@ services:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=edelweiss-dev-password
+
+volumes:
+  edelweiss-volume:
+    external: true

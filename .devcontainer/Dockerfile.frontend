@@ -1,6 +1,6 @@
-FROM node:10
+FROM 19-alpine3.16
 
-WORKDIR /workspace/edelweiss-webapp
+WORKDIR /workspaces/edelweiss-webapp
 
 COPY package*.json ./
 
