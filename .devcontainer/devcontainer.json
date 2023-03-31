@@ -13,6 +13,14 @@
 	"service": "application",
 	"workspaceFolder": "/workspace",
 	"shutdownAction": "stopCompose",
+	"portsAttributes": {
+		"3000": {
+			"label": "Javascript webApp"
+		},
+		"8080": {
+			"label": "phpMyAdmin"
+		}
+	},
 	"customizations": {
 		"vscode": {
 			"settings": {},
