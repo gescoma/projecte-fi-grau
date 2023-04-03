@@ -8,21 +8,22 @@ services:
       - 3000:3000
     tty: true
     stdin_open: true
+    volumes:
+      - ..:/workspaces
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    volume:
-      - edelweiss-volume: /workspace
-
+    volumes:
+      - ..:/workspaces
     ports:
       - 8000:8000
+    tty: true
+    stdin_open: true
 
   mysql:
     image: mysql
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     container_name: db
@@ -38,7 +39,3 @@ services:
       - PMA_HOST=db
       - PMA_USER=root
       - PMA_PASSWORD=edelweiss-dev-password
-
-volumes:
-  edelweiss-volume:
-    external: true

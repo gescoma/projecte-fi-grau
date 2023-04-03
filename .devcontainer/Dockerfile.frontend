@@ -2,8 +2,6 @@ FROM 19-alpine3.16
 
 WORKDIR /workspaces/edelweiss-webapp
 
-COPY package*.json ./
-
 RUN npm install
 
 EXPOSE 80

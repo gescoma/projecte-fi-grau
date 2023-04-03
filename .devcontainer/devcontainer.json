@@ -2,23 +2,14 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/alpine
 {
 	"name": "Edelweiss",
-	// "build": {
-	// 	"dockerfile": "Dockerfile",
-	// 	// Update 'VARIANT' to pick an Alpine version: 3.13, 3.14, 3.15, 3.16
-	// 	"args": {
-	// 		"VARIANT": "3.17"
-	// 	}
-	// },
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "application",
-	"mounts": [
-		"source=edelweiss-volume,target=/workspace,type=volume"
-	],
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspaces",
 	"shutdownAction": "stopCompose",
 	"forwardPorts": [
 		3000,
-		8080
+		8080,
+		8000
 	],
 	"portsAttributes": {
 		"3000": {
@@ -26,6 +17,9 @@
 		},
 		"8080": {
 			"label": "phpMyAdmin"
+		},
+		"8000": {
+			"label": "Backend API"
 		}
 	},
 	"customizations": {
@@ -34,14 +28,20 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"heybourn.headwind",
-				"ms-vsliveshare.vsliveshare",
+				"ms-azuretools.vscode-docker",
 				"esbenp.prettier-vscode",
 				"amatiasq.sort-imports",
 				"bradlc.vscode-tailwindcss",
 				"pflannery.vscode-versionlens",
 				"csstools.postcss",
 				"usernamehw.errorlens",
-				"mikestead.dotenv"
+				"mikestead.dotenv",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.pylint",
+				"github.copilot",
+				"eamodio.gitlens",
+				"pflannery.vscode-versionlens"
 			]
 		},
 		"codespaces": {
@@ -49,14 +49,19 @@
 			"extensions": [
 				"dbaeumer.vscode-eslint",
 				"heybourn.headwind",
-				"ms-vsliveshare.vsliveshare",
 				"esbenp.prettier-vscode",
 				"amatiasq.sort-imports",
 				"bradlc.vscode-tailwindcss",
 				"pflannery.vscode-versionlens",
 				"csstools.postcss",
 				"usernamehw.errorlens",
-				"mikestead.dotenv"
+				"mikestead.dotenv",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.pylint",
+				"github.copilot",
+				"eamodio.gitlens",
+				"pflannery.vscode-versionlens"
 			]
 		}
 	},
