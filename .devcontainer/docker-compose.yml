@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 3000:3000
     tty: true
     stdin_open: true
     volumes:
@@ -19,8 +17,15 @@ services:
       - ..:/workspaces
     ports:
       - 8000:8000
-    tty: true
-    stdin_open: true
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ..:/workspaces
+    ports:
+      - 3000:3000
 
   mysql:
     image: mysql
