@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: application
     tty: true
     stdin_open: true
     volumes:
@@ -20,12 +21,14 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.frontend
+      context: ../edelweiss-webapp
+      dockerfile: ../.devcontainer/Dockerfile.frontend
     volumes:
       - ..:/workspaces
     ports:
       - 3000:3000
+    tty: true
+    stdin_open: true
 
   mysql:
     image: mysql

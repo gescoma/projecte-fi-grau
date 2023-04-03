@@ -1,9 +1,9 @@
-FROM 19-alpine3.16
+FROM node:19-alpine3.16
 
 WORKDIR /workspaces/edelweiss-webapp
 
-RUN npm install
+COPY * ./
 
-EXPOSE 80
+RUN yarn
 
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev"]
