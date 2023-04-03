@@ -1,13 +1,9 @@
-import { Card } from '@/components/card'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
-import { Button } from '@/components/button'
 import { Avatar } from '@/components/avatar'
+import { Button } from '@/components/button'
+import { Card } from '@/components/card'
 import { Input } from '@/components/input'
 import { Logo } from '@/components/logo'
-
-const inter = Inter({ subsets: ['latin'] })
+import styles from './page.module.css'
 
 export default function Home() {
   return (
@@ -19,8 +15,6 @@ export default function Home() {
       <Button isBoton>Enviar</Button> 
       <Avatar>2</Avatar>    
       </Card>
-      
-
     </div>
   )
 }
