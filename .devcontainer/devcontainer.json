@@ -1,0 +1,69 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/alpine
+{
+  "name": "Edelweiss",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "application",
+  "workspaceFolder": "/workspaces",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000, 8080, 8000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Javascript webApp",
+      "protocol": "https"
+    },
+    "8080": {
+      "label": "phpMyAdmin",
+      "protocol": "https"
+    },
+    "8000": {
+      "label": "Backend API",
+      "protocol": "https"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "heybourn.headwind",
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode",
+        "amatiasq.sort-imports",
+        "bradlc.vscode-tailwindcss",
+        "pflannery.vscode-versionlens",
+        "csstools.postcss",
+        "usernamehw.errorlens",
+        "mikestead.dotenv",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "github.copilot",
+        "eamodio.gitlens",
+        "pflannery.vscode-versionlens"
+      ]
+    },
+    "codespaces": {
+      "settings": {},
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "heybourn.headwind",
+        "esbenp.prettier-vscode",
+        "amatiasq.sort-imports",
+        "bradlc.vscode-tailwindcss",
+        "pflannery.vscode-versionlens",
+        "csstools.postcss",
+        "usernamehw.errorlens",
+        "mikestead.dotenv",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "github.copilot",
+        "eamodio.gitlens",
+        "pflannery.vscode-versionlens"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}

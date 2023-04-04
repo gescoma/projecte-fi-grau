@@ -1,0 +1,15 @@
+.Avatar {
+    box-shadow: 0 0 15px rgb(86, 3, 194);
+    border-radius: 50%;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+/*.picture {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100px
+}*/

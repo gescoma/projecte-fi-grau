@@ -1,0 +1,30 @@
+.button {
+    display: inline-block;
+    color: #252537;
+    font-family: 'Times New Roman', Times, serif;
+  
+    width: 280px;
+    height: 50px;
+  
+    padding: 0 20px;
+    background: #c5dffc;
+    border-radius: 10px;
+    
+    outline: none;
+    border: none;
+  
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s linear;
+    
+    margin: 7% auto;
+    letter-spacing: 0.05em;
+
+    display: grid;
+    place-content: center;
+}
+.button:hover {
+    transform: translatey(3px);
+    box-shadow: none;
+    background-color: #b78fdb;
+}
