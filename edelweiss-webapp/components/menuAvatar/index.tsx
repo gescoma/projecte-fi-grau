@@ -1,5 +1,9 @@
-export function MenuAvatar ({icon, children, link}:{icon:React.ReactNode, children:string, link:string}) {
+import styles from './menuAvatar.module.css'
+
+export function MenuAvatar ({children}) {
   return (
-    <h1>MenuAvatar</h1>
+    <div className={styles.menuAvatar}>
+      {children}
+    </div>
   )
 }

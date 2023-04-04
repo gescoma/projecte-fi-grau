@@ -1,0 +1,10 @@
+.icons{
+    background-color:#FFEBCD ;
+    border: none;
+}
+
+.icons:hover{
+    transform: translatey(3px);
+    box-shadow: none;
+   
+}
