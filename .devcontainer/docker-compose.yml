@@ -1,0 +1,49 @@
+version: "3"
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application
+    tty: true
+    stdin_open: true
+    volumes:
+      - ..:/workspaces
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - ..:/workspaces
+    ports:
+      - 8000:8000
+
+  frontend:
+    build:
+      context: ../edelweiss-webapp
+      dockerfile: ../.devcontainer/Dockerfile.frontend
+    volumes:
+      - ..:/workspaces
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: edelweiss-dev-password
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=edelweiss-dev-password
