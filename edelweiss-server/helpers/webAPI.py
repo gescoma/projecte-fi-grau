@@ -8,6 +8,8 @@ async def root():
 
 @app.post("/user/login")
 async def login(data):
+    if (data.username == "admin" and data.password == "admin"):
+        return {"connected": True}
     print(data)
-    return {"connected": True}
+    return {"connected": False}
     
