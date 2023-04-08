@@ -1,0 +1,14 @@
+.avatar {
+  display: flex;
+  place-items: center stretch;
+  gap: 2rem;
+  position: relative;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.active {
+  color: var(--color-black-80);
+}

@@ -1,0 +1,28 @@
+.avatar {
+  position: relative;
+  overflow: hidden;
+}
+
+.normal {
+  width: var(--userImageSize);
+  height: var(--userImageSize);
+  border-radius: calc(var(--userImageSize) / 2);
+}
+
+.large {
+  width: calc(var(--userImageSize) * 2);
+  height: calc(var(--userImageSize) * 2);
+  border-radius: var(--userImageSize);
+}
+
+.xlarge {
+  width: calc(var(--userImageSize) * 3);
+  height: calc(var(--userImageSize) * 3);
+  border-radius: calc(var(--userImageSize) * 1.5);
+}
+
+.small {
+  width: calc(var(--userImageSize) / 2);
+  height: calc(var(--userImageSize) / 2);
+  border-radius: calc(var(--userImageSize) / 4);
+}

@@ -5,7 +5,9 @@ const nextConfig = {
   },
   images: {
     domains: [
-      "localhost"
+      "localhost",
+      "127.0.0.1",
+      "unavatar.io"
     ],
   }
 }

@@ -10,17 +10,22 @@ export const authOptions:AuthOptions = {
         email: { label: "Email", type: "email", placeholder: "jsmith@example.com" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: Record<"email" | "password", string> | undefined, req:any) { 
-        const res = await fetch(`${process.env.BACKEND_DOMAIN}/user/login`, {
+      async authorize(credentials: Record<"email" | "password", string> | undefined, req:any) {
+        const res = await fetch(`${process.env.BACKEND_DOMAIN}/user/login/`, {
           method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" }
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            bearer: process.env.BACKEND_BEARER,
+            ...credentials
+          })
         })
         const user = await res.json()
-        if (res.ok && user) {
-          return user
+        if (user.detail) {
+          throw new Error(user.detail)
         }
-        return null
+        return user
       }
     })
   ],

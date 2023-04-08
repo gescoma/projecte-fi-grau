@@ -1,15 +1,20 @@
-.Avatar {
-    box-shadow: 0 0 15px rgb(86, 3, 194);
-    border-radius: 50%;
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+.section {
+  display: flex;
+  gap: 1rem;
+  place-items: center stretch;
+  flex-grow: 1;
 }
 
-/*.picture {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    width: 100px
-}*/
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.nameNormal {
+  font-size: 0.9rem;
+}

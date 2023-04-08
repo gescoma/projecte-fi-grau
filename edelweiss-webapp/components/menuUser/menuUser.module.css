@@ -1,0 +1,49 @@
+.menu {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid var(--color-black-10);
+  background-color: var(--color-white);
+  border-radius: 1rem;
+  padding: 0.8rem 0;
+  list-style: none;
+  width: 100%;
+  max-width: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.menu::after {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-style: solid;
+  border-width: 1px 1px 0 0;
+  border-color: var(--color-black-10);
+  z-index: 1;
+  background-color: var(--color-white);
+}
+
+.up {
+  bottom: calc(0px + 4.5rem);
+  right: 0;
+}
+
+.up::after {
+  bottom: -0.6rem;
+  right: 1.2rem;
+  transform: rotate(135deg);
+}
+
+.down {
+  top: calc(0px + 3.5rem);
+  right: -1rem;
+}
+
+.down::after {
+  top: -0.6rem;
+  right: 1.2rem;
+  transform: rotate(-45deg);
+}
