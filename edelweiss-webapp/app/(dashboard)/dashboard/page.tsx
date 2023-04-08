@@ -9,7 +9,7 @@ export default function DashboardPage() {
       <h1>Dashboard</h1>
       <AvatarMenu />
       <button onClick={() => signOut()}>Sign Out</button>
-      <AvatarMenu menuDirection="up" />
+      <AvatarMenu />
     </>
   )
 }
