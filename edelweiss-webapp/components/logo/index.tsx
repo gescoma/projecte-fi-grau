@@ -2,12 +2,12 @@ export function Logo({
   width,
   height,
   size = "normal",
-  className,
+  className = "",
 }: {
   width: number
   height: number
   size?: "normal" | "small"
-  className: string
+  className?: string
 }) {
   return (
     <svg

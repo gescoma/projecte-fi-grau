@@ -11,6 +11,13 @@
   position: relative;
 }
 
+button.link {
+  margin: 0;
+  border: none;
+  width: 100%;
+  background: transparent;
+}
+
 .link:hover {
   color: var(--color-black-80);
 }

@@ -1,20 +1,26 @@
-import { SidebarLink } from "../sidebarLink/sidebar"
-import styles from "./menu.module.css"
+"use client"
 
-export function SidebarMenu({ elements }: { elements: any }) {
+import { SidebarElements } from "../../utils/navbarMenuItems"
+import { SidebarLink } from "@/components/sidebarLink/"
+import type { menuItem } from "@/types/menuItem"
+import styles from "./menu.module.css"
+import { usePathname } from "next/navigation"
+
+export function SidebarMenu() {
+  const pathname = usePathname()
+
   return (
     <nav className={styles.navigation}>
       <ul className={styles.list}>
-        {elements.map((element: any, index: number) => (
+        {SidebarElements.map((element: menuItem, index: number) => (
           <SidebarLink
             key={index}
             link={element.link}
             icon={element.icon}
-            isActive={element.isActive}
-            hasSubmenu={element.hasSubmenu || false}
-            submenu={element.hasSubmenu ? element.submenu : []}
+            isActive={element.link === `/${pathname?.split("/")[1]}`}
+            submenu={element.submenu ?? []}
           >
-            {element.children}
+            {element.text}
           </SidebarLink>
         ))}
       </ul>
