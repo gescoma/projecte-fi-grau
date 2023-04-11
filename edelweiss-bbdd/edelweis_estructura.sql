@@ -26,7 +26,7 @@ CREATE TABLE usuario (
 CREATE TABLE empleado (
     dni_usuario int NOT NULL,
     login VARCHAR(50) NOT NULL,  /*usuario*/
-    passwd VARCHAR(50) NOT NULL,   /*contraseña*/
+    passwd VARCHAR(50) NOT NULL,   /*contrasena*/
     PRIMARY KEY (dni_usuario)
     );	
 	
@@ -41,11 +41,11 @@ CREATE TABLE cliente (
 	
 	
 	
-CREATE TABLE campaña (
+CREATE TABLE campain (
     id int AUTO_INCREMENT NOT NULL,
-    año DATE NOT NULL,
+    year DATE NOT NULL,
 	documento VARCHAR(100) NOT NULL,
-    tipoCampaña VARCHAR(50) NOT NULL, 
+    tipoCampain VARCHAR(50) NOT NULL, 
     responsable VARCHAR(50) NOT NULL,/*MIRAR SI ES PRESCINDIBLE*//*SEGURAMENTE SE ACABARA QUITANDO*/
     cliente VARCHAR(50) NOT NULL, /*MIRAR SI ES PRESCINDIBLE*//*SEGURAMENTE SE ACABARA QUITANDO*/
     PRIMARY KEY (id)
@@ -57,7 +57,7 @@ CREATE TABLE notificacion (
     id int AUTO_INCREMENT NOT NULL,
 	comentario VARCHAR(500),
     fecha DATE NOT NULL,
-	id_campaña int NOT NULL,
+	id_campain int NOT NULL,
 	dni_cliente int NOT NULL,
 	dni_empleado int NOT NULL,
     PRIMARY KEY (id)
@@ -123,7 +123,7 @@ ALTER TABLE cliente ADD CONSTRAINT fk_cliente FOREIGN KEY (dni_usuario) REFERENC
 
 /*FKs notificación*//*los "notis" son los alias*/
 
-ALTER TABLE notificacion ADD CONSTRAINT fk_noti1 FOREIGN KEY (id_campaña) REFERENCES campaña (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE notificacion ADD CONSTRAINT fk_noti1 FOREIGN KEY (id_campain) REFERENCES campain (id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE notificacion ADD CONSTRAINT fk_noti2 FOREIGN KEY (dni_cliente) REFERENCES cliente (dni_usuario) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE notificacion ADD CONSTRAINT fk_noti3 FOREIGN KEY (dni_empleado) REFERENCES empleado (dni_usuario) ON UPDATE CASCADE ON DELETE CASCADE;
 

@@ -63,7 +63,7 @@ INSERT INTO cliente (dni_usuario, nacionalidad, personaFisica)  VALUES(40001005,
 posteriormente se pueden quitar o no quitar en función de si nos aporta algo a nivel informativo, si fuera el caso de que nos aportara
 podriamos hacer una inserción automatica con un trigger para que a raiz de los DNI puedan insertar los nombres por ejemplo*/
 
-INSERT INTO campaña (id, año, documento, tipoCampaña)  VALUES( 32,'2019-04-10', 'ruta1', 'Renta'),
+INSERT INTO campain (id, year, documento, tipoCampain)  VALUES( 32,'2019-04-10', 'ruta1', 'Renta'),
 (33,'2019-03-10', 'ruta2', 'Sociedades'),
 (34,'2019-05-10', 'ruta3', 'IBI'),
 (35,'2020-04-10', 'ruta4', 'Renta'),
@@ -83,7 +83,7 @@ INSERT INTO campaña (id, año, documento, tipoCampaña)  VALUES( 32,'2019-04-10
 
 /*Tabla notificacion*/
 
-INSERT INTO notificacion (comentario, fecha, id_campaña, dni_cliente, dni_empleado)  VALUES('ruta historico1', '2019-04-20',32 ,40001006, 40001001 ),
+INSERT INTO notificacion (comentario, fecha, id_campain, dni_cliente, dni_empleado)  VALUES('ruta historico1', '2019-04-20',32 ,40001006, 40001001 ),
 ('ruta historico2', '2019-03-20',33 ,40001018, 40001002 ),
 ('ruta historico3', '2019-05-20',34 ,40001007, 40001003 ),
 ('ruta historico4', '2019-04-20',35 ,40001008, 40001001 ),
