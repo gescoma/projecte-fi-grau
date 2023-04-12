@@ -46,4 +46,4 @@ async def login(data: schemas.UserData):
 
 @app.get("/clients", response_model=list[schema.Client])
 def get_all_clients(db: Session = Depends(get_db)):
-    return get_clients(db = db)
+    clients = get_clients(db = db)
