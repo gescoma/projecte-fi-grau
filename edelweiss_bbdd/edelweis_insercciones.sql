@@ -149,7 +149,7 @@ INSERT INTO tramiteCompra (dni_empleado, tipo, documento, fecha)  VALUES(4000100
 (40001001, 'Notaria','doc13','2023-02-25'),
 (40001002, 'Registro','doc14','2023-02-24'),
 (40001003, 'Tasación','doc15','2023-02-05'),
-(40001004, 'Suministros','doc16','2023-02-29'),
+(40001004, 'Suministros','doc16','2023-02-24'),
 (40001001, 'Notaria','doc17','2020-10-22'),
 (40001002, 'Registro','doc18','2020-10-21'),
 (40001003, 'Tasación','doc19','2020-10-05'),
