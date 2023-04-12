@@ -17,4 +17,3 @@ def create_client(db: Session, client: schema.Client):
     db.commit()
     db.refresh(db_client)
     return db_client
-
