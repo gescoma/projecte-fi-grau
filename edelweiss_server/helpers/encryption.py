@@ -1,2 +1,0 @@
-def encriptPassword(password):
-  return 
