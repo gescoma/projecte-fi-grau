@@ -39,6 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: edelweiss-dev-password
     volumes:
       - "../edelweiss-bbdd/edelweis_estructura.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "../edelweiss-bbdd/edelweis_insercciones.sql:/docker-entrypoint-initdb.d/2.sql"
 
   phpmyadmin:
     image: phpmyadmin
