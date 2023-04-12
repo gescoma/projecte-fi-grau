@@ -2,3 +2,4 @@ fastapi
 uvicorn
 bcrypt
 sqlalchemy
+mysql-connector-python

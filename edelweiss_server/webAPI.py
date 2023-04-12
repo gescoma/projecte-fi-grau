@@ -1,6 +1,9 @@
 """import fastAPI nedeed files"""
 from fastapi import FastAPI, HTTPException, status
-from .src import schemas
+# from . import crud, models, schemas
+from src.database import SessionLocal, engine
+
+from src import schemas
 from src import fake_info
 
 def get_user(email):
@@ -30,3 +33,6 @@ async def login(data: schemas.UserData):
         )
     return user
 
+@app.get("/clients")
+def get_all_clients():
+    return {"clients": ["hello"]}
