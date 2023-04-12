@@ -1,6 +1,6 @@
 FROM python:3-alpine
 
-WORKDIR /workspaces/edelweiss-server
+WORKDIR /workspaces/edelweiss_server
 
 RUN pip install --upgrade pip
 

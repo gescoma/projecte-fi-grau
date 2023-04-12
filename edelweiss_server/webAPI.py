@@ -1,6 +1,7 @@
 """import fastAPI nedeed files"""
 from fastapi import FastAPI, HTTPException, status
-from .src import schemas, fake_info
+from .src import schemas
+from src import fake_info
 
 def get_user(email):
     for user in fake_info.fake_db_user:

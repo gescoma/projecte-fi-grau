@@ -21,7 +21,7 @@ services:
 
   frontend:
     build:
-      context: ../edelweiss-webapp
+      context: ../edelweiss_webapp
       dockerfile: ../.devcontainer/Dockerfile.frontend
     volumes:
       - ..:/workspaces
@@ -38,8 +38,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: edelweiss-dev-password
     volumes:
-      - "../edelweiss-bbdd/edelweis_estructura.sql:/docker-entrypoint-initdb.d/1.sql"
-      - "../edelweiss-bbdd/edelweis_insercciones.sql:/docker-entrypoint-initdb.d/2.sql"
+      - "../edelweiss_bbdd/edelweis_estructura.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "../edelweiss_bbdd/edelweis_insercciones.sql:/docker-entrypoint-initdb.d/2.sql"
 
   phpmyadmin:
     image: phpmyadmin
