@@ -1,6 +1,6 @@
 /* FASE 4: INSERCIONES DE PRUEBA */
 
-
+USE edelweiss;
 
 /*Tabla usuario*/
 
