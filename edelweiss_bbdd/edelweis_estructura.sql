@@ -7,9 +7,6 @@ USE edelweiss;
 
 
 
-
-
-
 /*FASE 2: CREACIÓN DE TODAS LAS TABLAS QUE COMPONEN LA BASE DE DATOS "edelweis"*/
 
 CREATE TABLE usuario (
