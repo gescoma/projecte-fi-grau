@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class Campain(BaseModel):
+    """pydantic to create types for tables"""
     id: int
     year: str
     documento: str
@@ -11,5 +12,6 @@ class Campain(BaseModel):
     cliente: str
 
     class Config:
+        """pydantic to create types for tables"""
         orm_mode = True
     # cliente: Client

@@ -1,10 +1,12 @@
 """modules to use sql types"""
-from sqlalchemy import Column, ForeignKey, Integer, String, Date, Boolean
+from sqlalchemy import Column, Integer, String, Date, Boolean
 # from sqlalchemy.orm import relationship
 
 from .database import Base
 
+
 class Client(Base):
+    """Client model"""
     __tablename__ = "cliente"
 
     dni_usuario = Column(Integer, primary_key=True, index=True)
@@ -15,6 +17,7 @@ class Client(Base):
 
 
 class Campain(Base):
+    """Campain model"""
     __tablename__ = "campain"
 
     id = Column(Integer, primary_key=True, index=True)

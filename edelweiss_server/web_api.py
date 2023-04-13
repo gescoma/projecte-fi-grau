@@ -1,11 +1,7 @@
 """import fast_API nedeed files"""
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI
 
-# from . import crud, models, schemas
-from src.database import SessionLocal, engine, get_db
-
-from src import schemas
-
+# import routers from endpoints
 from src.client.endpoints import client_router
 from src.user.endpoints import user_router
 
@@ -13,6 +9,8 @@ app = FastAPI()
 app.include_router(client_router, tags=['Clients'], prefix='/clients')
 app.include_router(user_router, tags=['User'], prefix='/user')
 
+
 @app.get("/")
 def root():
+    """Root function"""
     return {"message": "Hello World"}

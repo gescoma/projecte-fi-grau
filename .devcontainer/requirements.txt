@@ -5,3 +5,5 @@ mysql-connector-python
 python-jose[cryptography]
 passlib[bcrypt]
 autopep8
+pytest
+pylint-pydantic

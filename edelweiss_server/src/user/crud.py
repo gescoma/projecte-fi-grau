@@ -1,6 +1,6 @@
-from sqlalchemy.orm import Session
+"""User CRUD operations."""
+from . import fake_info
 
-from . import model, schema, fake_info
 
 def get_user(email):
     for user in fake_info.fake_db_user:

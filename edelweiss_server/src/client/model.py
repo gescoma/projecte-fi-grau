@@ -4,7 +4,9 @@ from sqlalchemy import Column, Integer, String, Boolean
 
 from ..database import Base
 
+
 class Client(Base):
+    """Client model"""
     __tablename__ = "cliente"
 
     dni_usuario = Column(Integer, primary_key=True, index=True)

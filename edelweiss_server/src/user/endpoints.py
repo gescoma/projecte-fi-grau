@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Depends
-from sqlalchemy.orm import Session
+"""User endpoints."""
+from fastapi import APIRouter, HTTPException, status
 from . import crud, schema
 
 user_router = APIRouter()
@@ -7,6 +7,7 @@ user_router = APIRouter()
 
 @user_router.post("/login")
 def login(data: schema.UserData):
+    """Login function"""
     if data.bearer != "koUdVf6kazhwoOkjXh65CrDHwW4IYtkatZ3uFEOnob4=":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
