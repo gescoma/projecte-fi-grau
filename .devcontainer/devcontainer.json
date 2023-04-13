@@ -28,18 +28,10 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "heybourn.headwind",
-        "ms-azuretools.vscode-docker",
         "esbenp.prettier-vscode",
         "amatiasq.sort-imports",
-        "bradlc.vscode-tailwindcss",
-        "pflannery.vscode-versionlens",
-        "csstools.postcss",
-        "usernamehw.errorlens",
-        "mikestead.dotenv",
-        "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.pylint",
-        "github.copilot",
         "eamodio.gitlens",
         "pflannery.vscode-versionlens"
       ]
@@ -51,15 +43,8 @@
         "heybourn.headwind",
         "esbenp.prettier-vscode",
         "amatiasq.sort-imports",
-        "bradlc.vscode-tailwindcss",
-        "pflannery.vscode-versionlens",
-        "csstools.postcss",
-        "usernamehw.errorlens",
-        "mikestead.dotenv",
-        "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.pylint",
-        "github.copilot",
         "eamodio.gitlens",
         "pflannery.vscode-versionlens"
       ]
