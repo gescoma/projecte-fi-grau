@@ -2,7 +2,6 @@
 
 import { signOut, useSession } from "next-auth/react"
 
-import { Avatar } from "@/components/avatar"
 import { Button } from "@/components/button"
 import { Card } from "@/components/card"
 import { Logo } from "@/components/logo"
@@ -16,7 +15,6 @@ export default function Home() {
         <Card>
           <Logo width={300} height={150} />
           <button onClick={() => signOut()}>Cerrar sesión</button>
-          <Avatar>2</Avatar>
         </Card>
       </div>
     )
@@ -26,7 +24,6 @@ export default function Home() {
       <Card>
         <Logo width={300} height={150} />
         <Button isBoton>Enviar</Button>
-        <Avatar>2</Avatar>
       </Card>
     </div>
   )
