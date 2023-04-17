@@ -36,3 +36,36 @@ button.link {
   background-color: var(--color-black-80);
   border-radius: 0 0.2rem 0.2rem 0;
 }
+
+.submenuContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 2rem 0 2.2rem;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.submenu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-black-40);
+  cursor: pointer;
+}
+
+.submenu:hover {
+  color: var(--color-black-80);
+}
+
+.caret {
+  margin-left: auto;
+  transition: transform 0.1s ease;
+}
+
+.open {
+  transform: rotate(90deg);
+}
+
+.focus {
+  color: var(--color-black-80);
+}

@@ -21,7 +21,9 @@ export function SidebarLink({
   submenu?: any
 }) {
   const [open, setOpen] = useState(false)
-  const linkClassGenerator = `${styles.link} ${isActive ? styles.active : ""}`
+  const linkClassGenerator = `${styles.link} ${isActive ? styles.active : ""} ${
+    open ? styles.focus : ""
+  }`
   const caretClassGenerator = `${styles.caret} ${open ? styles.open : ""}`
 
   const hasSubmenu = submenu.length > 0
@@ -41,10 +43,15 @@ export function SidebarLink({
             <FiChevronRight className={caretClassGenerator} />
           </button>
           {open && (
-            <ul>
-              {submenu.map((item: menuItem, index: number) => (
-                <li key={index}>{item.text}</li>
-              ))}
+            <ul className={styles.submenuContainer}>
+              {submenu.map(
+                ({ icon: SubmenuIcon, ...item }: menuItem, index: number) => (
+                  <li className={styles.submenu} key={index}>
+                    {Icon && <SubmenuIcon />}
+                    {item.text}
+                  </li>
+                )
+              )}
             </ul>
           )}
         </>
