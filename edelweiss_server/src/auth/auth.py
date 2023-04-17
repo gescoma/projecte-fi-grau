@@ -7,6 +7,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
+from .schema import Token, TokenData, User, UserInDB
+from .constants import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -22,9 +25,10 @@ def get_password_hash(password):
 
 
 async def get_user(username: str):
-    query = users.select().where(users.c.username == username)
-    user = await database.fetch_one(query)
-    return UserInDB(username=user["username"], hashed_password=user["hashed_password"])
+    # query = users.select().where(users.c.username == username)
+    # user = await database.fetch_one(query)
+    # return UserInDB(username=user["username"], hashed_password=user["hashed_password"])
+    return UserInDB(username=username, hashed_password="123")
 
 
 async def authenticate_user(username: str, password: str):
