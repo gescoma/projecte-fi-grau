@@ -2,13 +2,15 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.orm import Session
 from src.database import get_db
 from src.client.crud import get_clients, get_client
+from src.auth import get_current_active_user
 
 client_router = APIRouter()
 
 
 @client_router.get("/")
-def get_all_clients(db: Session = Depends(get_db)):
+def get_all_clients(db: Session = Depends(get_db), user=Depends(get_current_active_user)):
     """Get all clients"""
+    # print(user)
     clients = get_clients(db=db)
     return clients
 
