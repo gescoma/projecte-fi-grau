@@ -27,26 +27,10 @@ export const authOptions:AuthOptions = {
         }
         return user
       }
-    }),
-    {
-      id: "Edelweiss",
-      name: "edelweiss",
-      type: "oauth",
-      token: `${process.env.BACKEND_DOMAIN}/token`,
-      userinfo: `${process.env.BACKEND_DOMAIN}/user/me`,
-      profile(profile) {
-        console.log(profile)
-        return {
-          id: profile.uuid,
-          name: profile.kakao_account?.profile.nickname,
-          email: profile.kakao_account?.email,
-          image: profile.kakao_account?.profile.profile_image_url,
-        }
-      },
-    }
+    })
   ],
   pages: {
-    signIn: "/auth/signIn"
+    signIn: "/auth/signin"
   }
 }
 

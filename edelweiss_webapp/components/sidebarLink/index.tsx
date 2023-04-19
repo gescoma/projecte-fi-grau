@@ -46,9 +46,14 @@ export function SidebarLink({
             <ul className={styles.submenuContainer}>
               {submenu.map(
                 ({ icon: SubmenuIcon, ...item }: menuItem, index: number) => (
-                  <li className={styles.submenu} key={index}>
-                    {Icon && <SubmenuIcon />}
-                    {item.text}
+                  <li key={index}>
+                    <Link
+                      className={styles.submenu}
+                      href={`${link}${item.link}`}
+                    >
+                      {Icon && <SubmenuIcon />}
+                      {item.text}
+                    </Link>
                   </li>
                 )
               )}
