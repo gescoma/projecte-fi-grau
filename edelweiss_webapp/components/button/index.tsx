@@ -1,4 +1,5 @@
 import styles from "./button.module.css"
+
 export function Button({ children, isBoton, disabled = false }) {
   if (isBoton) {
     return (

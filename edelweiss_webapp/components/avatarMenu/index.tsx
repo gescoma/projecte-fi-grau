@@ -74,7 +74,11 @@ export function AvatarMenu({
 
   return (
     <div ref={menuRef} className={generateAvatarClass}>
-      {session?.user?.image ? <Avatar /> : <AvatarSkeleton />}
+      {session?.user?.image ? (
+        <Avatar user={session.user} />
+      ) : (
+        <AvatarSkeleton />
+      )}
       <FiMoreHorizontal
         className={`${styles.icon} ${isOpen ? styles.active : ""}`}
         onClick={handleClick}
