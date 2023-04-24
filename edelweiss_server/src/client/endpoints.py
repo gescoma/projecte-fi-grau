@@ -9,7 +9,7 @@ client_router = APIRouter()
 
 
 @client_router.get("/")
-def get_all_clients(db: Session = Depends(get_db), _=Depends(has_access("admin"))):
+def get_all_clients(db: Session = Depends(get_db), _=Depends(has_access(["string", "admon"]))):
     """Get all clients"""
     clients = get_clients(db=db)
     return clients
