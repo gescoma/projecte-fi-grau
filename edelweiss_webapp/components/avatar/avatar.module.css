@@ -1,0 +1,20 @@
+.section {
+  display: flex;
+  gap: 1rem;
+  place-items: center stretch;
+  flex-grow: 1;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.nameNormal {
+  font-size: 0.9rem;
+}

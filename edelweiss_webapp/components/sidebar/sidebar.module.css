@@ -1,0 +1,22 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100vh;
+  height: 100dvh;
+
+  min-width: 16rem;
+  max-width: 16rem;
+
+  background-color: var(--color-black-5);
+}
+
+.logo {
+  padding: 1rem;
+}
+
+.avatar {
+  padding: 1rem;
+  max-width: 16rem;
+}

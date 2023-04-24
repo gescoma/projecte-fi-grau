@@ -1,0 +1,49 @@
+.item {
+  background-color: transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  color: var(--color-black-60);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+
+  padding: 0.5rem 1rem;
+
+  transition: background-color 0.15s ease-in-out;
+}
+
+.button {
+  border: none;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: var(--color-black-10);
+  color: var(--color-black);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: var(--color-black-5);
+  color: var(--color-black-90);
+}
+
+.icon {
+  font-weight: 600;
+  stroke-width: 2.5;
+}
+
+.danger {
+  color: var(--color-danger-30);
+}
+
+.danger:hover {
+  background-color: var(--color-danger-5);
+  color: var(--color-danger-50);
+}

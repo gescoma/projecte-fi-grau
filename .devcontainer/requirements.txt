@@ -1,2 +1,10 @@
 fastapi
 uvicorn
+sqlalchemy
+mysql-connector-python
+PyJWT
+python-decouple
+autopep8
+pytest
+pylint-pydantic
+python-multipart

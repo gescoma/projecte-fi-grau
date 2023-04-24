@@ -1,0 +1,12 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  list-style: none;
+}
+
+.navigation {
+  margin-bottom: auto;
+  padding: 2rem 0;
+  overflow-y: auto;
+}
