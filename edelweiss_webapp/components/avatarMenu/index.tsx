@@ -17,6 +17,7 @@ import { MenuUserItem } from "@/components/menuUserItem"
 import { Separator } from "@/components/separator"
 import Swal from "sweetalert2"
 import styles from "./avatar.module.css"
+import { useClickOutside } from "@/hooks/useClickOutsideRef"
 
 export function AvatarMenu({
   className,
@@ -26,32 +27,9 @@ export function AvatarMenu({
   menuDirection?: "up" | "down"
 }) {
   const { data: session } = useSession()
-  const [isOpen, setIsOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
+  const { isOpen, isOpenRef, handleClose } = useClickOutside<HTMLDivElement>()
 
   const generateAvatarClass = `${styles.avatar} ${className}`
-
-  const handleClick = () => {
-    setIsOpen(!isOpen)
-  }
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isOpen &&
-        menuRef.current &&
-        !menuRef.current.contains(event.target as HTMLDivElement)
-      ) {
-        setIsOpen(false)
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  })
 
   const handleLogout = () => {
     Swal.fire({
@@ -73,7 +51,7 @@ export function AvatarMenu({
   }
 
   return (
-    <div ref={menuRef} className={generateAvatarClass}>
+    <div ref={isOpenRef} className={generateAvatarClass}>
       {session?.user?.image ? (
         <Avatar user={session.user} />
       ) : (
@@ -81,7 +59,7 @@ export function AvatarMenu({
       )}
       <FiMoreHorizontal
         className={`${styles.icon} ${isOpen ? styles.active : ""}`}
-        onClick={handleClick}
+        onClick={handleClose}
       />
       {isOpen && (
         <MenuUser direction={menuDirection}>
