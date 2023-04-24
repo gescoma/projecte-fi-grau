@@ -1,12 +1,13 @@
 import { getUserToken } from "./getCurrentUser"
 
-export function serverFetch(url: string, options: RequestInit = {}, authorization = true): Promise<Response> {
+export async function serverFetch(url: string, options: RequestInit = {}, authorization = true): Promise<Response> {
+  const token = await getUserToken()
   return fetch(url, {
     ...options,
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
-      ...(authorization && { Authorization: `Bearer ${getUserToken()}` })
+      ...(authorization && { Authorization: `Bearer ${token}` })
     }
   })
 }
