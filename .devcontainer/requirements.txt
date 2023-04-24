@@ -2,8 +2,8 @@ fastapi
 uvicorn
 sqlalchemy
 mysql-connector-python
-python-jose[cryptography]
-passlib[bcrypt]
+PyJWT
+python-decouple
 autopep8
 pytest
 pylint-pydantic
