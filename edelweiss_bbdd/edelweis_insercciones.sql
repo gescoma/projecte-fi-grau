@@ -1,103 +1,94 @@
+
+
+
+
+
 /* FASE 4: INSERCIONES DE PRUEBA */
 
-USE edelweiss;
-
-/*Tabla usuario*/
-
-INSERT INTO usuario (dni, nombre, apellido1, apellido2, correo)  VALUES(40001001, 'Juan', 'Lopez','Tercero', 'juanito23@gmail.com'),
-(40001002, 'Raul', 'Blanco','Gomez', 'raulito@gmail.com'),
-(40001003, 'Pepe', 'Garcia','Glez', 'pepgarcia@gmail.com'),
-(40001004, 'Arsancio','Gomez','Garcia', 'Arsa55@gmail.com'),
-(40001005, 'Raquel', 'Lopez', 'Garcia', 'raquel210@gmail.com'),
-(40001006, 'Amancio', 'Perez', 'Castilla', 'amancio@gmail.com'),
-(40001007, 'Raul', 'Lopez', 'Glez', 'Rulete87@gmail.com'),
-(40001008, 'Jose', 'Astillero', 'Garcia', 'josegarcia@gmail.com'),
-(40001009, 'Julian', 'Aranda', 'Duero', 'jarandadelduero@gmail.com'),
-(40001010, 'Carlos', 'Romero', 'Hernadez', 'hernan@gmail.com'),
-(40001011, 'Aaron', 'Lopez', 'Tercero', 'aarontercero@gmail.com'),
-(40001012, 'Marta', 'Carranza', 'Navarro', 'martita@gmail.com'),
-(40001013, 'Enrique', 'Pozuelo', 'Nevada', 'kike@gmail.com'),
-(40001014, 'Laura', 'Garcia', 'Aranda', 'lauraaa@gmail.com'),
-(40001015, 'Pepe', 'Sanchez', 'Astillero', 'pepetesan@gmail.com'),
-(40001016, 'Esperanza', 'Aguirre', 'Gigante', 'espegigante@gmail.com'),
-(40001017, 'Juan Miguel', 'Aranda','Tercero', 'juanmi569@gmail.com'),
-(40001018, 'Juan Ramón', 'Glez','Lopez', 'jramon23@gmail.com'),
-(40001019, 'Maria', 'Lopez','Garcia', 'marilop55@gmail.com'),
-(40001020, 'Vanesa', 'Gigante','Baeza', 'vanegb89@gmail.com');
+USE edelweis;
 
 
 
-/*Tabla empleado*/
+/*Tabla roles*/
 
-INSERT INTO empleado (dni_usuario, login, passwd)  VALUES(40001001, 'jlopez', 'Juan'),
-(40001002, 'rblanco', 'Raul'),
-(40001003, 'pgarcia', 'Pepe'),
-(40001004, 'agomez', 'Arsancio'); /*Rol de admin*/
+INSERT INTO roles (nombre, descripcion) 
+VALUES('admin','El rol admin tendra ESCRITURA, en todas las tablas'),
+('contable','El rol contable solo tendra permisos de LECTURA en todas las tablas'),
+('verClientes','El usuario verClientes tendra LEER eb la tabla cliente'),
+('crearClientes','El rol crearClientes tendra ESCRITURA en la tabla cliente');
+
+
+
+
+/*Tabla rolEntidad*/
+
+INSERT INTO rolEntidad (entidad, permiso, rol)  VALUES('todas', 'ESCRIBIR','admin'),
+('todas', 'LEER','contable'),
+('cliente', 'LEER','verClientes'),
+('cliente', 'ESCRIBIR','crearClientes');
+
+
+
+
+/*Tabla users*/
+
+INSERT INTO users (id, rol, login, passwd)  VALUES(1, 'verClientes', 'jlopez', 'Juan'),
+(2, 'crearClientes', 'rblanco', 'Raul'),
+(3, 'contable', 'pgarcia', 'Pepe'),
+(4, 'Admin', 'agomez', 'Arsancio'); 
 
 
 
 /*Tabla cliente*/
 
-INSERT INTO cliente (dni_usuario, nacionalidad, personaFisica)  VALUES(40001005, 'Española', TRUE),
-(40001006, 'Española', TRUE),
-(40001007, 'Española', TRUE),
-(40001008, 'Española', TRUE),
-(40001009, 'Española', TRUE),
-(40001010, 'Española', TRUE),
-(40001011, 'Francesa', TRUE),
-(40001012, 'Francesa', TRUE),
-(40001013, 'Francesa', TRUE),
-(40001014, 'Alemana', TRUE),
-(40001015, 'Alemana', TRUE),
-(40001016, 'Alemana', TRUE),
-(40001017, 'Alemana', TRUE),
-(40001018, 'Española', FALSE),
-(40001019, 'Española', FALSE),
-(40001020, 'Española', FALSE);
+INSERT INTO cliente (id,nombre, apellido1, apellido2, correo, nacionalidad, personaFisica)  VALUES(5,'Raquel', 'Lopez', 'Garcia', 'raquel210@gmail.com','ES', TRUE),
+(6, 'Amancio', 'Perez', 'Castilla', 'amancio@gmail.com', 'ES', TRUE),
+(7, 'Raul', 'Lopez', 'Glez', 'Rulete87@gmail.com', 'ES', TRUE),
+(8, 'Jose', 'Astillero', 'Garcia', 'josegarcia@gmail.com', 'ES', TRUE),
+(9, 'Julian', 'Aranda', 'Duero', 'jarandadelduero@gmail.com', 'ES', TRUE),
+(10, 'Carlos', 'Romero', 'Hernadez', 'hernan@gmail.com', 'ES', TRUE),
+(11, 'Aaron', 'Lopez', 'Tercero', 'aarontercero@gmail.com', 'FR', TRUE),
+(12, 'Marta', 'Carranza', 'Navarro', 'martita@gmail.com', 'FR', TRUE),
+(13, 'Enrique', 'Pozuelo', 'Nevada', 'kike@gmail.com', 'FR', TRUE),
+(14, 'Laura', 'Garcia', 'Aranda', 'lauraaa@gmail.com', 'DE', TRUE),
+(15, 'Pepe', 'Sanchez', 'Astillero', 'pepetesan@gmail.com', 'DE', TRUE),
+(16, 'Esperanza', 'Aguirre', 'Gigante', 'espegigante@gmail.com', 'DE', TRUE),
+(17, 'Juan Miguel', 'Aranda','Tercero', 'juanmi569@gmail.com', 'DE', TRUE),
+(18, 'Juan Ramon', 'Glez','Lopez', 'jramon23@gmail.com', 'ES', FALSE),
+(19, 'Maria', 'Lopez','Garcia', 'marilop55@gmail.com', 'ES', FALSE),
+(20, 'Vanesa', 'Gigante','Baeza', 'vanegb89@gmail.com', 'ES', FALSE);
 
 
 
-/*Tabla campaña*/
+/*Tabla campain*/
 
-/*NOTA-Modifico manualmente la estructura de esta tabla para poder poner los campos "responsable" y "cliente" como nulos, 
-posteriormente se pueden quitar o no quitar en función de si nos aporta algo a nivel informativo, si fuera el caso de que nos aportara
-podriamos hacer una inserción automatica con un trigger para que a raiz de los DNI puedan insertar los nombres por ejemplo*/
 
-INSERT INTO campain (id, year, documento, tipoCampain)  VALUES( 32,'2019-04-10', 'ruta1', 'Renta'),
-(33,'2019-03-10', 'ruta2', 'Sociedades'),
-(34,'2019-05-10', 'ruta3', 'IBI'),
-(35,'2020-04-10', 'ruta4', 'Renta'),
-(36,'2020-03-10', 'ruta5', 'Sociedades'),
-(37,'2020-05-10', 'ruta6', 'IBI'),
-(38,'2021-04-10', 'ruta7', 'Renta'),
-(39,'2021-03-10', 'ruta8', 'Sociedades'),
-(40,'2021-05-10', 'ruta9', 'IBI'),
-(41,'2022-04-10', 'ruta10', 'Renta'),
-(42,'2022-03-10', 'ruta11', 'Sociedades'),
-(43,'2022-05-10', 'ruta12', 'IBI'),
-(44,'2023-04-10', 'ruta13', 'Renta'),
-(45,'2023-03-10', 'ruta14', 'Sociedades'),
-(46,'2023-05-10', 'ruta15', 'IBI');
+INSERT INTO campain (nombre, periocidad, descripcion)  VALUES('Renta', 'anual', 'Impuesto sobre la renta'),
+('IBI', 'anual', 'Impuesto sobre los bienes inmuebles'),
+('IVA', 'trimestral', 'declaración de iva'),
+('modelo1', 'semestral', 'descripción del modelo1'),
+('modelo2', 'mensual', 'Descripción del modelo2'),
+('modelo3', 'anual', 'Descripción del modelo3');
 
 
 
-/*Tabla notificacion*/
+/*Tabla cliente_user_campain*/
 
-INSERT INTO notificacion (comentario, fecha, id_campain, dni_cliente, dni_empleado)  VALUES('ruta historico1', '2019-04-20',32 ,40001006, 40001001 ),
-('ruta historico2', '2019-03-20',33 ,40001018, 40001002 ),
-('ruta historico3', '2019-05-20',34 ,40001007, 40001003 ),
-('ruta historico4', '2019-04-20',35 ,40001008, 40001001 ),
-('ruta historico5', '2019-03-20',36 ,40001019, 40001002 ),
-('ruta historico6', '2019-05-20',37 ,40001005, 40001003 ),
-('ruta historico7', '2019-04-20',38 ,40001006, 40001001 ),
-('ruta historico8', '2019-03-20',39 ,40001019, 40001002 ),
-('ruta historico9', '2019-05-20',40 ,40001010, 40001003 ),
-('ruta historico10', '2019-04-20',41 ,40001011, 40001001 ),
-('ruta historico11', '2019-03-20',42 ,40001020, 40001002 ),
-('ruta historico12', '2019-05-20',43 ,40001012, 40001003 ),
-('ruta historico13', '2019-04-20',44 ,40001013, 40001001 ),
-('ruta historico14', '2019-03-20',45 ,40001018, 40001002 ),
-('ruta historico15', '2019-05-20',46 ,40001014, 40001003 );
+INSERT INTO cliente_user_campain (comentario,id_campain, id_cliente, id_users)  VALUES('comentarios de prueba',1 ,6, 1 ),
+('coemntario2',2 ,18, 2 ),
+('comentario3',3 ,7, 3 ),
+('comentario4',4 ,8, 1 ),
+('comentario5',5 ,19, 2 ),
+('comentario6',6 ,5, 3 ),
+('comentario7',1 ,6, 1 ),
+('comentario8',2 ,19, 2 ),
+('comentario9',3 ,10, 3 ),
+('comentario10',4 ,11, 1 ),
+('comentario11',5 ,20, 2 ),
+('comentario12',6 ,12, 3 ),
+('comentario13',1 ,13, 1 ),
+('comentario14',2 ,18, 2 ),
+('comentario15',3 ,14, 3 );
 
 
 
@@ -109,24 +100,24 @@ INSERT INTO notificacion (comentario, fecha, id_campain, dni_cliente, dni_emplea
 
 INSERT INTO vivienda (calle, numero, vendida)  VALUES('Industria', '24 - 2ºC', TRUE),
 ('31 de Diciembre', '25-3A', FALSE),
-('Alfonso el Magnánimo', '10', TRUE),
-('Aragón', '20 - 2ºB', FALSE),
+('Alfonso el Magnanimo', '10', TRUE),
+('Aragon', '20-2B', FALSE),
 ('Via Asima', '5', TRUE),
 ('Blanquerna', '24', FALSE),
-('Colón', '23', TRUE),
+('Colon', '23', TRUE),
 ('Eusebio Estada', '20', FALSE),
 ('General rivera', '26', TRUE),
 ('Jacinto Verdaguer', '19', FALSE),
-('Camino de Jesus', '8 - 2ºH' , TRUE),
+('Camino de Jesus', '8 - 2H' , TRUE),
 ('Manacor', '9', FALSE),
-('De los Olmos', '24 - 2ºF', TRUE),
+('De los Olmos', '24 - 2F', TRUE),
 ('Rambla de Palma', '15', FALSE),
 ('Via Roma', '17 B', TRUE),
 ('Camino Salard', '5', FALSE),
-('Estación', '24', TRUE),
+('Estacion', '24', TRUE),
 ('31 de Diciembre', '10', FALSE),
 ('Alfonso el Magnánimo', '4', TRUE),
-('Aragón', '15 - 2ºB', FALSE),
+('Aragón', '15 - 2B', FALSE),
 ('Via Asima', '3', TRUE);
 
 
@@ -134,34 +125,81 @@ INSERT INTO vivienda (calle, numero, vendida)  VALUES('Industria', '24 - 2ºC', 
 
 /*Tabla tramiteCompra*/
 
-INSERT INTO tramiteCompra (dni_empleado, tipo, documento, fecha)  VALUES(40001001, 'Notaria','doc1','2020-02-10'),
-(40001002, 'Registro','doc2','2020-02-10'),
-(40001003, 'Tasación', 'doc3','2020-02-1'),
-(40001004, 'Suministros','doc4','2020-02-15'),
-(40001001, 'Notaria','doc5','2021-03-24'),
-(40001002, 'Registro','doc6','2021-03-23'),
-(40001003, 'Tasación','doc7','2021-03-10'),
-(40001004, 'Suministros','doc8','2021-03-29'),
-(40001001, 'Notaria','doc9','2022-05-24'),
-(40001002, 'Registro','doc10','2022-05-25'),
-(40001003, 'Tasación','doc11','2022-05-02'),
-(40001004, 'Suministros','doc12','2022-05-30'),
-(40001001, 'Notaria','doc13','2023-02-25'),
-(40001002, 'Registro','doc14','2023-02-24'),
-(40001003, 'Tasación','doc15','2023-02-05'),
-(40001004, 'Suministros','doc16','2023-02-24'),
-(40001001, 'Notaria','doc17','2020-10-22'),
-(40001002, 'Registro','doc18','2020-10-21'),
-(40001003, 'Tasación','doc19','2020-10-05'),
-(40001004, 'Suministros','doc20','2020-10-24');
+INSERT INTO tramiteCompra (id_users, tipo, documento, fecha)  VALUES(1, 'Notaria','doc1','2020-02-10'),
+(2, 'Registro','doc2','2020-02-10'),
+(3, 'Tasacion', 'doc3','2020-02-1'),
+(4, 'Suministros','doc4','2020-02-15'),
+(1, 'Notaria','doc5','2021-03-24'),
+(2, 'Registro','doc6','2021-03-23'),
+(3, 'Tasacion','doc7','2021-03-10'),
+(4, 'Suministros','doc8','2021-03-29'),
+(1, 'Notaria','doc9','2022-05-24'),
+(2, 'Registro','doc10','2022-05-25'),
+(3, 'Tasacion','doc11','2022-05-02'),
+(4, 'Suministros','doc12','2022-05-30'),
+(1, 'Notaria','doc13','2023-02-25'),
+(2, 'Registro','doc14','2023-02-24'),
+(3, 'Tasacion','doc15','2023-02-05'),
+(4, 'Suministros','doc16','2023-02-24'),
+(1, 'Notaria','doc17','2020-10-22'),
+(2, 'Registro','doc18','2020-10-21'),
+(3, 'Tasacion','doc19','2020-10-05'),
+(4, 'Suministros','doc20','2020-10-24');
 
 
 
 
 /*Tabla compra*/
 
-INSERT INTO compra (dni_cliente, id_tramite1, id_tramite2, id_tramite3, id_tramite4, id_vivienda)  VALUES(40001006,1,2,3,4,1),
-(40001007,5,6,7,8,3),
-(40001008,9,10,11,12,5),
-(40001009,13,14,15,16,7),
-(40001010,17,18,19,20,9);
+INSERT INTO compra (id_cliente, id_tramite1, id_tramite2, id_tramite3, id_tramite4, id_vivienda)  VALUES(6,1,2,3,4,1),
+(7,5,6,7,8,3),
+(8,9,10,11,12,5),
+(9,13,14,15,16,7),
+(10,17,18,19,20,9);
+
+
+
+
+/*Tabla tarea*/
+
+INSERT INTO tarea (nombre, descripcion, id_campain, estado, id_user)  
+VALUES('gestión de papeles','llevar papeles al departamento pertinente',1, 'INICIO',1),
+('hacer borrador','borrador para el cliente',2, 'FIN',2),
+('crear documentación','crear documentos necesarios',3, 'INICIO',3),
+('comunicar con hacienda','comunicar con hacienda los datos del cliente',5, 'INICIO',4),
+('destruir documentación','destruir documentos no necesarios',6, 'INICIO',3),
+('crear documentación','crear documentos necesarios',3, 'FIN',3),
+('destruir documentación','destruir documentos no necesarios',6, 'FIN',3);
+
+
+
+
+/*Tabla registroTarea*/
+
+INSERT INTO registroTarea (id_tarea, comentario)  
+VALUES(2,'se cierra la tarea tras aprobación del encargado'),
+(6,'Se crean todos los documentos y se recibe validación por parte del cliente'),
+(7,'se reciclan todos los papeles destruidos');
+
+
+
+
+/*Tabla archivo*/
+
+INSERT INTO archivo (nombre, id_tarea, ruta)  
+VALUES('json1',1,'ruta1'),
+('pdf1',1,'ruta2'),
+('word1',1,'ruta3'),
+('json2',2,'ruta1'),
+('pdf2',2,'ruta2'),
+('word2',2,'ruta3'),
+('json3',3,'ruta21'),
+('pdf3',3,'ruta2'),
+('word3',3,'ruta2');
+
+
+
+
+
+
+
