@@ -13,7 +13,6 @@ export async function getCurrentUser(): Promise<nextUser | null> {
     token: sessionJWT,
     secret: process.env.NEXTAUTH_SECRET || "",
   })) as nextUser
-  console.log({ user })
   return user
 }
 
