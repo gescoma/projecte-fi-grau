@@ -5,7 +5,7 @@
 
 /* FASE 4: INSERCIONES DE PRUEBA */
 
-USE edelweis;
+USE edelweiss;
 
 
 

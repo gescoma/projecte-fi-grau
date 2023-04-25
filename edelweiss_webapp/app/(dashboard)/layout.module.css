@@ -1,7 +1,7 @@
 .container {
   display: flex;
   align-items: stretch;
-  background-color: var(--color-black-5);
+  background-color: var(--color-black-10);
   width: 100vw;
   width: 100dvw;
 
@@ -12,7 +12,7 @@
 
 .main {
   flex-grow: 1;
-  background-color: white;
+  background-color: var(--color-black-5);
   border-radius: 1.5rem 0 0 1.5rem;
   padding: 1.5rem;
 }
