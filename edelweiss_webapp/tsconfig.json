@@ -27,8 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "components/sidebarLink/sidebar.tsc"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
