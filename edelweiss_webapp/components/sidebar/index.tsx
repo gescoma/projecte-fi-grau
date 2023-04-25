@@ -1,6 +1,6 @@
-import { AvatarMenu } from "../avatarMenu"
+import { AvatarMenu } from "../user/avatarMenu"
 import { Logo } from "@/components/logo"
-import { Separator } from "../separator"
+import { Separator } from "../utils/separator"
 import { SidebarMenu } from "@/components/sidebarMenu"
 import styles from "./sidebar.module.css"
 

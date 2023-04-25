@@ -1,5 +1,5 @@
 import { Session } from "next-auth"
-import { UserImage } from "@/components/userImage"
+import { UserImage } from "@/components/user/userImage"
 import { nextUser } from "@/types/nextUser"
 import styles from "./avatar.module.css"
 

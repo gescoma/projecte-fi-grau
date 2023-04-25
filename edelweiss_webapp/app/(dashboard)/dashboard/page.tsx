@@ -1,7 +1,7 @@
 "use client"
 
-import { Avatar } from "@/components/avatar"
-import { AvatarMenu } from "@/components/avatarMenu"
+import { Avatar } from "@/components/user/avatar"
+import { AvatarMenu } from "@/components/user/avatarMenu"
 import { signOut } from "next-auth/react"
 
 export default function DashboardPage() {

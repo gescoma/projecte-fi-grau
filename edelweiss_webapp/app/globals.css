@@ -89,9 +89,9 @@ span.skeleton.h1 {
 /* HTML ELEMENTS */
 
 h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1;
   margin-bottom: 1rem;
 }
 
