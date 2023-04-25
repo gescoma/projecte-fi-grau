@@ -8,7 +8,7 @@ export function Avatar({
   size = "normal",
 }: {
   user: Session["user"] | nextUser
-  size?: "normal" | "small" | "large" | "xlarge"
+  size?: "normal" | "small" | "large" | "xlarge" | "compressed"
 }) {
   const sizeClassCapitalize = size.charAt(0).toUpperCase() + size.slice(1)
   const avatarClassGenerator = `${styles.section} ${styles[size]}`
@@ -23,7 +23,11 @@ export function Avatar({
       <UserImage size={size} user={user} />
       <div className={textClassGenerator}>
         <span className={nameClassGenerator}>{user?.name}</span>
-        {(size === "xlarge" || size === "large") && <span>{user?.email}</span>}
+        {(size === "xlarge" || size === "large" || size === "compressed") && (
+          <span className={`${styles[`info${sizeClassCapitalize}`]}`}>
+            {user?.email}
+          </span>
+        )}
       </div>
     </section>
   )

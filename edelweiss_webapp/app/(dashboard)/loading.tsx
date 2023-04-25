@@ -1,4 +1,3 @@
-import { DashboardHead } from "@/components/dashboard/dashboard-head"
 import { SidebarLoading } from "@/components/dashboard/sidebar/sidebarLoading"
 import styles from "./layout.module.css"
 
@@ -10,10 +9,7 @@ export default function DashboardsLayout({
   return (
     <div className={styles.container}>
       <SidebarLoading />
-      <main className={styles.main}>
-        <DashboardHead />
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
     </div>
   )
 }
