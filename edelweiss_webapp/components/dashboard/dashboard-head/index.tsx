@@ -1,14 +1,8 @@
-import styles from "./dashboard-head.module.css"
-
-export function DashboardHead() {
-  // const { t } = useTranslation("dashboard")
-
+export function DashboardHead({ children }: { children: string }) {
   return (
-    <div className={styles.head}>
-      <div className={styles.title}>
-        <h1>{"title"}</h1>
-      </div>
-      <div className={styles.user}></div>
+    <div>
+      <h1>{children}</h1>
+      <input type="text" />
     </div>
   )
 }

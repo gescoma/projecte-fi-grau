@@ -1,7 +1,7 @@
-import { AvatarMenu } from "../user/avatarMenu"
+import { AvatarMenu } from "./avatarMenu"
 import { Logo } from "@/components/logo"
-import { Separator } from "../utils/separator"
-import { SidebarMenu } from "@/components/sidebarMenu"
+import { Separator } from "../../utils/separator"
+import { SidebarMenu } from "@/components/dashboard/sidebar/sidebarMenu"
 import styles from "./sidebar.module.css"
 
 export function Sidebar() {

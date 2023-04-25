@@ -1,5 +1,5 @@
 import { DashboardHead } from "@/components/dashboard/dashboard-head"
-import { SidebarLoading } from "@/components/sidebar/sidebarLoading"
+import { SidebarLoading } from "@/components/dashboard/sidebar/sidebarLoading"
 import styles from "./layout.module.css"
 
 export default function DashboardsLayout({

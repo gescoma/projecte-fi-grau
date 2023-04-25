@@ -1,3 +1,9 @@
+import { DashboardHead } from "@/components/dashboard/dashboard-head"
+
 export default function UserPage() {
-  return <h1>User</h1>
+  return (
+    <>
+      <DashboardHead>Gestion de usuarios</DashboardHead>
+    </>
+  )
 }

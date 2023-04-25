@@ -1,3 +1,4 @@
+import { DashboardHead } from "@/components/dashboard/dashboard-head"
 import { nextUser } from "@/types/nextUser"
 import { serverAPIFetch } from "@/utils/serverFetch"
 
@@ -7,11 +8,11 @@ export default async function Users() {
 
   return (
     <div>
-      <h1>Users</h1>
+      <DashboardHead>Gestión de usuarios</DashboardHead>
       <ul>
         {users.length > 0 &&
           users.map((user: nextUser, index: number) => (
-            <li key={index}>{user.name}</li>
+            <li key={index}>{user.nombre}</li>
           ))}
       </ul>
     </div>
