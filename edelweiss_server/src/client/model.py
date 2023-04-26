@@ -9,6 +9,10 @@ class Client(Base):
     """Client model"""
     __tablename__ = "cliente"
 
-    dni_usuario = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String)
+    apellido1 = Column(String)
+    apellido2 = Column(String)
+    correo = Column(String)
     nacionalidad = Column(String)
     personaFisica = Column(Boolean)

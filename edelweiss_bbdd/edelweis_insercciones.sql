@@ -5,7 +5,7 @@
 
 /* FASE 4: INSERCIONES DE PRUEBA */
 
-USE edelweis;
+USE edelweiss;
 
 
 
@@ -52,7 +52,7 @@ INSERT INTO cliente (id,nombre, apellido1, apellido2, correo, nacionalidad, pers
 (13, 'Enrique', 'Pozuelo', 'Nevada', 'kike@gmail.com', 'FR', TRUE),
 (14, 'Laura', 'Garcia', 'Aranda', 'lauraaa@gmail.com', 'DE', TRUE),
 (15, 'Pepe', 'Sanchez', 'Astillero', 'pepetesan@gmail.com', 'DE', TRUE),
-(16, 'Esperanza', 'Aguirre', 'Gigante', 'espegigante@gmail.com', 'DE', TRUE),
+(16, 'Esperanza', 'Garcia', 'Gigante', 'espegigante@gmail.com', 'DE', TRUE),
 (17, 'Juan Miguel', 'Aranda','Tercero', 'juanmi569@gmail.com', 'DE', TRUE),
 (18, 'Juan Ramon', 'Glez','Lopez', 'jramon23@gmail.com', 'ES', FALSE),
 (19, 'Maria', 'Lopez','Garcia', 'marilop55@gmail.com', 'ES', FALSE),

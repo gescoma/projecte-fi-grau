@@ -9,6 +9,12 @@
   border-radius: calc(var(--userImageSize) / 2);
 }
 
+.compressed {
+  width: var(--userImageSize);
+  height: var(--userImageSize);
+  border-radius: calc(var(--userImageSize) / 2);
+}
+
 .large {
   width: calc(var(--userImageSize) * 2);
   height: calc(var(--userImageSize) * 2);

@@ -8,13 +8,14 @@ export function UserImage({
   size = "normal",
 }: {
   user: Session["user"] | User
-  size?: "normal" | "small" | "large" | "xlarge"
+  size?: "normal" | "small" | "large" | "xlarge" | "compressed"
 }) {
   const avatarClassGenerator = `${styles.avatar} ${styles[size]}`
   const alt = `Avatar image of ${user?.name}`
+  const imageSrc = user?.image || user?.picture
   return (
     <div className={avatarClassGenerator}>
-      {user?.image && <Image src={user.image} alt={alt} fill sizes="100%" />}
+      {user?.image && <Image src={imageSrc} alt={alt} fill sizes="100%" />}
     </div>
   )
 }

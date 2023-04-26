@@ -9,12 +9,27 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  gap: 0.2rem;
 }
 
 .name {
   font-weight: 600;
 }
 
+/* NORMAL STYLES */
+
 .nameNormal {
   font-size: 0.9rem;
+}
+
+/* COMPRESSED STYLES */
+
+.nameCompressed {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.infoCompressed {
+  font-size: 0.7rem;
+  color: var(--color-black-50);
 }

@@ -2,7 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react"
 
-import { Avatar } from "@/components/avatar"
+import { Avatar } from "@/components/user/avatar"
 import { Button } from "@/components/button"
 import { Card } from "@/components/card"
 import { Logo } from "@/components/logo"

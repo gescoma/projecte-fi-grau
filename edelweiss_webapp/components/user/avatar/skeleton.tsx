@@ -1,4 +1,4 @@
-import { UserImageSkeleton } from "@/components/userImage/skeleton"
+import { UserImageSkeleton } from "@/components/user/userImage/skeleton"
 import styles from "./avatar.module.css"
 
 export function AvatarSkeleton({

@@ -1,7 +1,7 @@
 export type nextUser = {
   name: string,
   email: string,
-  picture: string,
+  image: string,
   role?: string,
   client_id?: string,
   iat: number,

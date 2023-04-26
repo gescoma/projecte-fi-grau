@@ -8,13 +8,12 @@ import {
   FiUser,
 } from "react-icons/fi"
 import { signOut, useSession } from "next-auth/react"
-import { useEffect, useRef, useState } from "react"
 
-import { Avatar } from "@/components/avatar"
-import { AvatarSkeleton } from "@/components/avatar/skeleton"
-import { MenuUser } from "@/components/menuUser"
-import { MenuUserItem } from "@/components/menuUserItem"
-import { Separator } from "@/components/separator"
+import { Avatar } from "@/components/user/avatar"
+import { AvatarSkeleton } from "@/components/user/avatar/skeleton"
+import { MenuUser } from "@/components/dashboard/sidebar/menuUser"
+import { MenuUserItem } from "@/components/dashboard/sidebar/menuUserItem"
+import { Separator } from "@/components/utils/separator"
 import Swal from "sweetalert2"
 import styles from "./avatar.module.css"
 import { useClickOutside } from "@/hooks/useClickOutsideRef"

@@ -7,7 +7,8 @@ const nextConfig = {
     domains: [
       "localhost",
       "127.0.0.1",
-      "unavatar.io"
+      "unavatar.io",
+      "flagsapi.com"
     ],
   }
 }
