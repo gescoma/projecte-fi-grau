@@ -25,6 +25,7 @@ export default function Home() {
       <Card>
         <Logo width={300} height={150} />
         <Button isBoton>Enviar</Button>
+        <Button isBoton>Enviar</Button>
       </Card>
     </div>
   )

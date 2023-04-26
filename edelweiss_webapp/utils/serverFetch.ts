@@ -2,6 +2,7 @@ import { getUserToken } from "./getCurrentUser"
 
 export async function serverFetch(url: string, options: RequestInit = {}, authorization = true): Promise<Response> {
   const token = await getUserToken()
+  console.log({token})
   return fetch(url, {
     ...options,
     headers: {

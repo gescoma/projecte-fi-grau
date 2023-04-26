@@ -33,7 +33,7 @@ const columns: TableColumns = [
 ]
 
 export default async function Users() {
-  const request = await serverAPIFetch(`/clients/`)
+  const request = await serverAPIFetch(`/clients`)
   const users = (await request.json()) || null
 
   return (
