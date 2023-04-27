@@ -8,7 +8,8 @@ const nextConfig = {
       "localhost",
       "127.0.0.1",
       "unavatar.io",
-      "flagsapi.com"
+      "flagsapi.com",
+      "edelweiss-webapp.vercel.app"
     ],
   }
 }
