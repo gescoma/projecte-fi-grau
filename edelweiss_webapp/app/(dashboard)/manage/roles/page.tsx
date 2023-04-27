@@ -1,3 +1,5 @@
+import { User } from "@/types/User"
+
 export default async function Roles() {
   const users = await fetch(`${process.env.BACKEND_DOMAIN}/clients`)
   const usersJson = await users.json()
@@ -5,10 +7,10 @@ export default async function Roles() {
   return (
     <div>
       <h1>Users</h1>
-      {usersJson.map((user) => (
-        <div key={user.dni_usuario}>
-          <p>{user.nacionalidad}</p>
-          <p>{user.personaFisica}</p>
+      {users && usersJson.map((user: User) => (
+        <div key={user.name}>
+          <p>{user.name}</p>
+          <p>{user.email}</p>
         </div>
       ))}
     </div>
