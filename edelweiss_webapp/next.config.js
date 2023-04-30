@@ -9,7 +9,8 @@ const nextConfig = {
       "127.0.0.1",
       "unavatar.io",
       "flagsapi.com",
-      "edelweiss-webapp.vercel.app"
+      "edelweiss-webapp.vercel.app",
+      "cloudflare-ipfs.com"
     ],
   }
 }
