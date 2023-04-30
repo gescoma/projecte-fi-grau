@@ -1,110 +1,204 @@
 "use client"
 
-import { Avatar } from "@/components/user/avatar"
-import Image from "next/image"
-import { TableColumns } from "@/types/tableColumns"
-import { useCallback } from "react"
+import {
+  useAsyncDebounce,
+  useFilters,
+  useGlobalFilter,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useTable,
+} from "react-table"
+
+import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
+import styles from "./table.module.css"
+import { useEffect } from "react"
 
 export function Table({
-  dataTable,
+  data,
   columns,
-  actions = [],
+  filters = {},
+  globalFilters = "",
 }: {
-  dataTable: any
-  columns: TableColumns
-  actions?: any
+  data: any
+  columns: any
+  filters?: any
+  globalFilters?: string
 }) {
-  const formatText = useCallback((text: string) => {
-    if (!text) return ""
-    text = text.replaceAll("$", "")
-    return text
-  }, [])
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    selectedFlatRows,
+    state: { pageIndex, pageSize, selectedRowIds },
+    setFilter,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: "selection",
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ])
+    }
+  )
+
+  const debouncedGlobalFilter = useAsyncDebounce(setGlobalFilter, 200)
+
+  useEffect(() => {
+    Object.entries(filters).forEach(([key, value]) => {
+      if (key === "filters") return
+      setFilter(key, value)
+    })
+  }, [filters, setFilter])
+
+  useEffect(() => {
+    debouncedGlobalFilter(globalFilters)
+  }, [globalFilters, debouncedGlobalFilter])
+
   return (
-    <table>
-      <thead>
-        <tr>
-          {columns.map(({ id, label }) => (
-            <th key={id}>{label}</th>
+    <>
+      <pre>{JSON.stringify(filters)}</pre>
+      <pre>{JSON.stringify(globalFilters)}</pre>
+      <table {...getTableProps()} className={styles.table}>
+        <thead>
+          {headerGroups.map((headerGroup) => {
+            const { key: tr_key, ...restHeaderProps } =
+              headerGroup.getHeaderGroupProps()
+            return (
+              <tr {...restHeaderProps} key={tr_key}>
+                {headerGroup.headers.map((column) => {
+                  const { key: th_key, ...restColumnProps } =
+                    column.getHeaderProps(column.getSortByToggleProps())
+                  return (
+                    <th {...restColumnProps} key={th_key}>
+                      {column.render("Header")}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " 🔽"
+                            : " 🔼"
+                          : ""}
+                      </span>
+                    </th>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row)
+            const { key: tr_key, ...rowProps } = row.getRowProps()
+            return (
+              <tr {...rowProps} key={tr_key}>
+                {row.cells.map((cell) => {
+                  const { key: td_key, ...restOfProps } = cell.getCellProps()
+                  return (
+                    <td {...restOfProps} key={td_key}>
+                      {cell.render("Cell")}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              gotoPage(page)
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
           ))}
-          {actions.length > 0 && <th>Acciones</th>}
-        </tr>
-      </thead>
-      <tbody>
-        {dataTable.map((row: any, index: number) => (
-          <tr key={index}>
-            {columns.map(
-              ({
-                id,
-                label,
-                type,
-                avatar = {
-                  title: "null",
-                  subtitle: "null",
-                  image: "null",
-                },
-                align,
-                format,
-                minWidth,
-              }) => {
-                switch (type) {
-                  case "string":
-                    return <td key={id}>{row[id]}</td>
-                  case "number":
-                    return <td key={id}>{row[id]}</td>
-                  case "date":
-                    return <td key={id}>{row[id]}</td>
-                  case "boolean":
-                    return <td key={id}>{row[id]}</td>
-                  case "currency":
-                    return <td key={id}>{row[id]}</td>
-                  case "image":
-                    return (
-                      <td key={id}>
-                        <Image
-                          src={`https://flagsapi.com/${row[id]}/flat/24.png`}
-                          alt={`flag of the ${row[id]} country`}
-                          width={24}
-                          height={24}
-                        />
-                      </td>
-                    )
-                  case "avatar":
-                    const nameFormated = formatText(avatar.title)
-                    const realName = nameFormated
-                      .split(" ")
-                      .reduce((acc, cur) => {
-                        if (!cur) return acc
-                        return acc + " " + row[cur]
-                      }, "")
-                    const imageFormated = row[formatText(avatar.image)]
-                    const name = realName
-                    const email =
-                      avatar.subtitle && row[formatText(avatar.subtitle)]
-                    const image = (
-                      (avatar.image && imageFormated) ||
-                      `https://unavatar.io/${realName}`
-                    ).replaceAll(" ", "")
-                    return (
-                      <td key={id}>
-                        <Avatar
-                          user={{ name, email, image }}
-                          size="compressed"
-                        />
-                      </td>
-                    )
-                  default:
-                    return <td key={id}>{row[id]}</td>
-                }
-              }
+        </select>
+        <pre>
+          <code>
+            {JSON.stringify(
+              {
+                selectedRowIds: selectedRowIds,
+                "selectedFlatRows[].original": selectedFlatRows.map(
+                  (d) => d.original
+                ),
+              },
+              null,
+              2
             )}
-            <td>
-              {actions.map((action: any, index: number) => (
-                <button key={index}>{action}</button>
-              ))}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+          </code>
+        </pre>
+      </div>
+    </>
   )
 }
