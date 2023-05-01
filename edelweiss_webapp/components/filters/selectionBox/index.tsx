@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useEffect, useRef } from "react"
+import { forwardRef, useEffect, useRef } from "react"
 
 function Checkbox({ indeterminate, ...rest }: any, ref: any) {
   const defaultRef = useRef()
