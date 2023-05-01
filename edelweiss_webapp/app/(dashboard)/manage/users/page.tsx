@@ -39,7 +39,6 @@ export default async function Users() {
   return (
     <Card>
       <DashboardHead>Gestión de usuarios</DashboardHead>
-      <Table dataTable={users} columns={columns} />
     </Card>
   )
 }
