@@ -138,7 +138,7 @@ export function Table({
                 <tr {...rowProps} key={tr_key} className={styles.row}>
                   {row.cells.map((cell) => {
                     const { key: td_key, ...restOfProps } = cell.getCellProps()
-                    if (cell.column.id === "selection") {
+                    if (cell.column.id === "selection" || !expandable) {
                       return (
                         <td {...restOfProps} key={td_key}>
                           {cell.render("Cell")}
