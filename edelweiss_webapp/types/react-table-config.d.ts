@@ -45,7 +45,7 @@ import {
   UseSortByHooks,
   UseSortByInstanceProps,
   UseSortByOptions,
-  UseSortByState
+  UseSortByState,
 } from 'react-table'
 
 declare module 'react-table' {
@@ -117,4 +117,10 @@ declare module 'react-table' {
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D>,
       UseRowStateRowProps<D> {}
+
+  export interface TableExpandedToggleProps<D extends Record<string, unknown> = Record<string, unknown>>
+    extends UseExpandedRowProps<D> {
+      onClick: () => void
+    }
+
 }
