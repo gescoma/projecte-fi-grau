@@ -24,8 +24,8 @@ export default function Home() {
     <div className={styles.main}>
       <Card>
         <Logo width={300} height={150} />
-        <Button isBoton>Enviar</Button>
-        <Button isBoton>Enviar</Button>
+        <Button>Enviar</Button>
+        <Button color="blue">Enviar</Button>
       </Card>
     </div>
   )
