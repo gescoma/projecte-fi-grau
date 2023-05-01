@@ -1,25 +1,21 @@
+import { ReactNode } from "react"
 import styles from "./button.module.css"
 
 export function Button({
   children,
-  isBoton,
   disabled = false,
+  color = "white",
+  label = "",
 }: {
-  children: React.ReactNode
-  isBoton: boolean
+  children: ReactNode
   disabled?: boolean
+  color?: "red" | "blue" | "green" | "yellow" | "white" | "black"
+  label?: string
 }) {
-  if (isBoton) {
-    return (
-      <button className={styles.button} disabled={disabled}>
-        {children}
-      </button>
-    )
-  }
-
   return (
-    <a className={styles.button} href="menu.html">
+    <button className={`${styles.button} ${styles[color]}`} disabled={disabled}>
+      <span>{label}</span>
       {children}
-    </a>
+    </button>
   )
 }
