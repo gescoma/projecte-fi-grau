@@ -1,7 +1,9 @@
 "use client"
 
+import { Component, ComponentType, ReactNode, useEffect } from "react"
 import {
   useAsyncDebounce,
+  useExpanded,
   useFilters,
   useGlobalFilter,
   usePagination,
@@ -11,19 +13,23 @@ import {
 } from "react-table"
 
 import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
+import { SidebarLayout } from "./sidebar"
 import styles from "./table.module.css"
-import { useEffect } from "react"
 
 export function Table({
   data,
   columns,
   filters = {},
   globalFilters = "",
+  sidebar: Sidebar,
+  expandable = false,
 }: {
   data: any
   columns: any
   filters?: any
   globalFilters?: string
+  sidebar?: ComponentType<any>
+  expandable?: boolean
 }) {
   const {
     getTableProps,
@@ -51,6 +57,7 @@ export function Table({
     useFilters,
     useGlobalFilter,
     useSortBy,
+    useExpanded,
     usePagination,
     useRowSelect,
     (hooks) => {
@@ -90,7 +97,6 @@ export function Table({
   useEffect(() => {
     debouncedGlobalFilter(globalFilters)
   }, [globalFilters, debouncedGlobalFilter])
-
   return (
     <>
       <pre>{JSON.stringify(filters)}</pre>
@@ -126,17 +132,36 @@ export function Table({
           {page.map((row, i) => {
             prepareRow(row)
             const { key: tr_key, ...rowProps } = row.getRowProps()
+            const { onClick: toogleSidebar } = row.getToggleRowExpandedProps()
             return (
-              <tr {...rowProps} key={tr_key}>
-                {row.cells.map((cell) => {
-                  const { key: td_key, ...restOfProps } = cell.getCellProps()
-                  return (
-                    <td {...restOfProps} key={td_key}>
-                      {cell.render("Cell")}
-                    </td>
-                  )
-                })}
-              </tr>
+              <>
+                <tr {...rowProps} key={tr_key} className={styles.row}>
+                  {row.cells.map((cell) => {
+                    const { key: td_key, ...restOfProps } = cell.getCellProps()
+                    if (cell.column.id === "selection") {
+                      return (
+                        <td {...restOfProps} key={td_key}>
+                          {cell.render("Cell")}
+                        </td>
+                      )
+                    }
+                    return (
+                      <td {...restOfProps} key={td_key} onClick={toogleSidebar}>
+                        {cell.render("Cell")}
+                      </td>
+                    )
+                  })}
+                </tr>
+                {row.isExpanded && (
+                  <SidebarLayout closeAction={toogleSidebar}>
+                    {Sidebar ? (
+                      <Sidebar data={row.original} />
+                    ) : (
+                      <>Error not sidebar on table props</>
+                    )}
+                  </SidebarLayout>
+                )}
+              </>
             )
           })}
         </tbody>

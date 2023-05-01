@@ -10,6 +10,7 @@ import { OWNERS } from "@/utils/filters/owners"
 import { Table as OriginalTable } from "@/components/table"
 import { OwnerSelector } from "@/components/filters/onwers"
 import { Search } from "@/components/filters/search"
+import { Sidebar } from "./sidebar"
 
 type ClientRow = {
   name: string
@@ -176,6 +177,8 @@ export function Table({ users }: { users: any }) {
         data={data}
         filters={state}
         globalFilters={filterInput}
+        expandable
+        sidebar={Sidebar}
       />
     </>
   )
