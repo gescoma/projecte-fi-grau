@@ -1,0 +1,12 @@
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.row {
+  cursor: pointer;
+}
+
+.row:hover {
+  background-color: var(--color-black-10);
+}
