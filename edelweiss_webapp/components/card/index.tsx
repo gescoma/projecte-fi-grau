@@ -1,9 +1,5 @@
-import styles from './card.module.css'
+import styles from "./card.module.css"
 
-export function Card ({ children }: { children: React.ReactNode}) {
-  return (
-    <div className={styles.card}>
-      {children}
-    </div>
-  )
+export function Card({ children }: { children: React.ReactNode }) {
+  return <div className={styles.card}>{children}</div>
 }
