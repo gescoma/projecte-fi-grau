@@ -5,11 +5,11 @@ import styles from "./select.module.css"
 
 export function TabBox({
   state,
-  setState,
+  action,
   data,
 }: {
   state: string
-  setState: Dispatch<SetStateAction<string>>
+  action: Dispatch<SetStateAction<string>>
   data: Datatype[]
 }) {
   return (
@@ -18,7 +18,7 @@ export function TabBox({
         <button
           className={`${styles.button} ${value === state ? styles.active : ""}`}
           key={label}
-          onClick={() => setState(value)}
+          onClick={() => action(value)}
           disabled={value === state}
         >
           {label}
