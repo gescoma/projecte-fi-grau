@@ -14,6 +14,7 @@ const VIEW = {
 }
 
 const resetReducer = {
+  status: "",
   filters: false,
 }
 
@@ -47,35 +48,22 @@ type PropertiesRow = {
 }
 
 function reducer(state: any, action: any) {
-  if (action.type === "change_business") {
+  if (action.type === "change_state_view") {
     if (action.payload === "") {
       return {
         ...state,
         filters: false,
-        source: action.payload,
+        status: action.payload,
       }
     }
     return {
       ...state,
       filters: true,
-      source: action.payload,
+      status: action.payload,
     }
   }
 
-  if (action.type === "change_owner") {
-    if (action.payload === "") {
-      return {
-        ...state,
-        filters: false,
-        owner: action.payload,
-      }
-    }
-    return {
-      ...state,
-      filters: true,
-      owner: action.payload,
-    }
-  }
+  console.log({ action })
 
   if (action.type === "reset_filters") {
     return resetReducer
@@ -95,7 +83,7 @@ function reducer(state: any, action: any) {
     }
   }
 
-  throw Error("Unknown action.")
+  // throw Error("Unknown action.")
 }
 
 export function PropertiesTable({ properties }: { properties: any }) {
@@ -182,7 +170,7 @@ export function PropertiesTable({ properties }: { properties: any }) {
       <div>
         <TabBox
           state={view}
-          setState={setView}
+          action={setView}
           data={[
             {
               label: "Tabla",
@@ -197,7 +185,37 @@ export function PropertiesTable({ properties }: { properties: any }) {
         <h1>{view}</h1>
       </div>
       {view === VIEW.TABLE && (
-        <Table data={data} columns={column} expandable sidebar={Sidebar} />
+        <section>
+          <div>
+            <TabBox
+              state={state.status}
+              action={(val) => {
+                dispatch({ type: "change_state_view", payload: val })
+              }}
+              data={[
+                {
+                  label: "Todos",
+                  value: "",
+                },
+                {
+                  label: "Oferta",
+                  value: "Oferta",
+                },
+                {
+                  label: "Finalizado",
+                  value: "finalizado",
+                },
+              ]}
+            />
+          </div>
+          <Table
+            data={data}
+            columns={column}
+            expandable
+            sidebar={Sidebar}
+            filters={state}
+          />
+        </section>
       )}
       {/* {view === VIEW.GRID && <Grid />} */}
     </div>
