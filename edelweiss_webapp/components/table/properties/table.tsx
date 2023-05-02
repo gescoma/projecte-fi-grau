@@ -3,8 +3,9 @@
 import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
-import { DisplaySelect } from "@/components/filters/viewItems"
 import Image from "next/image"
+import { Sidebar } from "./sidebar"
+import { TabBox } from "@/components/filters/tabBox"
 import { Table } from "@/components/table"
 
 const VIEW = {
@@ -173,13 +174,31 @@ export function PropertiesTable({ properties }: { properties: any }) {
     []
   )
 
+  // reduce data to et states
+  const prepareData = data.reduce((acc: any, item: any) => {}, [])
+
   return (
     <div>
       <div>
-        <DisplaySelect state={view} setState={setView} options={VIEW} />
+        <TabBox
+          state={view}
+          setState={setView}
+          data={[
+            {
+              label: "Tabla",
+              value: VIEW.TABLE,
+            },
+            {
+              label: "Grid",
+              value: VIEW.GRID,
+            },
+          ]}
+        />
         <h1>{view}</h1>
       </div>
-      {view === VIEW.TABLE && <Table data={data} columns={column} />}
+      {view === VIEW.TABLE && (
+        <Table data={data} columns={column} expandable sidebar={Sidebar} />
+      )}
       {/* {view === VIEW.GRID && <Grid />} */}
     </div>
   )
