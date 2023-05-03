@@ -4,6 +4,8 @@ import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
 import { ClearFilters } from "@/components/filters/clearFiltersButton"
+import { DropdownBox } from "@/components/filters/dropdownBox"
+import { Grid } from "@/components/grid"
 import Image from "next/image"
 import { SearchBox } from "@/components/filters/searchBox"
 import { Sidebar } from "./sidebar"
@@ -244,7 +246,7 @@ export function PropertiesTable({ properties }: { properties: any }) {
             },
           ]}
         />
-        <TabBox
+        <DropdownBox
           state={state.status}
           action={(val) => {
             dispatch({ type: "change_state_view", payload: val })
@@ -281,7 +283,7 @@ export function PropertiesTable({ properties }: { properties: any }) {
           />
         </section>
       )}
-      {/* {view === VIEW.GRID && <Grid />} */}
+      {view === VIEW.GRID && <Grid data={data} columns={column} />}
     </div>
   )
 }
