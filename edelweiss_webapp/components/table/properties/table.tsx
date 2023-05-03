@@ -3,7 +3,9 @@
 import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
+import { ClearFilters } from "@/components/filters/clearFiltersButton"
 import Image from "next/image"
+import { SearchBox } from "@/components/filters/searchBox"
 import { Sidebar } from "./sidebar"
 import { TabBox } from "@/components/filters/tabBox"
 import { Table } from "@/components/table"
@@ -15,6 +17,7 @@ const VIEW = {
 
 const resetReducer = {
   status: "",
+  type: "",
   filters: false,
 }
 
@@ -63,7 +66,20 @@ function reducer(state: any, action: any) {
     }
   }
 
-  console.log({ action })
+  if (action.type === "change_type_view") {
+    if (action.payload === "") {
+      return {
+        ...state,
+        filters: false,
+        type: action.payload,
+      }
+    }
+    return {
+      ...state,
+      filters: true,
+      type: action.payload,
+    }
+  }
 
   if (action.type === "reset_filters") {
     return resetReducer
@@ -150,7 +166,7 @@ export function PropertiesTable({ properties }: { properties: any }) {
         Header: "Fecha",
         accessor: "date",
         Cell: ({ row: { original } }: { row: { original: PropertiesRow } }) => (
-          <span>{original.date.toLocaleDateString()}</span>
+          <span>{original.date.toLocaleDateString("es-ES")}</span>
         ),
       },
       {
@@ -163,11 +179,57 @@ export function PropertiesTable({ properties }: { properties: any }) {
   )
 
   // reduce data to et states
-  const prepareData = data.reduce((acc: any, item: any) => {}, [])
+  const prepareData = data
+    .reduce(
+      (acc: any, item: any) => {
+        const index = acc.findIndex((el: any) => el.label === item.status)
+        if (index !== -1) {
+          acc[index].items += 1
+        } else {
+          acc.push({
+            label: item.status,
+            value: item.status,
+            items: 1,
+          })
+        }
+        return acc
+      },
+      [
+        {
+          label: "Todos",
+          value: "",
+        },
+      ]
+    )
+    .sort((a: any, b: any) => a.label.localeCompare(b.label))
+
+  const prepareTypes = data
+    .reduce(
+      (acc: any, item: any) => {
+        const index = acc.findIndex((el: any) => el.label === item.type)
+        if (index !== -1) {
+          acc[index].items += 1
+        } else {
+          acc.push({
+            label: item.type,
+            value: item.type,
+            items: 1,
+          })
+        }
+        return acc
+      },
+      [
+        {
+          label: "Todos",
+          value: "",
+        },
+      ]
+    )
+    .sort((a: any, b: any) => a.label.localeCompare(b.label))
 
   return (
     <div>
-      <div>
+      <div style={{ display: "flex" }}>
         <TabBox
           state={view}
           action={setView}
@@ -182,38 +244,40 @@ export function PropertiesTable({ properties }: { properties: any }) {
             },
           ]}
         />
-        <h1>{view}</h1>
+        <TabBox
+          state={state.status}
+          action={(val) => {
+            dispatch({ type: "change_state_view", payload: val })
+          }}
+          data={prepareData}
+        />
+        <TabBox
+          state={state.type}
+          action={(val) => {
+            dispatch({ type: "change_type_view", payload: val })
+          }}
+          data={prepareTypes}
+        />
+        <ClearFilters
+          disabled={!state.filters && filterInput === ""}
+          onClick={() => {
+            dispatch({ type: "reset_filters" })
+            setFilterInput("")
+          }}
+        />
+      </div>
+      <div>
+        <SearchBox onChange={setFilterInput} value={filterInput} />
       </div>
       {view === VIEW.TABLE && (
         <section>
-          <div>
-            <TabBox
-              state={state.status}
-              action={(val) => {
-                dispatch({ type: "change_state_view", payload: val })
-              }}
-              data={[
-                {
-                  label: "Todos",
-                  value: "",
-                },
-                {
-                  label: "Oferta",
-                  value: "Oferta",
-                },
-                {
-                  label: "Finalizado",
-                  value: "finalizado",
-                },
-              ]}
-            />
-          </div>
           <Table
             data={data}
             columns={column}
             expandable
             sidebar={Sidebar}
             filters={state}
+            globalFilters={filterInput}
           />
         </section>
       )}
