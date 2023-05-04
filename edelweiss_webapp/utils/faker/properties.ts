@@ -19,12 +19,13 @@ const generateOwners = () => {
 
 export const ownersList = generateOwners()
 
-export function generateProperties(num = 100) {
+export function generateProperties(num = 103) {
   const properties = []
   for (let i = 0; i < num; i++) {
     properties.push({
       status: estado[Math.floor(Math.random() * estado.length)],
       date: faker.date.past(),
+      id: faker.random.alphaNumeric(10),
       property: {
         id: faker.random.alphaNumeric(10),
         address: faker.address.streetAddress(),
