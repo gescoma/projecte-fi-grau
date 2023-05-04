@@ -1,50 +1,80 @@
-import { ReactNode, useEffect, useState } from "react"
+import { ComponentType, useEffect, useState } from "react"
 
-import { IncrementalCache } from "next/dist/server/lib/incremental-cache"
+import { Footer } from "../filters/footer"
+import { GridElement } from "./gridComponent"
+import styles from "./grid.module.css"
+import { useAsyncDebounce } from "react-table"
 
 export function Grid({
   data,
-  columns,
   filters = {},
   globalFilters = "",
   sidebar: Sidebar,
   expandable = false,
+  element: Element,
 }: {
   data: any
-  columns: any
   filters?: any
   globalFilters?: string
-  sidebar?: ReactNode
+  sidebar?: ComponentType<any>
   expandable?: boolean
+  element: ComponentType<any>
 }) {
-  const [content, setContent] = useState<any>(data)
-
-  useEffect(() => {
-    setContent(data)
-  }, [data])
-
-  useEffect(() => {
-    if (filters) {
-      const filteredData = data.filter((item: any) => {
-        console.log({ item })
-        return Object.keys(filters).every((key) => {
-          if (filters[key] === "") return true
-          return item[key] === filters[key]
-        })
+  const [content, setContent] = useState(data)
+  const [page, setPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const filterData = (data: any, filters: any) => {
+    if (!filters.filters && globalFilters === "") return data
+    const entries = Object.entries(filters)
+    const filterKeys = entries.slice(0, -1)
+    let dataToFilter = data.filter((item: any) => {
+      if (globalFilters === "" && !filters.filters) return true
+      return filterKeys.every(([key, value]) => {
+        if (value === "") return true
+        return item[key] === value
       })
-      setContent(filteredData)
-    }
-  }, [filters, data])
+    })
+    return dataToFilter
+  }
+
+  const filteredData = useAsyncDebounce(() => {
+    return filterData(data, filters)
+  }, 200)
+
+  useEffect(() => {
+    filteredData().then((res: any) => {
+      setContent(res)
+    })
+  }, [filters, globalFilters, filteredData])
 
   return (
-    <section>
-      {content.map((item: any) => {
-        return (
-          <article key={item.property.id}>
-            <header>{item.customer.name}</header>
-          </article>
-        )
-      })}
-    </section>
+    <>
+      <section className={styles.grid}>
+        {content &&
+          content
+            .slice(0 + page * pageSize, pageSize + page * pageSize)
+            .map((item: any) => (
+              <GridElement
+                item={item}
+                key={item.id}
+                expandable={expandable}
+                sidebar={Sidebar}
+              >
+                <Element data={item}>/</Element>
+              </GridElement>
+            ))}
+      </section>
+      <Footer
+        page={page}
+        setPage={setPage}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        itemsCount={content.length}
+        showPagination
+        showResults
+        showPageSize
+        showPageSelector
+      />
+    </>
   )
 }
