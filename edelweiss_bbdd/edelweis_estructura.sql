@@ -88,12 +88,8 @@ CREATE TABLE vivienda (
 	
 CREATE TABLE compra (
     id int AUTO_INCREMENT NOT NULL,
+	id_users int not NULL,
     id_cliente int NOT NULL,
-	id_tramite1 int, /*Estos 5 campos son Fks de la tabla tramiteCompra con esto conseguimos que una compra pueda tener varios tramites*/
-	id_tramite2 int,	/*Pueden ser null porque no siempre haran falta todos los tramites*/
-	id_tramite3 int,
-	id_tramite4 int,
-	id_tramite5 int, /*puede ser un agrupado de liquidación de impuestos (ITP-AJD-PLUSVALIA)*/
 	id_vivienda int NOT NULL,
 	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion DATE,
@@ -104,13 +100,16 @@ CREATE TABLE compra (
 
 CREATE TABLE tramiteCompra (
     id int AUTO_INCREMENT NOT NULL,
-	id_users int NOT NULL,
-    tipo VARCHAR (50) NOT NULL, /*ASOCIAR UN TIPO DE TRAMITE*/
-	documento VARCHAR (100) NOT NULL,
+	nombre VARCHAR (50) NOT NULL, 
+	descripcion VARCHAR (200) NULL,
+	id_proyecto int,
+    id_compra int NOT NULL, 
+	estado ENUM ("INICIO","ACTUALIZADA","FIN") NOT NULL,
+	id_users int NOT NULL, /*encargado*/
 	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion DATE,
     PRIMARY KEY (id)
-    );	
+    );
 	
 	
 	
@@ -147,7 +146,8 @@ CREATE TABLE tarea ( /*una campaña tiene una o varias tareas*/
 	id int AUTO_INCREMENT NOT NULL,
 	nombre VARCHAR (50) NOT NULL, 
 	descripcion VARCHAR (200) NULL,
-    id_campain int NOT NULL, 
+	id_proyecto int,
+    id_cliente_user_campain int NOT NULL, 
 	estado ENUM ("INICIO","ACTUALIZADA","FIN") NOT NULL,
 	id_user int NOT NULL, /*encargado*/
 	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -160,9 +160,10 @@ CREATE TABLE tarea ( /*una campaña tiene una o varias tareas*/
 
 CREATE TABLE registroTarea ( /*se podra hacer con un tigger*/
 	id int AUTO_INCREMENT NOT NULL,
-	fecha_cambio DATE, /* de momento asi*/
     id_tarea int NOT NULL, 
 	comentario VARCHAR (200) NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 
@@ -171,14 +172,58 @@ CREATE TABLE registroTarea ( /*se podra hacer con un tigger*/
 	
 CREATE TABLE archivo ( /*una tarea tiene uno o varios archivos*/
 	id int AUTO_INCREMENT NOT NULL,
-	nombre VARCHAR (50) NOT NULL,
-    id_tarea int NOT NULL, 
+	nombre VARCHAR (50) NOT NULL, 
 	rutaRel VARCHAR (150) NOT NULL,
 	rutaAbs VARCHAR (250) NOT NULL,
 	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
+
+
+
+
+/*Tablas de relación con archivo*/
+
+
+CREATE TABLE tareaArchivo ( 
+	id int AUTO_INCREMENT NOT NULL,
+	id_tarea int NOT NULL,
+	id_archivo int NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
+    PRIMARY KEY (id)
+    );
+	
+	
+	
+	
+CREATE TABLE tramiteCompraArchivo ( 
+	id int AUTO_INCREMENT NOT NULL,
+	id_tramiteCompra int NOT NULL,
+	id_archivo int NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
+    PRIMARY KEY (id)
+    );	
+
+
+
+/*la ultima tabla proyectos*/
+
+	
+CREATE TABLE proyecto ( 
+	id int AUTO_INCREMENT NOT NULL,
+	nombre VARCHAR (50) NOT NULL,
+	descripcion VARCHAR (200) NULL,
+	id_cliente_user_campain int,
+	id_users int NOT NULL,
+	id_compra int,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
+    PRIMARY KEY (id)
+    );
+
 
 
 
@@ -198,20 +243,17 @@ ALTER TABLE cliente_user_campain ADD CONSTRAINT fk_noti3 FOREIGN KEY (id_users) 
 
 /*FK tramiteCompra */
 
-ALTER TABLE tramiteCompra ADD CONSTRAINT fk_tramiteCompra FOREIGN KEY (id_users) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tramiteCompra ADD CONSTRAINT fk_tCompraUser FOREIGN KEY (id_users) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tramiteCompra ADD CONSTRAINT fk_tCompraCompra FOREIGN KEY (id_compra) REFERENCES compra (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tramiteCompra ADD CONSTRAINT fk_tcProyecto FOREIGN KEY (id_proyecto) REFERENCES proyecto (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 
-/*FKs Compra *//*fk_tra, son los 4 registros para que acepte varios tramites*/
-
-ALTER TABLE compra ADD CONSTRAINT fk_compra1 FOREIGN KEY (id_cliente) REFERENCES cliente (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_tra1 FOREIGN KEY (id_tramite1) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_tra2 FOREIGN KEY (id_tramite2) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_tra3 FOREIGN KEY (id_tramite3) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_tra4 FOREIGN KEY (id_tramite4) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_tra5 FOREIGN KEY (id_tramite5) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE compra ADD CONSTRAINT fk_compra2 FOREIGN KEY (id_vivienda) REFERENCES vivienda (id) ON UPDATE CASCADE ON DELETE CASCADE;
+/*FKs Compra */
+ALTER TABLE compra ADD CONSTRAINT fk_compraCliente FOREIGN KEY (id_cliente) REFERENCES cliente (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE compra ADD CONSTRAINT fk_compraUsers FOREIGN KEY (id_users) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE compra ADD CONSTRAINT fk_compraVivienda FOREIGN KEY (id_vivienda) REFERENCES vivienda (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -232,8 +274,9 @@ ALTER TABLE rolEntidad ADD CONSTRAINT fk_rolEntidad FOREIGN KEY (rol) REFERENCES
 
 /*FK tarea */
 
-ALTER TABLE tarea ADD CONSTRAINT fk_tarea FOREIGN KEY (id_campain) REFERENCES campain (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tarea ADD CONSTRAINT fk_tarea FOREIGN KEY (id_cliente_user_campain) REFERENCES cliente_user_campain (id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE tarea ADD CONSTRAINT fk_tareaEncargado FOREIGN KEY (id_user) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tarea ADD CONSTRAINT fk_tareaProyecto FOREIGN KEY (id_proyecto) REFERENCES proyecto (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -247,10 +290,32 @@ ALTER TABLE registroTarea ADD CONSTRAINT fk_registroTarea FOREIGN KEY (id_tarea)
 
 /*FK archivo */
 
-ALTER TABLE archivo ADD CONSTRAINT fk_archivo FOREIGN KEY (id_tarea) REFERENCES tarea (id) ON UPDATE CASCADE ON DELETE CASCADE;
+/*ALTER TABLE archivo ADD CONSTRAINT fk_archivo FOREIGN KEY (id_tarea) REFERENCES tarea (id) ON UPDATE CASCADE ON DELETE CASCADE;*//*SE CANCELA POR LAS TABLAS NUEVAS DE RELACIÓN*/
 
 
 
+
+/*FK tareaArchivo*/
+
+ALTER TABLE tareaArchivo ADD CONSTRAINT fk_tatarea FOREIGN KEY (id_tarea) REFERENCES tarea (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tareaArchivo ADD CONSTRAINT fk_taArchivo FOREIGN KEY (id_archivo) REFERENCES archivo (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+
+/*FK tramiteCompraArchivo*/
+
+ALTER TABLE tramiteCompraArchivo ADD CONSTRAINT fk_taArchivo2 FOREIGN KEY (id_archivo) REFERENCES archivo (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE tramiteCompraArchivo ADD CONSTRAINT fk_taCompraArchivo FOREIGN KEY (id_tramiteCompra) REFERENCES tramiteCompra (id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+
+/*FK proyecto*/
+
+ALTER TABLE proyecto ADD CONSTRAINT fk_pcliente_user_campain FOREIGN KEY (id_cliente_user_campain) REFERENCES cliente_user_campain (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE proyecto ADD CONSTRAINT fk_pUser FOREIGN KEY (id_users) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE proyecto ADD CONSTRAINT fk_pCompra FOREIGN KEY (id_compra) REFERENCES compra (id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
