@@ -14,15 +14,15 @@ export function DropdownBox({
   state: any
 }) {
   return (
-    <select {...restOfProps} onChange={(e) => action(e.target.value)}>
+    <select
+      {...restOfProps}
+      value={state}
+      onChange={(e) => action(e.target.value)}
+    >
       {data.map(({ value, label, items }) => (
-        <option
-          key={label.replace(" ", "")}
-          value={value}
-          selected={value === state}
-        >
+        <option key={label.replace(" ", "")} value={value}>
           {label}
-          {items && <span>{items}</span>}
+          {/* {items && <span>{items}</span>} */}
         </option>
       ))}
     </select>

@@ -1,14 +1,18 @@
 export function PageSelector({
   page,
   setPage,
+  maxPage,
 }: {
   page: number
   setPage: any
+  maxPage: number
 }) {
   return (
     <input
       type="number"
-      defaultValue={page + 1}
+      value={page + 1}
+      min={1}
+      max={10}
       onChange={(e) => {
         const page = e.target.value ? Number(e.target.value) - 1 : 0
         setPage(page)

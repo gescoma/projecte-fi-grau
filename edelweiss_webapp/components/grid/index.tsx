@@ -34,6 +34,29 @@ export function Grid({
         return item[key] === value
       })
     })
+    dataToFilter = dataToFilter.filter((item: any) => {
+      if (globalFilters === "") return true
+      return Object.values(item).some((value) => {
+        if (typeof value === "string") {
+          return value.toLowerCase().includes(globalFilters.toLowerCase())
+        }
+        if (typeof value === "number") {
+          return value.toString().includes(globalFilters)
+        }
+        if (typeof value === "object") {
+          if (value === null) return false
+          return Object.values(value).some((v) => {
+            if (typeof v === "string") {
+              return v.toLowerCase().includes(globalFilters.toLowerCase())
+            }
+            if (typeof v === "number") {
+              return v.toString().includes(globalFilters)
+            }
+          })
+        }
+        return false
+      })
+    })
     return dataToFilter
   }
 

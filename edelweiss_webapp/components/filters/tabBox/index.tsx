@@ -22,7 +22,7 @@ export function TabBox({
           disabled={value === state}
         >
           {label}
-          {items && <span>{items}</span>}
+          {/* {items && <span>{items}</span>} */}
         </button>
       ))}
     </div>

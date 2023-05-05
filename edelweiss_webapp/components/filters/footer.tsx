@@ -26,15 +26,28 @@ export function Footer({
 }) {
   return (
     <footer>
-      <p>Footer</p>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        totalPages={Math.ceil(itemsCount / pageSize)}
-      />
-      <Results totalResults={itemsCount} />
-      <PageSize pageSize={pageSize} setPageSize={setPageSize} />
-      <PageSelector page={page} setPage={setPage} />
+      {showPagination && (
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPages={Math.ceil(itemsCount / pageSize)}
+        />
+      )}
+      {showResults && <Results totalResults={itemsCount} />}
+      {showPageSize && (
+        <PageSize
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          total={itemsCount}
+        />
+      )}
+      {showPageSelector && (
+        <PageSelector
+          page={page}
+          setPage={setPage}
+          maxPage={Math.ceil(itemsCount / pageSize)}
+        />
+      )}
     </footer>
   )
 }

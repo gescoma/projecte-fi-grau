@@ -38,16 +38,9 @@ export function Table({
     headerGroups,
     prepareRow,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
     gotoPage,
-    nextPage,
-    previousPage,
     setPageSize,
     rows,
-    selectedFlatRows,
     state: { pageIndex, pageSize, selectedRowIds },
     setFilter,
     setGlobalFilter,
@@ -101,8 +94,6 @@ export function Table({
   }, [globalFilters, debouncedGlobalFilter])
   return (
     <>
-      <pre>{JSON.stringify(filters)}</pre>
-      <pre>{JSON.stringify(globalFilters)}</pre>
       <table {...getTableProps()} className={styles.table}>
         <thead>
           {headerGroups.map((headerGroup) => {
