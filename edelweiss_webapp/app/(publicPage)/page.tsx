@@ -10,6 +10,7 @@ import styles from "./page.module.css"
 
 export default function Home() {
   const { data: session } = useSession()
+
   if (session) {
     return (
       <div className={styles.main}>

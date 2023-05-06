@@ -10,6 +10,7 @@ const nextConfig = {
       "unavatar.io",
       "flagsapi.com",
       "edelweiss-webapp.vercel.app",
+      "source.unsplash.com",
       "edelweiss-webapp-gescoma.vercel.app",
       "cloudflare-ipfs.com"
     ],

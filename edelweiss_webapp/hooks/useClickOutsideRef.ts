@@ -19,7 +19,6 @@ export function useClickOutside<T>(hasAction=false, action:(() => void) | null =
         isOpenRef.current.contains &&
         !isOpenRef.current.contains(event.target as T)
       ) {
-        console.log("hasAction")
         action && action()
       }
     }

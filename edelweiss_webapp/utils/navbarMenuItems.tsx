@@ -26,7 +26,7 @@ export const SidebarElements: menuItem[] = [
   {
     icon: FiHome,
     text: "Propiedades",
-    link: "/profile",
+    link: "/properties",
   },
   {
     icon: FiShoppingBag,
