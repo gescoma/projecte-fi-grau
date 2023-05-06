@@ -11,6 +11,7 @@ const nextConfig = {
       "flagsapi.com",
       "edelweiss-webapp.vercel.app",
       "source.unsplash.com",
+      "edelweiss-webapp-gescoma.vercel.app",
       "cloudflare-ipfs.com"
     ],
   }

@@ -19,9 +19,15 @@ USE edelweiss;
 	
 CREATE TABLE users (
     id int AUTO_INCREMENT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	apellido1 VARCHAR(50) NOT NULL,
+	imagen VARCHAR(200) NOT NULL,
+	email VARCHAR(100) NOT NULL,
     rol VARCHAR(50) NOT NULL,
     login VARCHAR(50) NOT NULL,  /*usuario*/
     passwd VARCHAR(50) NOT NULL,   /*contrasena*/
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 	
@@ -35,6 +41,8 @@ CREATE TABLE cliente (
     correo VARCHAR(50) NOT NULL,
     nacionalidad VARCHAR(50),
     personaFisica BOOLEAN,   /*¿Estamos tratando con una persona fisica, o es una empresa? p.fisica: YES/1 -- empresa: NO/0*/
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 	
@@ -55,10 +63,11 @@ CREATE TABLE campain (
 CREATE TABLE cliente_user_campain (
     id int AUTO_INCREMENT NOT NULL,
 	comentario VARCHAR(500),
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	id_campain int NOT NULL,
 	id_cliente int NOT NULL,
 	id_users int NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 	
@@ -69,6 +78,8 @@ CREATE TABLE vivienda (
     calle VARCHAR(50) NOT NULL,
     numero VARCHAR(50) NOT NULL,   /*Es varchar aunque sea numerico, solo se utiliza a nivel informativo*/
 	vendida BOOLEAN NOT NULL,  /*queremos saber SI la vivienda esta vendida o NO*/
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 	
@@ -84,6 +95,8 @@ CREATE TABLE compra (
 	id_tramite4 int,
 	id_tramite5 int, /*puede ser un agrupado de liquidación de impuestos (ITP-AJD-PLUSVALIA)*/
 	id_vivienda int NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );
 
@@ -94,7 +107,8 @@ CREATE TABLE tramiteCompra (
 	id_users int NOT NULL,
     tipo VARCHAR (50) NOT NULL, /*ASOCIAR UN TIPO DE TRAMITE*/
 	documento VARCHAR (100) NOT NULL,
-	fecha DATE NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 	
@@ -108,6 +122,8 @@ CREATE TABLE tramiteCompra (
 CREATE TABLE roles ( 
     nombre VARCHAR (50) NOT NULL, 
 	descripcion VARCHAR (200) NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (nombre)
     );	
 
@@ -116,9 +132,11 @@ CREATE TABLE roles (
 
 CREATE TABLE rolEntidad (
 	id int AUTO_INCREMENT NOT NULL,
-    entidad ENUM ("todas","cliente","users", "campain", "notificacion", "compra", "tramiteCompra", "vivienda") NOT NULL, 
+    entidad VARCHAR (50) NOT NULL, 
 	permiso ENUM ("LEER","ESCRIBIR") NOT NULL,   /*Escribir incluye a los 2*/
 	rol VARCHAR (50) NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );
 
@@ -129,11 +147,11 @@ CREATE TABLE tarea ( /*una campaña tiene una o varias tareas*/
 	id int AUTO_INCREMENT NOT NULL,
 	nombre VARCHAR (50) NOT NULL, 
 	descripcion VARCHAR (200) NULL,
+    id_campain int NOT NULL, 
+	estado ENUM ("INICIO","ACTUALIZADA","FIN") NOT NULL,
+	id_user int NOT NULL, /*encargado*/
 	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	fecha_modificacion DATE,
-    id_campain int NOT NULL, 
-	estado ENUM ("INICIO","AZTUALIZADA","FIN") NOT NULL,
-	id_user int NOT NULL, /*encargado*/
     PRIMARY KEY (id)
     );
 	
@@ -142,7 +160,7 @@ CREATE TABLE tarea ( /*una campaña tiene una o varias tareas*/
 
 CREATE TABLE registroTarea ( /*se podra hacer con un tigger*/
 	id int AUTO_INCREMENT NOT NULL,
-	fecha_cambioEstado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_cambio DATE, /* de momento asi*/
     id_tarea int NOT NULL, 
 	comentario VARCHAR (200) NOT NULL,
     PRIMARY KEY (id)
@@ -153,11 +171,12 @@ CREATE TABLE registroTarea ( /*se podra hacer con un tigger*/
 	
 CREATE TABLE archivo ( /*una tarea tiene uno o varios archivos*/
 	id int AUTO_INCREMENT NOT NULL,
-	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	fecha_modificacion DATE,
 	nombre VARCHAR (50) NOT NULL,
     id_tarea int NOT NULL, 
-	ruta VARCHAR (200) NOT NULL,
+	rutaRel VARCHAR (150) NOT NULL,
+	rutaAbs VARCHAR (250) NOT NULL,
+	fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	fecha_modificacion DATE,
     PRIMARY KEY (id)
     );	
 

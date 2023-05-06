@@ -32,10 +32,11 @@ INSERT INTO rolEntidad (entidad, permiso, rol)  VALUES('todas', 'ESCRIBIR','admi
 
 /*Tabla users*/
 
-INSERT INTO users (id, rol, login, passwd)  VALUES(1, 'verClientes', 'jlopez', 'Juan'),
-(2, 'crearClientes', 'rblanco', 'Raul'),
-(3, 'contable', 'pgarcia', 'Pepe'),
-(4, 'Admin', 'agomez', 'Arsancio'); 
+INSERT INTO users (id, name, apellido1, imagen, email, rol, login, passwd)  
+VALUES(1, 'Jimena', 'lopez','imagen1','jlopez@gmail.com','verClientes', 'jlopez', 'passwdhaseada1'),
+(2, 'Raul', 'Blanco','imagen2','rblanco@gmail.com', 'crearClientes', 'rblanco', 'passwdhaseada2'),
+(3, 'Pedro', 'Garcia','imagen3','pgarcia@gmail.com','contable', 'pgarcia', 'passwdhaseada3'),
+(4, 'Ana Belen', 'Gomez','imagen4','anabgolez@gmail.com','Admin', 'agomez', 'passwdhaseada4'); 
 
 
 
@@ -52,7 +53,7 @@ INSERT INTO cliente (id,nombre, apellido1, apellido2, correo, nacionalidad, pers
 (13, 'Enrique', 'Pozuelo', 'Nevada', 'kike@gmail.com', 'FR', TRUE),
 (14, 'Laura', 'Garcia', 'Aranda', 'lauraaa@gmail.com', 'DE', TRUE),
 (15, 'Pepe', 'Sanchez', 'Astillero', 'pepetesan@gmail.com', 'DE', TRUE),
-(16, 'Esperanza', 'Garcia', 'Gigante', 'espegigante@gmail.com', 'DE', TRUE),
+(16, 'Esperanza', 'Aguirre', 'Gigante', 'espegigante@gmail.com', 'DE', TRUE),
 (17, 'Juan Miguel', 'Aranda','Tercero', 'juanmi569@gmail.com', 'DE', TRUE),
 (18, 'Juan Ramon', 'Glez','Lopez', 'jramon23@gmail.com', 'ES', FALSE),
 (19, 'Maria', 'Lopez','Garcia', 'marilop55@gmail.com', 'ES', FALSE),
@@ -186,16 +187,16 @@ VALUES(2,'se cierra la tarea tras aprobación del encargado'),
 
 /*Tabla archivo*/
 
-INSERT INTO archivo (nombre, id_tarea, ruta)  
-VALUES('json1',1,'ruta1'),
-('pdf1',1,'ruta2'),
-('word1',1,'ruta3'),
-('json2',2,'ruta1'),
-('pdf2',2,'ruta2'),
-('word2',2,'ruta3'),
-('json3',3,'ruta21'),
-('pdf3',3,'ruta2'),
-('word3',3,'ruta2');
+INSERT INTO archivo (nombre, id_tarea, rutaRel, rutaAbs)  
+VALUES('json1',1,'//ruta1','/ruta/absoluta'),
+('pdf1',1,'//ruta2' ,'/ruta/absoluta'),
+('word1',1,'//ruta3' ,'/ruta/absoluta'),
+('json2',2,'//ruta1' ,'/ruta/absoluta'),
+('pdf2',2,'//ruta2' ,'/ruta/absoluta'),
+('word2',2,'//ruta3' ,'/ruta/absoluta'),
+('json3',3,'//ruta21' ,'/ruta/absoluta'),
+('pdf3',3,'//ruta2' ,'/ruta/absoluta'),
+('word3',3,'//ruta2', '/ruta/absoluta');
 
 
 

@@ -21,7 +21,7 @@ export const SidebarElements: menuItem[] = [
   {
     icon: FiBook,
     text: "Clientes",
-    link: "/profile",
+    link: "/clients",
   },
   {
     icon: FiHome,
@@ -41,7 +41,7 @@ export const SidebarElements: menuItem[] = [
   {
     icon: FiBell,
     text: "Campañas",
-    link: "/clients",
+    link: "/campains",
   },
   {
     icon: FiSliders,

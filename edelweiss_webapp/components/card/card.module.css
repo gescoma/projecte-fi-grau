@@ -2,5 +2,5 @@
   padding: 2rem;
   background-color: white;
   border-radius: 1rem;
-  border: 0.1rem solid #;
+  border: 0.1rem solid var(--color-black-10);
 }

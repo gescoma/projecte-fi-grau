@@ -56,7 +56,7 @@ export default function SignInPage() {
         {errors.password && <span>You must enter email and password</span>}
         {error && <span>{error}</span>}
         <a href="#">I forgot my password</a>
-        <Button isBoton disabled={isSubmitting}>
+        <Button disabled={isSubmitting}>
           {isSubmitting ? "Loading..." : "Sign In"}
         </Button>
       </form>
