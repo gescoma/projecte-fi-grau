@@ -7,6 +7,7 @@ import { faker } from "@faker-js/faker";
 
 export function useTaskCollection() {
   const [tasks, setTasks] = useState<any>({})
+  const [sortedTasks, setSortedTasks] = useState<TaskCollection>({})
 
   useEffect(() => {
     fetch("https://cdbcaegvdoxoaczugjfw.supabase.co/rest/v1/tarea?select=*", {
@@ -37,12 +38,46 @@ export function useTaskCollection() {
       setTasks(newdata)
     })
 
-  }, [])
+  }, [])  
+    
 
   const saveTask = (task: TaskModel) => {
     // Logica para guardar la tarea en la base de datos
-    console.log(`Method to save task ${JSON.stringify(task)}`)
+
+    setTasks((prev: TaskCollection) => {
+      const newTasks = structuredClone(prev)
+      if(!newTasks[task.column]) {
+        newTasks[task.column] = [task]
+        return newTasks
+      } 
+      newTasks[task.column].push(task)
+      return newTasks
+    })
+
   }
 
-  return {tasks, saveTask}
+  const updateTask = (newTask: TaskModel, oldTask: TaskModel) => {
+    // Logica para actualizar la tarea en la base de datos
+    setTasks((prev: TaskCollection) => {
+      const newTasks = structuredClone(prev)
+      if(!newTasks[newTask.column]) {
+        newTasks[newTask.column] = [newTask]
+      } else {
+        newTasks[newTask.column].push(newTask)
+      }
+      newTasks[oldTask.column] = newTasks[oldTask.column].filter((t: TaskModel) => t.id !== oldTask.id)
+      return newTasks
+    })
+  }
+
+  const deleteTask = (task: TaskModel) => {
+    // Logica para eliminar la tarea en la base de datos
+    setTasks((prev: TaskCollection) => {
+      const newTasks = structuredClone(prev)
+      newTasks[task.column] = newTasks[task.column].filter((t: TaskModel) => t.id !== task.id)
+      return newTasks
+    })
+  }
+
+  return {tasks, saveTask, updateTask, deleteTask}
 }

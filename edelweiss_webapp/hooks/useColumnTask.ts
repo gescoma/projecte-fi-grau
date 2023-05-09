@@ -10,7 +10,6 @@ export function useColumnTask(column: ColumnType) {
   const {tasks, saveTask} = useTaskCollection()
 
   const addNewTask = useCallback(() => {
-    console.log(`Method to add new task to column ${column}`)
 
     const newTask = {
       id: "1",

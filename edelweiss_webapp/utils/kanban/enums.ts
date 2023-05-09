@@ -3,3 +3,7 @@ export enum ColumnType {
   ACTUALIZADA= "ACTUALIZADA",
   FIN= "FIN",
 }
+
+export enum ItemType {
+  TASK = "TASK",
+}

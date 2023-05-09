@@ -18,5 +18,11 @@ export interface TaskModel {
 }
 
 export interface TaskCollection {
-  [key: string]: TaskModel
+  [key: string]: TaskModel[]
+}
+
+export interface DragItem {
+  index: number;
+  id: TaskModel['id'];
+  from: ColumnType;
 }
