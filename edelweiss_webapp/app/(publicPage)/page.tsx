@@ -4,30 +4,30 @@ import { signOut, useSession } from "next-auth/react"
 
 import { Avatar } from "@/components/user/avatar"
 import { Button } from "@/components/button"
+import { Calendar } from "@/components/calendar/calendar"
 import { Card } from "@/components/card"
+import { EventModel } from "@/utils/calendar/models"
 import { Logo } from "@/components/logo"
 import styles from "./page.module.css"
 
-export default function Home() {
-  const { data: session } = useSession()
+const events: EventModel[] = [
+  {
+    id: "fds",
+    title: "fds",
+    start: new Date(),
+  },
+  {
+    id: "fds",
+    title: "fds",
+    start: new Date(),
+  },
+  {
+    id: "fds",
+    title: "fds",
+    start: new Date(),
+  },
+]
 
-  if (session) {
-    return (
-      <div className={styles.main}>
-        <Card>
-          <Logo width={300} height={150} />
-          <button onClick={() => signOut()}>Cerrar sesión</button>
-        </Card>
-      </div>
-    )
-  }
-  return (
-    <div className={styles.main}>
-      <Card>
-        <Logo width={300} height={150} />
-        <Button>Enviar</Button>
-        <Button color="blue">Enviar</Button>
-      </Card>
-    </div>
-  )
+export default function Home() {
+  return <Calendar events={events} />
 }
