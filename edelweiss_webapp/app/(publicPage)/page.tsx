@@ -39,7 +39,7 @@ export default function Home() {
             id_usuario,
           })
         )
-        setCampains(correctData)
+        setCampains(correctData as any)
       })
   }, [])
 
