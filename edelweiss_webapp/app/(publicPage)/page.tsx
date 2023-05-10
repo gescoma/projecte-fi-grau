@@ -9,26 +9,57 @@ import { Card } from "@/components/card"
 import { EventModel } from "@/utils/calendar/models"
 import { Logo } from "@/components/logo"
 import styles from "./page.module.css"
-
-const events: EventModel[] = [
-  {
-    id: "fds",
-    title: "fds",
-    start: new Date(new Date().setHours(17, 0, 0, 0)),
-  },
-  {
-    id: "fds",
-    title: "fds",
-    start: new Date(new Date().setHours(13, 0, 0, 0)),
-  },
-  {
-    id: "fds",
-    title: "fds",
-    // start today at 10:00
-    start: new Date(new Date().setHours(10, 0, 0, 0)),
-  },
-]
+import { useCalendarEvents } from "@/hooks/useCalendarEvents"
 
 export default function Home() {
-  return <Calendar events={events} />
+  const { events, addEvent, removeEvent } = useCalendarEvents()
+
+  const handleCreateEvent = () => {
+    addEvent({
+      id: Math.random().toString(),
+      title: "New Event",
+      start: new Date(),
+      end: new Date(),
+    })
+  }
+
+  return (
+    <>
+      <div className={styles.header}>
+        <button onClick={handleCreateEvent}>add Event</button>
+      </div>
+      <Calendar events={events} sidebar={Sidebar} onDelete={removeEvent} />
+    </>
+  )
+}
+
+function Sidebar({
+  task,
+  onDelete,
+}: {
+  task: EventModel
+  onDelete: (task: any) => void
+}) {
+  return (
+    <>
+      <button onClick={() => onDelete(task)}>delete</button>
+      <h1>{task.title}</h1>
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+      {task && JSON.stringify(task)}
+    </>
+  )
 }

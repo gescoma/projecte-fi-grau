@@ -14,12 +14,20 @@ const localizer = dayjsLocalizer(dayjs)
 export function Calendar({
   events,
   sidebar: Sidebar,
+  onDelete,
 }: {
   events: EventModel[]
   sidebar: ComponentType<any>
+  onDelete: (task: any) => void
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarTask, setSidebarTask] = useState<EventModel | null>(null)
+
+  const handledDelete = (task: EventModel) => {
+    onDelete(task)
+    setSidebarOpen(false)
+  }
+
   return (
     <>
       <BigCalendar
@@ -39,7 +47,7 @@ export function Calendar({
             setSidebarOpen(false)
           }}
         >
-          <Sidebar task={sidebarTask} />
+          <Sidebar task={sidebarTask} onDelete={handledDelete} />
         </SidebarLayout>
       )}
     </>
