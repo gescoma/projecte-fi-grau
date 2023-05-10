@@ -1,4 +1,4 @@
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css"
+import "./calendar.css"
 
 import { Calendar as ReactCalendar, dayjsLocalizer } from "react-big-calendar"
 
@@ -16,7 +16,6 @@ export function Calendar({ events }: { events: EventModel[] }) {
   return (
     <DnDCalendar
       localizer={localizer}
-      events={events}
       onDoubleClickEvent={(event) => {
         console.log(event)
       }}

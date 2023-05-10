@@ -14,17 +14,18 @@ const events: EventModel[] = [
   {
     id: "fds",
     title: "fds",
-    start: new Date(),
+    start: new Date(new Date().setHours(17, 0, 0, 0)),
   },
   {
     id: "fds",
     title: "fds",
-    start: new Date(),
+    start: new Date(new Date().setHours(13, 0, 0, 0)),
   },
   {
     id: "fds",
     title: "fds",
-    start: new Date(),
+    // start today at 10:00
+    start: new Date(new Date().setHours(10, 0, 0, 0)),
   },
 ]
 
