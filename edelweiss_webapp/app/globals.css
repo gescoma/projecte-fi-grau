@@ -43,6 +43,9 @@
   --mq-lg: 1024px;
   --mq-xl: 1280px;
   --mq-2xl: 1536px;
+
+  /* BORDERS */
+  --border: 1px solid var(--color-black-10);
 }
 
 /* RESET STYLES */

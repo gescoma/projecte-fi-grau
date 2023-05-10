@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 import { Datatype } from "@/types/filterDataType"
-import styles from "./dropdownBox.module.css"
+import styles from "./dropdown.module.css"
 
 export function DropdownBox({
   data,
@@ -13,18 +13,21 @@ export function DropdownBox({
   action: Dispatch<SetStateAction<string>>
   state: any
 }) {
+  const [selected, setSelected] = useState(state)
+  const [selectOpen, setSelectOpen] = useState(false)
   return (
-    <select
-      {...restOfProps}
-      value={state}
-      onChange={(e) => action(e.target.value)}
-    >
-      {data.map(({ value, label, items }) => (
-        <option key={label.replace(" ", "")} value={value}>
-          {label}
-          {/* {items && <span>{items}</span>} */}
-        </option>
-      ))}
-    </select>
+    <div className={styles.select}>
+      {selected}
+      {selectOpen && (
+        <div className={styles.options}>
+          {data.map(({ value, label, items }) => (
+            <div key={value}>
+              {typeof label === "string" ? label : label({})}
+              {/* {items && <span>{items}</span>} */}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
