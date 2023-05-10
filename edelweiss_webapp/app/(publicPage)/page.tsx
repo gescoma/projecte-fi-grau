@@ -1,33 +1,54 @@
 "use client"
 
 import { signOut, useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
 import { Button } from "@/components/button"
 import { Card } from "@/components/card"
 import { Logo } from "@/components/logo"
 import styles from "./page.module.css"
+import { supabase } from "@/utils/supabaseClient"
 
 export default function Home() {
   const { data: session } = useSession()
+  const [campains, setCampains] = useState([])
 
-  if (session) {
-    return (
-      <div className={styles.main}>
-        <Card>
-          <Logo width={300} height={150} />
-          <button onClick={() => signOut()}>Cerrar sesión</button>
-        </Card>
-      </div>
-    )
-  }
+  useEffect(() => {
+    supabase
+      .from("campain")
+      .select("*")
+      .then(({ error, data }) => {
+        if (error) {
+          throw error
+        }
+        const correctData = data.map(
+          ({
+            id,
+            nombre,
+            descripcion,
+            fecha_inicio,
+            fecha_fin,
+            id_usuario,
+          }) => ({
+            id,
+            nombre,
+            descripcion,
+            fecha_inicio,
+            fecha_fin,
+            id_usuario,
+          })
+        )
+        setCampains(correctData)
+      })
+  }, [])
+
   return (
-    <div className={styles.main}>
-      <Card>
-        <Logo width={300} height={150} />
-        <Button>Enviar</Button>
-        <Button color="blue">Enviar</Button>
-      </Card>
-    </div>
+    <ul>
+      {campains &&
+        campains.map((campain: any) => {
+          return <li key={campain.id}>{campain.nombre}</li>
+        })}
+    </ul>
   )
 }
