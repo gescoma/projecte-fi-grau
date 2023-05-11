@@ -29,11 +29,6 @@
   outline: none;
 }
 
-.input:focus + .label {
-  color: var(--color-black-80);
-  outline: 1px solid red;
-}
-
 .icon {
   color: var(--color-black-40);
 }
