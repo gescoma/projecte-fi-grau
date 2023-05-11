@@ -80,9 +80,9 @@ export function Table({
     }
   )
 
-  const debouncedGlobalFilter = useDebounce(setGlobalFilter)
+  const filterGlobal = useDebounce(globalFilters)
 
-  useEffect(() => {
+  const debouncedGlobalFilter = useEffect(() => {
     Object.entries(filters).forEach(([key, value]) => {
       if (key === "filters") return
       setFilter(key, value)
@@ -90,8 +90,8 @@ export function Table({
   }, [filters, setFilter])
 
   useEffect(() => {
-    debouncedGlobalFilter(globalFilters)
-  }, [globalFilters, debouncedGlobalFilter])
+    setGlobalFilter(filterGlobal)
+  }, [filterGlobal, setGlobalFilter])
   return (
     <>
       <table {...getTableProps()} className={styles.table}>
