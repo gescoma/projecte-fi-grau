@@ -1,5 +1,6 @@
 "use client"
 
+import { FiGrid, FiLayout } from "react-icons/fi"
 import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
@@ -12,6 +13,7 @@ import { SearchBox } from "@/components/filters/searchBox"
 import { Sidebar } from "./sidebar"
 import { TabBox } from "@/components/filters/tabBox"
 import { Table } from "@/components/table"
+import styles from "./table.module.css"
 
 const VIEW = {
   TABLE: "table",
@@ -232,67 +234,69 @@ export function PropertiesTable({ properties }: { properties: any }) {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <TabBox
-          state={view}
-          action={setView}
-          data={[
-            {
-              label: "Tabla",
-              value: VIEW.TABLE,
-            },
-            {
-              label: "Grid",
-              value: VIEW.GRID,
-            },
-          ]}
-        />
-        <DropdownBox
-          state={state.status}
-          action={(val) => {
-            dispatch({ type: "change_state_view", payload: val })
-          }}
-          data={prepareData}
-        />
-        <TabBox
-          state={state.type}
-          action={(val) => {
-            dispatch({ type: "change_type_view", payload: val })
-          }}
-          data={prepareTypes}
-        />
-        <ClearFilters
-          disabled={!state.filters && filterInput === ""}
-          onClick={() => {
-            dispatch({ type: "reset_filters" })
-            setFilterInput("")
-          }}
-        />
-      </div>
-      <div>
-        <SearchBox onChange={setFilterInput} value={filterInput} />
+      <div className={styles.filters}>
+        <div className={styles.select}>
+          <DropdownBox
+            state={state.status}
+            action={(val) => {
+              dispatch({ type: "change_state_view", payload: val })
+            }}
+            data={prepareData}
+          />
+        </div>
+        <div className={styles.tabs}>
+          <TabBox
+            state={view}
+            action={setView}
+            data={[
+              {
+                label: FiLayout,
+                value: VIEW.TABLE,
+              },
+              {
+                label: FiGrid,
+                value: VIEW.GRID,
+              },
+            ]}
+          />
+          <TabBox
+            state={state.type}
+            action={(val) => {
+              dispatch({ type: "change_type_view", payload: val })
+            }}
+            data={prepareTypes}
+          />
+          <ClearFilters
+            disabled={!state.filters && filterInput === ""}
+            onClick={() => {
+              dispatch({ type: "reset_filters" })
+              setFilterInput("")
+            }}
+          />
+        </div>
       </div>
       {view === VIEW.TABLE && (
-        <section>
+        <section className={styles.table}>
           <Table
             data={data}
             columns={column}
             expandable
             sidebar={Sidebar}
             filters={state}
-            globalFilters={filterInput}
           />
         </section>
       )}
       {view === VIEW.GRID && (
-        <Grid
-          data={data}
-          expandable
-          sidebar={Sidebar}
-          element={Property}
-          filters={state}
-          globalFilters={filterInput}
-        />
+        <section className={styles.table}>
+          <Grid
+            data={data}
+            expandable
+            sidebar={Sidebar}
+            element={Property}
+            filters={state}
+            globalFilters={filterInput}
+          />
+        </section>
       )}
     </div>
   )
