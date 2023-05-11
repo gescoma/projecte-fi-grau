@@ -2,15 +2,16 @@
   display: inline-flex;
   align-items: stretch;
   background-color: var(--color-black-5);
-  padding: 0.4rem;
+  padding: var(--padding-xs);
   border-radius: 0.4rem;
-  gap: 0.2rem;
+  gap: calc(var(--padding-xs) / 2);
   border: var(--border);
+  font-size: var(--font-size-filters);
 }
 
 .button {
   border: 1px solid transparent;
-  padding: 0.4rem;
+  padding: var(--padding-xs);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   border-radius: 0.4rem;
