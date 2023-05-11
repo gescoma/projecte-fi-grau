@@ -178,7 +178,7 @@ export function Table({ users }: { users: any }) {
             dispatch({ type: "change_owner", payload: val })
           }}
           data={...OWNERS.map((owner) => ({
-            label: "hola",
+            label: owner.label,
             value: owner.name,
           }))}
         />
