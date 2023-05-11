@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react"
+import { FiArrowDown, FiArrowUp } from "react-icons/fi"
 import {
   useAsyncDebounce,
   useExpanded,
@@ -114,7 +115,7 @@ export function Table({
       </div>
 
       <table {...getTableProps()} className={styles.table}>
-        <thead>
+        <thead className={styles.tableHead}>
           {headerGroups.map((headerGroup) => {
             const { key: tr_key, ...restHeaderProps } =
               headerGroup.getHeaderGroupProps()
@@ -125,14 +126,20 @@ export function Table({
                     column.getHeaderProps(column.getSortByToggleProps())
                   return (
                     <th {...restColumnProps} key={th_key}>
-                      {column.render("Header")}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? " 🔽"
-                            : " 🔼"
-                          : ""}
-                      </span>
+                      <div className={styles.headers}>
+                        <div className={styles.title}>
+                          {column.render("Header")}
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <FiArrowDown />
+                            ) : (
+                              <FiArrowUp />
+                            )
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
                     </th>
                   )
                 })}
@@ -152,14 +159,20 @@ export function Table({
                     const { key: td_key, ...restOfProps } = cell.getCellProps()
                     if (cell.column.id === "selection" || !expandable) {
                       return (
-                        <td {...restOfProps} key={td_key}>
-                          {cell.render("Cell")}
+                        <td
+                          {...restOfProps}
+                          key={td_key}
+                          className={styles.checkbox}
+                        >
+                          <div className={styles.selector}>
+                            {cell.render("Cell")}
+                          </div>
                         </td>
                       )
                     }
                     return (
                       <td {...restOfProps} key={td_key} onClick={toogleSidebar}>
-                        {cell.render("Cell")}
+                        <div>{cell.render("Cell")}</div>
                       </td>
                     )
                   })}
