@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 
 import { FiSearch } from "react-icons/fi"
+import { SearchBox as Search } from "@/components/input/searchBox"
 import styles from "./search.module.css"
 
 export function SearchBox({
@@ -13,17 +14,7 @@ export function SearchBox({
 }) {
   return (
     <div className={styles.container}>
-      <div className={styles.group}>
-        <input
-          type="text"
-          value={value}
-          placeholder="Buscar"
-          onChange={(e) => onChange(e.target.value)}
-          className={styles.input}
-          {...props}
-        />
-        <FiSearch className={styles.icon} />
-      </div>
+      <Search value={value} onChange={onChange} size="filter" />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { PageSelector } from "./pageSelector"
 import { PageSize } from "./pageSize"
 import { Pagination } from "./pagination"
 import { Results } from "./results"
+import styles from "./footer.module.css"
 
 export function Footer({
   page,
@@ -25,7 +26,7 @@ export function Footer({
   showPageSelector?: boolean
 }) {
   return (
-    <footer>
+    <footer className={styles.footer}>
       {showPagination && (
         <Pagination
           page={page}
