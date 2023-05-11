@@ -37,7 +37,6 @@ const resetReducer = {
 
 function reducer(state: any, action: any) {
   if (action.type === "change_business") {
-    console.log(action.payload)
     if (action.payload === "") {
       return {
         ...state,

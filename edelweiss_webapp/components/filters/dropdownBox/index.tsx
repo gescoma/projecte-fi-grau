@@ -20,15 +20,12 @@ export function DropdownBox({
   )
   const [selectOpen, setSelectOpen] = useState(false)
 
-  console.log({ state })
-
   const handleClick = (value: string, label: string | IconType) => {
     setSelected(label)
     action(value)
     setSelectOpen(false)
   }
 
-  console.log({ selected, selectOpen })
   return (
     <>
       <div className={styles.select}>
