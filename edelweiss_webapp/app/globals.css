@@ -3,6 +3,7 @@
 
   /* FONTS */
   --font-size-base: 16px;
+  --font-size-filters: 0.833rem;
 
   /* SIZES */
 
@@ -45,7 +46,16 @@
   --mq-2xl: 1536px;
 
   /* BORDERS */
-  --border: 1px solid var(--color-black-10);
+  --border-width: 1px;
+  --border-color: var(--color-black-10);
+  --border: var(--border-width) solid var(--border-color);
+
+  /* SPACES */
+  --padding-base: 1rem;
+  --padding-xs: 0.4rem;
+  --padding-md: 0.8rem;
+  --padding-lg: 1.2rem;
+  --padding-xl: 1.6rem;
 }
 
 /* RESET STYLES */
