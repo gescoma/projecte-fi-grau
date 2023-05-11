@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { Datatype } from "@/types/filterDataType"
 import { FiChevronDown } from "react-icons/fi"
 import { IconType } from "react-icons"
+import { Select } from "@/components/input/selector"
 import styles from "./dropdown.module.css"
 
 export function DropdownBox({
@@ -15,48 +16,24 @@ export function DropdownBox({
   action: Dispatch<SetStateAction<string>>
   state: any
 }) {
-  const [selected, setSelected] = useState<string | IconType>(
-    data.filter((item) => item.value === state)[0].label as string | IconType
-  )
-  const [selectOpen, setSelectOpen] = useState(false)
-
-  const handleClick = (value: string, label: string | IconType) => {
-    setSelected(label)
+  const handleClick = (value: string) => {
     action(value)
-    setSelectOpen(false)
   }
 
   return (
     <>
       <div className={styles.select}>
         <span>Owners:</span>
-        <div
-          className={`${styles.input} ${selectOpen && styles.open}`}
-          onClick={() => setSelectOpen(!selectOpen)}
-        >
-          <div className={styles.label}>
-            {typeof selected === "string" ? selected : selected({})}
-            <FiChevronDown
-              className={`${styles.caret} ${selectOpen && styles.turnCaret}`}
-            />
-          </div>
-        </div>
-        {selectOpen && (
-          <div className={styles.optionsContainer}>
-            <div className={styles.options}>
-              {data.map(({ value, label, items }) => (
-                <div
-                  className={styles.value}
-                  key={value}
-                  onClick={() => handleClick(value, label)}
-                >
-                  {typeof label === "string" ? label : label({})}
-                  {/* {items && <span>{items}</span>} */}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <Select
+          defaultValue={
+            data.filter((item) => item.value === state)[0].label as string
+          }
+          options={data.map((item) => ({
+            label: item.label as string,
+            value: item.value,
+          }))}
+          onChange={handleClick}
+        />
       </div>
     </>
   )
