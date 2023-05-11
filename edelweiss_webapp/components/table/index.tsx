@@ -191,17 +191,16 @@ export function Table({
           })}
         </tbody>
       </table>
-      <Footer
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        itemsCount={rows.length}
-        page={pageIndex}
-        setPage={gotoPage}
-        showPagination
-        showResults
-        showPageSize
-        showPageSelector
-      />
+      <div className={styles.footer}>
+        <Footer
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          itemsCount={rows.length}
+          page={pageIndex}
+          setPage={gotoPage}
+          showPagination
+        />
+      </div>
     </>
   )
 }
