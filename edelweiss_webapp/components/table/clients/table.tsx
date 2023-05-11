@@ -89,7 +89,6 @@ function reducer(state: any, action: any) {
 
 export function Table({ users }: { users: any }) {
   const [state, dispatch] = useReducer(reducer, resetReducer)
-  const [filterInput, setFilterInput] = useState("")
 
   const data = useMemo(() => users, [users])
   const column = useMemo(
@@ -151,54 +150,56 @@ export function Table({ users }: { users: any }) {
   return (
     <>
       <div className={styles.filters}>
-        <TabBox
-          state={state.source}
-          action={(val) => {
-            dispatch({ type: "change_business", payload: val })
-          }}
-          data={[
-            {
-              label: "Todos",
-              value: BUSINESS_TYPES.all,
-            },
-            {
-              label: FiBriefcase,
-              value: "Empresa",
-            },
-            {
-              label: FiUser,
-              value: "Persona",
-            },
-          ]}
-        />
-        <DropdownBox
-          state={state.owner}
-          action={(val) => {
-            dispatch({ type: "change_owner", payload: val })
-          }}
-          data={...OWNERS.map((owner) => ({
-            label: owner.label,
-            value: owner.name,
-          }))}
-        />
-
-        <SearchBox onChange={setFilterInput} value={filterInput} />
-        <ClearFilters
-          disabled={filterInput === "" && !state.filters}
-          onClick={() => {
-            dispatch({ type: "reset_filters" })
-            setFilterInput("")
-          }}
+        <div>
+          <DropdownBox
+            state={state.owner}
+            action={(val) => {
+              dispatch({ type: "change_owner", payload: val })
+            }}
+            data={...OWNERS.map((owner) => ({
+              label: owner.label,
+              value: owner.name,
+            }))}
+          />
+        </div>
+        <div>
+          <TabBox
+            state={state.source}
+            action={(val) => {
+              dispatch({ type: "change_business", payload: val })
+            }}
+            data={[
+              {
+                label: "Todos",
+                value: BUSINESS_TYPES.all,
+              },
+              {
+                label: FiBriefcase,
+                value: "Empresa",
+              },
+              {
+                label: FiUser,
+                value: "Persona",
+              },
+            ]}
+          />
+          <ClearFilters
+            disabled={!state.filters}
+            onClick={() => {
+              dispatch({ type: "reset_filters" })
+            }}
+          />
+        </div>
+      </div>
+      <div className={styles.table}>
+        <OriginalTable
+          columns={column}
+          data={data}
+          filters={state}
+          expandable
+          sidebar={Sidebar}
         />
       </div>
-      <OriginalTable
-        columns={column}
-        data={data}
-        filters={state}
-        globalFilters={filterInput}
-        expandable
-        sidebar={Sidebar}
-      />
     </>
   )
 }

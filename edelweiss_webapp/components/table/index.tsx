@@ -1,6 +1,12 @@
 "use client"
 
-import { ComponentType, useEffect } from "react"
+import {
+  ComponentType,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react"
 import {
   useAsyncDebounce,
   useExpanded,
@@ -14,6 +20,7 @@ import {
 
 import { Footer } from "../filters/footer"
 import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
+import { SearchBox } from "../filters/searchBox"
 import { SidebarLayout } from "@/components/sidebar/sidebar"
 import styles from "./table.module.css"
 
@@ -21,14 +28,12 @@ export function Table({
   data,
   columns,
   filters = {},
-  globalFilters = "",
   sidebar: Sidebar,
   expandable = false,
 }: {
   data: any
   columns: any
   filters?: any
-  globalFilters?: string
   sidebar?: ComponentType<any>
   expandable?: boolean
 }) {
@@ -41,7 +46,7 @@ export function Table({
     gotoPage,
     setPageSize,
     rows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize, globalFilter },
     setFilter,
     setGlobalFilter,
   } = useTable(
@@ -79,6 +84,7 @@ export function Table({
       ])
     }
   )
+  const [globalFilters, setGlobalFilters] = useState("")
 
   const debouncedGlobalFilter = useAsyncDebounce(setGlobalFilter, 200)
 
@@ -92,8 +98,21 @@ export function Table({
   useEffect(() => {
     debouncedGlobalFilter(globalFilters)
   }, [globalFilters, debouncedGlobalFilter])
+
   return (
     <>
+      <div className={styles.filters}>
+        <SearchBox onChange={setGlobalFilters} value={globalFilters} />
+        <Footer
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          itemsCount={rows.length}
+          page={pageIndex}
+          setPage={gotoPage}
+          showPageSize
+        />
+      </div>
+
       <table {...getTableProps()} className={styles.table}>
         <thead>
           {headerGroups.map((headerGroup) => {

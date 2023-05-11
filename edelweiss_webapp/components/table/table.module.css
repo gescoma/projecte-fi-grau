@@ -10,3 +10,9 @@
 .row:hover {
   background-color: var(--color-black-10);
 }
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
