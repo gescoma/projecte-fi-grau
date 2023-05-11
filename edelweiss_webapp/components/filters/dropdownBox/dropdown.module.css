@@ -1,5 +1,78 @@
 .select {
-  display: block;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-black-5);
+  padding: var(--padding-xs);
+  border-radius: var(--padding-xs);
   border: var(--border);
+  font-size: var(--font-size-filters);
+
+  gap: var(--padding-xs);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.label {
+  border: var(--border);
+  display: flex;
+  justify-content: space-between;
   min-width: 10rem;
+  align-items: center;
+  background-color: var(--color-white);
+  padding: var(--padding-xs);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 0.4rem;
+  z-index: 2;
+}
+
+.optionsContainer {
+  position: absolute;
+  top: calc(
+    calc(var(--font-size-filters) + calc(var(--padding-xs) * 2)) +
+      calc(var(--border-width) * 2)
+  );
+  right: var(--padding-xs);
+  background-color: var(--color-black-5);
+  border: var(--border);
+  min-width: calc(10rem + 0.8rem);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 0 0 0.4rem 0.4rem;
+  padding-top: 0.4rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  max-height: 10rem;
+  overflow-y: scroll;
+}
+
+.value {
+  transition: background-color 0.2s ease-in-out;
+  padding: 0.4rem;
+  border: var(--border-width) solid transparent;
+}
+
+.open {
+  border-radius: 0.4rem 0.4rem 0 0;
+  border-bottom: none;
+  z-index: 3;
+}
+
+.value:hover {
+  background-color: var(--color-black-10);
+  border: var(--border);
+  border-radius: 0.4rem;
+}
+
+.caret {
+  transition: transform 0.1s ease-in-out;
+}
+
+.turnCaret {
+  transform: rotate(-180deg);
 }
