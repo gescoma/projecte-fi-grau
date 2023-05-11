@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { Session } from "next-auth"
 import { User } from "@/types/User"
 import styles from "./avatar.module.css"
 
@@ -7,7 +6,7 @@ export function UserImage({
   user,
   size = "normal",
 }: {
-  user: Session["user"] | User
+  user: any
   size?: "normal" | "small" | "large" | "xlarge" | "compressed"
 }) {
   const avatarClassGenerator = `${styles.avatar} ${styles[size]}`
