@@ -1,0 +1,85 @@
+.select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-black-5);
+  padding: var(--padding-xs);
+  border-radius: var(--padding-xs);
+  border: var(--border);
+  font-size: var(--font-size-filters);
+
+  gap: var(--padding-xs);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: var(--color-black-80);
+}
+
+.label {
+  border: var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-white);
+  padding: var(--padding-xs);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: var(--border-radius-xs);
+  z-index: 2;
+}
+
+.input {
+  z-index: 4;
+  position: relative;
+}
+
+.optionsContainer {
+  position: absolute;
+  top: calc(
+    calc(var(--font-size-filters) + var(--padding-xs)) + var(--border-width)
+  );
+  background-color: var(--color-black-5);
+  border: var(--border);
+  min-width: calc(100% - var(--border-width) * 2);
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);
+  padding-top: var(--border-radius-xs);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  max-height: 10rem;
+  overflow-y: scroll;
+}
+
+.value {
+  transition: background-color 0.2s ease-in-out;
+  padding: var(--padding-xs);
+  border: var(--border-width) solid transparent;
+}
+
+.open {
+  border-radius: var(--border-radius-xs) var(--border-radius-xs) 0 0;
+  border-bottom: none;
+  z-index: 3;
+}
+
+.value:hover {
+  background-color: var(--color-black-10);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
+}
+
+.caret {
+  transition: transform 0.1s ease-in-out;
+}
+
+.turnCaret {
+  transform: rotate(-180deg);
+}
+
+.container {
+  position: relative;
+}
