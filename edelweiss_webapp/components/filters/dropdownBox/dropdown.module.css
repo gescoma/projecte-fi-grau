@@ -12,6 +12,7 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  color: var(--color-black-80);
 }
 
 .label {
@@ -24,7 +25,7 @@
   padding: var(--padding-xs);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  border-radius: 0.4rem;
+  border-radius: var(--border-radius-xs);
   z-index: 2;
 }
 
@@ -40,8 +41,8 @@
   min-width: calc(10rem + 0.8rem);
   z-index: 1;
   cursor: pointer;
-  border-radius: 0 0 0.4rem 0.4rem;
-  padding-top: 0.4rem;
+  border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);
+  padding-top: var(--border-radius-xs);
 }
 
 .options {
@@ -53,12 +54,12 @@
 
 .value {
   transition: background-color 0.2s ease-in-out;
-  padding: 0.4rem;
+  padding: var(--padding-xs);
   border: var(--border-width) solid transparent;
 }
 
 .open {
-  border-radius: 0.4rem 0.4rem 0 0;
+  border-radius: var(--border-radius-xs) var(--border-radius-xs) 0 0;
   border-bottom: none;
   z-index: 3;
 }
@@ -66,7 +67,7 @@
 .value:hover {
   background-color: var(--color-black-10);
   border: var(--border);
-  border-radius: 0.4rem;
+  border-radius: var(--border-radius-xs);
 }
 
 .caret {

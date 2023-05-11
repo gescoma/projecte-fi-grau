@@ -50,6 +50,14 @@
   --border-color: var(--color-black-10);
   --border: var(--border-width) solid var(--border-color);
 
+  /* BORDER RADIUS */
+
+  --border-radius: 1rem;
+  --border-radius-xs: 0.4rem;
+  --border-radius-md: 0.8rem;
+  --border-radius-lg: 1.2rem;
+  --border-radius-xl: 1.6rem;
+
   /* SPACES */
   --padding-base: 1rem;
   --padding-xs: 0.4rem;
