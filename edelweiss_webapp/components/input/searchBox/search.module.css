@@ -1,0 +1,39 @@
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding-xs);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
+  background-color: var(--color-white);
+}
+
+.group:focus-within {
+  outline: 1px solid var(--color-black-40);
+  outline-offset: -2px;
+}
+
+.input {
+  color: var(--color-black-80);
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.icon {
+  color: var(--color-black-40);
+}
+
+.group:focus-within .icon {
+  color: var(--color-black-80);
+}
+
+.filter {
+  font-size: var(--font-filter);
+}
+
+.normal {
+  font-size: var(--font-size);
+}
