@@ -1,3 +1,5 @@
+"use client"
+
 import { SearchBox } from "@/components/input/searchBox"
 import styles from "./head.module.css"
 import { useState } from "react"
