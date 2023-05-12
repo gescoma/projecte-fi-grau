@@ -9,11 +9,11 @@ import { OWNERS } from "@/utils/filters/owners"
 import { Table as OriginalTable } from "@/components/table"
 import { Sidebar } from "./sidebar"
 import { TabBox } from "@/components/filters/tabBox"
-import { SearchBox } from "@/components/filters/searchBox"
 import { ClearFilters } from "@/components/filters/clearFiltersButton"
 import { FiBriefcase, FiUser } from "react-icons/fi"
 
 import styles from "./table.module.css"
+import { useClientsContext } from "@/context/ClientsContext"
 
 type ClientRow = {
   name: string
@@ -87,8 +87,9 @@ function reducer(state: any, action: any) {
   throw Error("Unknown action.")
 }
 
-export function Table({ users }: { users: any }) {
+export function Table({ users2 }: { users2?: any }) {
   const [state, dispatch] = useReducer(reducer, resetReducer)
+  const { formatedData: users, createClient } = useClientsContext()
 
   const data = useMemo(() => users, [users])
   const column = useMemo(
@@ -102,7 +103,7 @@ export function Table({ users }: { users: any }) {
               ...original,
               name: `${original.name} ${original.surname}`,
             }}
-            size="compressed"
+            size="small"
           />
         ),
       },
@@ -190,15 +191,36 @@ export function Table({ users }: { users: any }) {
             }}
           />
         </div>
+        <div>
+          <button
+            onClick={() => {
+              const client = {
+                nombre: "Juan",
+                apellido1: "Perez",
+                apellido2: "Garcia",
+                telefono: Math.random().toString(),
+                correo: Math.random().toString(),
+                imagen: "",
+                id_entidad: "EMPRESA",
+                id_propietario: "e6c846b0-c462-4e8f-8923-48b05c784b76",
+              }
+              createClient(client)
+            }}
+          >
+            Add Client
+          </button>
+        </div>
       </div>
       <div className={styles.table}>
-        <OriginalTable
-          columns={column}
-          data={data}
-          filters={state}
-          expandable
-          sidebar={Sidebar}
-        />
+        {users && (
+          <OriginalTable
+            columns={column}
+            data={data}
+            filters={state}
+            expandable
+            sidebar={Sidebar}
+          />
+        )}
       </div>
     </>
   )

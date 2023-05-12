@@ -1,9 +1,9 @@
 "use client"
 
 import { Card } from "@/components/card"
+import { ClientsProvider } from "@/context/ClientsContext"
 import { DashboardHead } from "@/components/dashboard/dashboard-head"
 import { Table } from "@/components/table/clients/table"
-import { generateUsers } from "@/utils/faker/users"
 
 type ClientRow = {
   name: string
@@ -20,14 +20,12 @@ type ClientRow = {
 }
 
 export default function Users() {
-  const users = generateUsers()
-
   return (
-    <>
+    <ClientsProvider>
       <DashboardHead>Clientes</DashboardHead>
       <Card>
-        <Table users={users}></Table>
+        <Table />
       </Card>
-    </>
+    </ClientsProvider>
   )
 }
