@@ -19,7 +19,6 @@
   border: var(--border);
   display: flex;
   justify-content: space-between;
-  min-width: 10rem;
   align-items: center;
   background-color: var(--color-white);
   padding: var(--padding-xs);
@@ -29,16 +28,19 @@
   z-index: 2;
 }
 
+.input {
+  z-index: 4;
+  position: relative;
+}
+
 .optionsContainer {
   position: absolute;
   top: calc(
-    calc(var(--font-size-filters) + calc(var(--padding-xs) * 2)) +
-      calc(var(--border-width) * 2)
+    calc(var(--font-size-filters) + var(--padding-xs)) + var(--border-width)
   );
-  right: var(--padding-xs);
   background-color: var(--color-black-5);
   border: var(--border);
-  min-width: calc(10rem + 0.8rem);
+  min-width: calc(100% - var(--border-width) * 2);
   z-index: 1;
   cursor: pointer;
   border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);
@@ -76,4 +78,8 @@
 
 .turnCaret {
   transform: rotate(-180deg);
+}
+
+.container {
+  position: relative;
 }

@@ -4,13 +4,16 @@ import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
 import { BUSINESS_TYPES } from "@/utils/filters/businessTypes"
-import { BusinessSelector } from "@/components/filters/business"
-import { Button } from "@/components/filters/clearFilters"
+import { DropdownBox } from "@/components/filters/dropdownBox"
 import { OWNERS } from "@/utils/filters/owners"
 import { Table as OriginalTable } from "@/components/table"
-import { OwnerSelector } from "@/components/filters/onwers"
-import { Search } from "@/components/filters/search"
 import { Sidebar } from "./sidebar"
+import { TabBox } from "@/components/filters/tabBox"
+import { SearchBox } from "@/components/filters/searchBox"
+import { ClearFilters } from "@/components/filters/clearFiltersButton"
+import { FiBriefcase, FiUser } from "react-icons/fi"
+
+import styles from "./table.module.css"
 
 type ClientRow = {
   name: string
@@ -86,7 +89,6 @@ function reducer(state: any, action: any) {
 
 export function Table({ users }: { users: any }) {
   const [state, dispatch] = useReducer(reducer, resetReducer)
-  const [filterInput, setFilterInput] = useState("")
 
   const data = useMemo(() => users, [users])
   const column = useMemo(
@@ -147,39 +149,57 @@ export function Table({ users }: { users: any }) {
 
   return (
     <>
-      <div className="filters">
-        <BusinessSelector
-          value={state.business}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            dispatch({ type: "change_business", payload: e.target.value })
-          }}
-        />
-        <OwnerSelector
-          value={state.owner}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            dispatch({ type: "change_owner", payload: e.target.value })
-          }}
-          data={OWNERS}
-        />
-        <Search setValue={setFilterInput} value={filterInput} />
-        <Button
-          inactive={filterInput === "" && !state.filters}
-          onClick={() => {
-            dispatch({ type: "reset_filters" })
-            setFilterInput("")
-          }}
-        >
-          Clear filters
-        </Button>
+      <div className={styles.filters}>
+        <div>
+          <DropdownBox
+            state={state.owner}
+            action={(val) => {
+              dispatch({ type: "change_owner", payload: val })
+            }}
+            data={...OWNERS.map((owner) => ({
+              label: owner.label,
+              value: owner.name,
+            }))}
+          />
+        </div>
+        <div>
+          <TabBox
+            state={state.source}
+            action={(val) => {
+              dispatch({ type: "change_business", payload: val })
+            }}
+            data={[
+              {
+                label: "Todos",
+                value: BUSINESS_TYPES.all,
+              },
+              {
+                label: FiBriefcase,
+                value: "Empresa",
+              },
+              {
+                label: FiUser,
+                value: "Persona",
+              },
+            ]}
+          />
+          <ClearFilters
+            disabled={!state.filters}
+            onClick={() => {
+              dispatch({ type: "reset_filters" })
+            }}
+          />
+        </div>
       </div>
-      <OriginalTable
-        columns={column}
-        data={data}
-        filters={state}
-        globalFilters={filterInput}
-        expandable
-        sidebar={Sidebar}
-      />
+      <div className={styles.table}>
+        <OriginalTable
+          columns={column}
+          data={data}
+          filters={state}
+          expandable
+          sidebar={Sidebar}
+        />
+      </div>
     </>
   )
 }

@@ -1,6 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronsLeft,
+  FiChevronsRight,
+  FiMoreHorizontal,
+} from "react-icons/fi"
+
+import styles from "./pagination.module.css"
 
 export function Pagination({
   page,
@@ -42,20 +50,36 @@ export function Pagination({
   const pages = pagesObject()
 
   return (
-    <div>
-      <button onClick={firstPage} disabled={page === 0}>
-        {"<<"}
-      </button>{" "}
-      <button onClick={previousPage} disabled={page === 0}>
-        {"<"}
-      </button>{" "}
+    <div className={styles.pagination}>
+      <button
+        onClick={firstPage}
+        className={`${page === 0 && styles.disabled}`}
+        disabled={page === 0}
+      >
+        <FiChevronsLeft />
+      </button>
+      <button
+        onClick={previousPage}
+        className={`${page === 0 && styles.disabled}`}
+        disabled={page === 0}
+      >
+        <FiChevronLeft />
+      </button>
       {pages.map((p) => {
         if (p > page + 3 || p < page - 1) {
           if (p === 2) {
-            return <span key={p}>...</span>
+            return (
+              <span key={p}>
+                <FiMoreHorizontal />
+              </span>
+            )
           }
           if (p === totalPages) {
-            return <span key={p}>...</span>
+            return (
+              <span key={p}>
+                <FiMoreHorizontal />
+              </span>
+            )
           }
           return null
         }
@@ -63,6 +87,7 @@ export function Pagination({
           <button
             key={p}
             onClick={() => gotoPage(p - 1)}
+            className={`${page + 1 === p ? styles.active : ""}`}
             disabled={page + 1 === p}
           >
             {p}
@@ -70,11 +95,11 @@ export function Pagination({
         )
       })}
       <button onClick={nextPage} disabled={page === totalPages - 1}>
-        {">"}
-      </button>{" "}
+        <FiChevronRight />
+      </button>
       <button onClick={lastPage} disabled={page === totalPages - 1}>
-        {">>"}
-      </button>{" "}
+        <FiChevronsRight />
+      </button>
     </div>
   )
 }

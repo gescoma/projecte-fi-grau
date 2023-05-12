@@ -9,7 +9,6 @@ export default function PropertiesPage() {
     <>
       <DashboardHead>Propiedades</DashboardHead>
       <Card>
-        <h1>Propiedades</h1>
         <PropertiesTable properties={properties} />
       </Card>
     </>

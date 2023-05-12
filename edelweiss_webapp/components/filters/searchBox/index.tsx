@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from "react"
 
+import { FiSearch } from "react-icons/fi"
+import { SearchBox as Search } from "@/components/input/searchBox"
+import styles from "./search.module.css"
+
 export function SearchBox({
   onChange,
   value,
@@ -9,11 +13,8 @@ export function SearchBox({
   value: string
 }) {
   return (
-    <input
-      type="text"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      {...props}
-    />
+    <div className={styles.container}>
+      <Search value={value} onChange={onChange} size="filter" />
+    </div>
   )
 }

@@ -1,0 +1,52 @@
+.container {
+  padding: var(--padding-xs);
+  font-size: var(--font-size-filters);
+  background-color: var(--color-black-5);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
+}
+
+.button {
+  padding: var(--padding-xs);
+  background-color: var(--color-white);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: var(--padding-xs);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.active:hover {
+  background-color: var(--color-black-10);
+}
+
+.active:focus {
+  outline: 1px solid var(--color-black-40);
+  outline-offset: -2px;
+}
+
+.icon {
+  width: var(--font-size-filters);
+  height: var(--font-size-filters);
+}
+
+.iconSmall {
+  width: 8px;
+  height: 8px;
+}
+
+.iconGroup {
+  position: relative;
+}
+
+.iconGroup .iconSmall {
+  position: absolute;
+  bottom: 12px;
+  right: -2px;
+  background-color: var(--color-white);
+  border-radius: 100%;
+  stroke-width: 3px;
+}

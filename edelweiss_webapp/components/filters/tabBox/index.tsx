@@ -13,16 +13,19 @@ export function TabBox({
   data: Datatype[]
 }) {
   return (
-    <div>
+    <div className={styles.container}>
       {data.map(({ label, value, items }) => (
         <button
           className={`${styles.button} ${value === state ? styles.active : ""}`}
-          key={label}
+          key={value}
           onClick={() => action(value)}
           disabled={value === state}
         >
-          {label}
-          {/* {items && <span>{items}</span>} */}
+          {typeof label === "string"
+            ? label
+            : label({
+                className: styles.icon,
+              })}
         </button>
       ))}
     </div>

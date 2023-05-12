@@ -1,7 +1,10 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 import { Datatype } from "@/types/filterDataType"
-import styles from "./dropdownBox.module.css"
+import { FiChevronDown } from "react-icons/fi"
+import { IconType } from "react-icons"
+import { Select } from "@/components/input/selector"
+import styles from "./dropdown.module.css"
 
 export function DropdownBox({
   data,
@@ -13,18 +16,25 @@ export function DropdownBox({
   action: Dispatch<SetStateAction<string>>
   state: any
 }) {
+  const handleClick = (value: string) => {
+    action(value)
+  }
+
   return (
-    <select
-      {...restOfProps}
-      value={state}
-      onChange={(e) => action(e.target.value)}
-    >
-      {data.map(({ value, label, items }) => (
-        <option key={label.replace(" ", "")} value={value}>
-          {label}
-          {/* {items && <span>{items}</span>} */}
-        </option>
-      ))}
-    </select>
+    <>
+      <div className={styles.select}>
+        <span>Owners:</span>
+        <Select
+          defaultValue={
+            data.filter((item) => item.value === state)[0].label as string
+          }
+          options={data.map((item) => ({
+            label: item.label as string,
+            value: item.value,
+          }))}
+          onChange={handleClick}
+        />
+      </div>
+    </>
   )
 }

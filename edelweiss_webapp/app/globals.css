@@ -2,8 +2,8 @@
   --max-width: 1100px;
 
   /* FONTS */
-  --font-primary: "system-ui", sans-serif;
   --font-size-base: 16px;
+  --font-size-filters: 0.833rem;
 
   /* SIZES */
 
@@ -44,6 +44,26 @@
   --mq-lg: 1024px;
   --mq-xl: 1280px;
   --mq-2xl: 1536px;
+
+  /* BORDERS */
+  --border-width: 1px;
+  --border-color: var(--color-black-10);
+  --border: var(--border-width) solid var(--border-color);
+
+  /* BORDER RADIUS */
+
+  --border-radius: 1rem;
+  --border-radius-xs: 0.4rem;
+  --border-radius-md: 0.8rem;
+  --border-radius-lg: 1.2rem;
+  --border-radius-xl: 1.6rem;
+
+  /* SPACES */
+  --padding-base: 1rem;
+  --padding-xs: 0.4rem;
+  --padding-md: 0.8rem;
+  --padding-lg: 1.2rem;
+  --padding-xl: 1.6rem;
 }
 
 /* RESET STYLES */
@@ -55,7 +75,6 @@
 
 html {
   font-size: var(--font-size-base);
-  font-family: var(--font-primary);
 }
 
 /* SKELETON */

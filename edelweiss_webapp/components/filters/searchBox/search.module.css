@@ -1,0 +1,6 @@
+.container {
+  padding: var(--padding-xs);
+  background-color: var(--color-black-5);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
+}

@@ -1,18 +1,41 @@
+.container {
+  display: inline-flex;
+  align-items: stretch;
+  background-color: var(--color-black-5);
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-xs);
+  gap: calc(var(--padding-xs) / 2);
+  border: var(--border);
+  font-size: var(--font-size-filters);
+  color: var(--color-black-80);
+}
+
 .button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-  margin: 0.5rem 0.5rem;
+  border: 1px solid transparent;
+  padding: var(--padding-xs);
   cursor: pointer;
-  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: var(--border-radius-xs);
+  background-color: transparent;
+}
+
+.icon {
+  font-size: 1rem;
+  aspect-ratio: 1;
+  min-width: 1.3rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-black-80);
+}
+
+.button:hover {
+  background-color: var(--color-black-10);
+  border: var(--border);
 }
 
 .active {
-  color: black;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: var(--border);
   cursor: default;
 }

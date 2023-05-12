@@ -10,9 +10,9 @@
 }
 
 .compressed {
-  width: var(--userImageSize);
-  height: var(--userImageSize);
-  border-radius: calc(var(--userImageSize) / 2);
+  width: calc(var(--userImageSize) / 2);
+  height: calc(var(--userImageSize) / 2);
+  border-radius: calc(var(--userImageSize) / 4);
 }
 
 .large {

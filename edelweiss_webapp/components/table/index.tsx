@@ -1,6 +1,13 @@
 "use client"
 
-import { ComponentType, useEffect } from "react"
+import {
+  ComponentType,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react"
+import { FiArrowDown, FiArrowUp } from "react-icons/fi"
 import {
   useExpanded,
   useFilters,
@@ -13,6 +20,7 @@ import {
 
 import { Footer } from "../filters/footer"
 import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
+import { SearchBox } from "../filters/searchBox"
 import { SidebarLayout } from "@/components/sidebar/sidebar"
 import styles from "./table.module.css"
 import { useDebounce } from "@/hooks/useDebounce"
@@ -21,14 +29,12 @@ export function Table({
   data,
   columns,
   filters = {},
-  globalFilters = "",
   sidebar: Sidebar,
   expandable = false,
 }: {
   data: any
   columns: any
   filters?: any
-  globalFilters?: string
   sidebar?: ComponentType<any>
   expandable?: boolean
 }) {
@@ -41,7 +47,7 @@ export function Table({
     gotoPage,
     setPageSize,
     rows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize, globalFilter },
     setFilter,
     setGlobalFilter,
   } = useTable(
@@ -79,6 +85,7 @@ export function Table({
       ])
     }
   )
+  const [globalFilters, setGlobalFilters] = useState("")
 
   const filterGlobal = useDebounce(globalFilters)
 
@@ -92,10 +99,23 @@ export function Table({
   useEffect(() => {
     setGlobalFilter(filterGlobal)
   }, [filterGlobal, setGlobalFilter])
+  
   return (
     <>
+      <div className={styles.filters}>
+        <SearchBox onChange={setGlobalFilters} value={globalFilters} />
+        <Footer
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          itemsCount={rows.length}
+          page={pageIndex}
+          setPage={gotoPage}
+          showPageSize
+        />
+      </div>
+
       <table {...getTableProps()} className={styles.table}>
-        <thead>
+        <thead className={styles.tableHead}>
           {headerGroups.map((headerGroup) => {
             const { key: tr_key, ...restHeaderProps } =
               headerGroup.getHeaderGroupProps()
@@ -106,14 +126,20 @@ export function Table({
                     column.getHeaderProps(column.getSortByToggleProps())
                   return (
                     <th {...restColumnProps} key={th_key}>
-                      {column.render("Header")}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? " 🔽"
-                            : " 🔼"
-                          : ""}
-                      </span>
+                      <div className={styles.headers}>
+                        <div className={styles.title}>
+                          {column.render("Header")}
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <FiArrowDown />
+                            ) : (
+                              <FiArrowUp />
+                            )
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
                     </th>
                   )
                 })}
@@ -133,14 +159,20 @@ export function Table({
                     const { key: td_key, ...restOfProps } = cell.getCellProps()
                     if (cell.column.id === "selection" || !expandable) {
                       return (
-                        <td {...restOfProps} key={td_key}>
-                          {cell.render("Cell")}
+                        <td
+                          {...restOfProps}
+                          key={td_key}
+                          className={styles.checkbox}
+                        >
+                          <div className={styles.selector}>
+                            {cell.render("Cell")}
+                          </div>
                         </td>
                       )
                     }
                     return (
                       <td {...restOfProps} key={td_key} onClick={toogleSidebar}>
-                        {cell.render("Cell")}
+                        <div>{cell.render("Cell")}</div>
                       </td>
                     )
                   })}
@@ -159,17 +191,16 @@ export function Table({
           })}
         </tbody>
       </table>
-      <Footer
-        pageSize={pageSize}
-        setPageSize={setPageSize}
-        itemsCount={rows.length}
-        page={pageIndex}
-        setPage={gotoPage}
-        showPagination
-        showResults
-        showPageSize
-        showPageSelector
-      />
+      <div className={styles.footer}>
+        <Footer
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          itemsCount={rows.length}
+          page={pageIndex}
+          setPage={gotoPage}
+          showPagination
+        />
+      </div>
     </>
   )
 }
