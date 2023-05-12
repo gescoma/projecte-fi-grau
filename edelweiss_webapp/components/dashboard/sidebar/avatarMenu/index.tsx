@@ -25,8 +25,8 @@ export function AvatarMenu({
   className?: string
   menuDirection?: "up" | "down"
 }) {
-  const { supabase } = useSupabase()
   const { isOpen, isOpenRef, handleClose } = useClickOutside<HTMLDivElement>()
+  const { profile, supabase } = useSupabase()
 
   const generateAvatarClass = `${styles.avatar} ${className}`
 
@@ -52,7 +52,7 @@ export function AvatarMenu({
   return (
     <div ref={isOpenRef} className={generateAvatarClass}>
       {/* TODO: Print Avatar with user information */}
-      <AvatarSkeleton />
+      {profile ? <Avatar user={profile} /> : <AvatarSkeleton />}
       <FiMoreHorizontal
         className={`${styles.icon} ${isOpen ? styles.active : ""}`}
         onClick={handleClose}

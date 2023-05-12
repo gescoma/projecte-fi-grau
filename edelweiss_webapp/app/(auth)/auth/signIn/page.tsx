@@ -17,7 +17,7 @@ export type Inputs = {
 
 export default function SignInPage() {
   const [error, setError] = useState<string | undefined>(undefined)
-  const { supabase, session } = useSupabase()
+  const { supabase } = useSupabase()
   const router = useRouter()
   const {
     register,
@@ -37,7 +37,6 @@ export default function SignInPage() {
         setError(error.message)
         return
       }
-      console.log(loginData)
       await router.push("/dashboard")
     } catch (e: any) {
       setError(e.message)
