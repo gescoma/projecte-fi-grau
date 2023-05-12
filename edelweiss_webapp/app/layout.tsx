@@ -23,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <SupabaseProvider className={inter.className} session={session}>{children}</SupabaseProvider>
+      <body className={inter.className}>
+        <SupabaseProvider session={session}>{children}</SupabaseProvider>
       </body>
     </html>
   )
