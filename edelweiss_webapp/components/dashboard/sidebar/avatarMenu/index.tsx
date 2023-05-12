@@ -7,7 +7,6 @@ import {
   FiSettings,
   FiUser,
 } from "react-icons/fi"
-import { signOut, useSession } from "next-auth/react"
 
 import { Avatar } from "@/components/user/avatar"
 import { AvatarSkeleton } from "@/components/user/avatar/skeleton"
@@ -17,6 +16,7 @@ import { Separator } from "@/components/utils/separator"
 import Swal from "sweetalert2"
 import styles from "./avatar.module.css"
 import { useClickOutside } from "@/hooks/useClickOutsideRef"
+import { useSupabase } from "@/context/AuthContext"
 
 export function AvatarMenu({
   className,
@@ -25,7 +25,7 @@ export function AvatarMenu({
   className?: string
   menuDirection?: "up" | "down"
 }) {
-  const { data: session } = useSession()
+  const { supabase } = useSupabase()
   const { isOpen, isOpenRef, handleClose } = useClickOutside<HTMLDivElement>()
 
   const generateAvatarClass = `${styles.avatar} ${className}`
@@ -42,7 +42,7 @@ export function AvatarMenu({
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        signOut()
+        supabase.auth.signOut()
         return
       }
       return
@@ -51,11 +51,8 @@ export function AvatarMenu({
 
   return (
     <div ref={isOpenRef} className={generateAvatarClass}>
-      {session?.user?.image ? (
-        <Avatar user={session.user} />
-      ) : (
-        <AvatarSkeleton />
-      )}
+      {/* TODO: Print Avatar with user information */}
+      <AvatarSkeleton />
       <FiMoreHorizontal
         className={`${styles.icon} ${isOpen ? styles.active : ""}`}
         onClick={handleClose}

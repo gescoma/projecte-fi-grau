@@ -2,14 +2,15 @@
 
 import { Avatar } from "@/components/user/avatar"
 import { AvatarMenu } from "@/components/dashboard/sidebar/avatarMenu"
-import { signOut } from "next-auth/react"
+import { useSupabase } from "@/context/AuthContext"
 
 export default function DashboardPage() {
+  const { supabase } = useSupabase()
   return (
     <>
       <h1>Dashboard</h1>
       <AvatarMenu />
-      <button onClick={() => signOut()}>Sign Out</button>
+      <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
       <AvatarMenu />
       <Avatar
         user={{

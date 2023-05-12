@@ -2,7 +2,6 @@
 
 import { ComponentType, useEffect } from "react"
 import {
-  useAsyncDebounce,
   useExpanded,
   useFilters,
   useGlobalFilter,
@@ -16,6 +15,7 @@ import { Footer } from "../filters/footer"
 import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
 import { SidebarLayout } from "@/components/sidebar/sidebar"
 import styles from "./table.module.css"
+import { useDebounce } from "@/hooks/useDebounce"
 
 export function Table({
   data,
@@ -80,9 +80,9 @@ export function Table({
     }
   )
 
-  const debouncedGlobalFilter = useAsyncDebounce(setGlobalFilter, 200)
+  const filterGlobal = useDebounce(globalFilters)
 
-  useEffect(() => {
+  const debouncedGlobalFilter = useEffect(() => {
     Object.entries(filters).forEach(([key, value]) => {
       if (key === "filters") return
       setFilter(key, value)
@@ -90,8 +90,8 @@ export function Table({
   }, [filters, setFilter])
 
   useEffect(() => {
-    debouncedGlobalFilter(globalFilters)
-  }, [globalFilters, debouncedGlobalFilter])
+    setGlobalFilter(filterGlobal)
+  }, [filterGlobal, setGlobalFilter])
   return (
     <>
       <table {...getTableProps()} className={styles.table}>
