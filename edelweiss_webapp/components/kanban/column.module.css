@@ -1,0 +1,13 @@
+.column {
+  padding: 1rem;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  min-width: 300px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.tasks {
+  height: 100%;
+}

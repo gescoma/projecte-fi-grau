@@ -1,0 +1,17 @@
+.card {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.trash {
+  color: red;
+  padding: 0;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
