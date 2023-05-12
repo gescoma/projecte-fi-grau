@@ -3,7 +3,7 @@ import { ComponentType, useEffect, useState } from "react"
 import { Footer } from "../filters/footer"
 import { GridElement } from "./gridComponent"
 import styles from "./grid.module.css"
-import { useAsyncDebounce } from "react-table"
+import { useDebounce } from "@/hooks/useDebounce"
 
 export function Grid({
   data,
@@ -60,9 +60,7 @@ export function Grid({
     return dataToFilter
   }
 
-  const filteredData = useAsyncDebounce(() => {
-    return filterData(data, filters)
-  }, 200)
+  const filteredData = useDebounce(() => filterData(data, filters))
 
   useEffect(() => {
     filteredData().then((res: any) => {

@@ -12,17 +12,20 @@
   "dependencies": {
     "@types/react-big-calendar": "^1.6.3",
     "dayjs": "1.11.7",
+    "@supabase/auth-helpers-nextjs": "0.6.1",
+    "@supabase/supabase-js": "^2.21.0",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "next": "13.3.1",
-    "next-auth": "4.22.1",
     "react": "18.2.0",
     "react-big-calendar": "1.6.9",
+    "react-dnd": "16.0.1",
+    "react-dnd-html5-backend": "16.0.1",
     "react-dom": "18.2.0",
     "react-hook-form": "7.43.9",
     "react-icons": "4.8.0",
     "react-table": "7.8.0",
-    "sweetalert2": "11.7.3"
+    "sweetalert2": "^11.4.8"
   },
   "devDependencies": {
     "@faker-js/faker": "7.6.0",
@@ -30,6 +33,7 @@
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "@types/react-table": "7.7.14",
+    "encoding": "^0.1.13",
     "typescript": "5.0.4"
   }
 }

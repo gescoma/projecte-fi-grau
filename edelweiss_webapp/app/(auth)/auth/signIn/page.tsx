@@ -5,10 +5,10 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 import { Logo } from "@/components/logo"
-import { signIn } from "next-auth/react"
 import styles from "./signIn.module.css"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useSupabase } from "@/context/AuthContext"
 
 export type Inputs = {
   email: string
@@ -16,7 +16,8 @@ export type Inputs = {
 }
 
 export default function SignInPage() {
-  const [error, setError] = useState("")
+  const [error, setError] = useState<string | undefined>(undefined)
+  const { supabase, session } = useSupabase()
   const router = useRouter()
   const {
     register,
@@ -25,16 +26,18 @@ export default function SignInPage() {
   } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      setError("")
-      const user = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      })
-      if (user && !user.ok && user.error) {
-        setError(user.error)
+      setError(undefined)
+      const { data: loginData, error } = await supabase.auth.signInWithPassword(
+        {
+          email: data.email,
+          password: data.password,
+        }
+      )
+      if (error) {
+        setError(error.message)
         return
       }
+      console.log(loginData)
       await router.push("/dashboard")
     } catch (e: any) {
       setError(e.message)
