@@ -124,53 +124,64 @@ INSERT INTO vivienda (calle, numero, vendida)  VALUES('Industria', '24 - 2ºC', 
 
 
 
-/*Tabla tramiteCompra*/
-
-INSERT INTO tramiteCompra (id_users, tipo, documento, fecha)  VALUES(1, 'Notaria','doc1','2020-02-10'),
-(2, 'Registro','doc2','2020-02-10'),
-(3, 'Tasacion', 'doc3','2020-02-1'),
-(4, 'Suministros','doc4','2020-02-15'),
-(1, 'Notaria','doc5','2021-03-24'),
-(2, 'Registro','doc6','2021-03-23'),
-(3, 'Tasacion','doc7','2021-03-10'),
-(4, 'Suministros','doc8','2021-03-29'),
-(1, 'Notaria','doc9','2022-05-24'),
-(2, 'Registro','doc10','2022-05-25'),
-(3, 'Tasacion','doc11','2022-05-02'),
-(4, 'Suministros','doc12','2022-05-30'),
-(1, 'Notaria','doc13','2023-02-25'),
-(2, 'Registro','doc14','2023-02-24'),
-(3, 'Tasacion','doc15','2023-02-05'),
-(4, 'Suministros','doc16','2023-02-24'),
-(1, 'Notaria','doc17','2020-10-22'),
-(2, 'Registro','doc18','2020-10-21'),
-(3, 'Tasacion','doc19','2020-10-05'),
-(4, 'Suministros','doc20','2020-10-24');
-
-
-
-
 /*Tabla compra*/
 
-INSERT INTO compra (id_cliente, id_tramite1, id_tramite2, id_tramite3, id_tramite4, id_vivienda)  VALUES(6,1,2,3,4,1),
-(7,5,6,7,8,3),
-(8,9,10,11,12,5),
-(9,13,14,15,16,7),
-(10,17,18,19,20,9);
+INSERT INTO compra (id_users, id_cliente, id_vivienda)  VALUES(1,6,1),
+(2,7,3),
+(3,8,5),
+(4,9,7),
+(1,10,9);
+
+
+
+
+/*Proyecto*/
+
+INSERT INTO proyecto (nombre, descripcion, id_cliente_user_campain, id_users, id_compra)  
+VALUES('Proyecto1','Proyecto para la compra del dia 9 de mayo',NULL,1,1),
+('Proyecto2','Proyecto para la Campaña de la renta',1,2,NULL),
+('Proyecto3','Proyecto IBI',3,3,NULL),
+('Proyecto4','Proyecto para la compra del dia 10 de mayo',NULL,3,2),
+('Proyecto5','Proyecto para la compra del dia 15 de mayo',NULL,1,3),
+('Proyecto6','Proyecto para la compra del dia 23 de mayo',NULL,4,4);
+
+
+
+
+
+
+/*Tabla tramiteCompra*/
+
+INSERT INTO tramiteCompra (nombre, descripcion, id_proyecto, id_compra, estado, id_users)  VALUES('ITP','impuesto transmisiones patrimoniales',1,1,'FIN',1),
+('Notaria','LLevar papeles al notario',1,1,'INICIO',2),
+('Banco','Gestiones con el banco',1,1,'FIN',3),
+('Registro','Registro de la propiedad',1,1,'INICIO',4),
+('ITP','impuesto transmisiones patrimoniales',1,2,'INICIO',1),
+('Notaria','LLevar papeles al notario',4,2,'FIN',2),
+('Banco','Gestiones con el banco',4,2,'FIN',3),
+('Registro','Registro de la propiedad',4,2,'INICIO',4),
+('ITP','impuesto transmisiones patrimoniales',5,3,'INICIO',1),
+('Notaria','LLevar papeles al notario',5,3,'FIN',2),
+('Banco','Gestiones con el banco',5,3,'FIN',3),
+('Registro','Registro de la propiedad',5,3,'INICIO',4),
+('ITP','impuesto transmisiones patrimoniales',6,4,'INICIO',1),
+('Notaria','LLevar papeles al notario',6,4,'INICIO',2),
+('Banco','Gestiones con el banco',6,4,'FIN',3),
+('Registro','Registro de la propiedad',6,4,'INICIO',4);
 
 
 
 
 /*Tabla tarea*/
 
-INSERT INTO tarea (nombre, descripcion, id_campain, estado, id_user)  
-VALUES('gestión de papeles','llevar papeles al departamento pertinente',1, 'INICIO',1),
-('hacer borrador','borrador para el cliente',2, 'FIN',2),
-('crear documentación','crear documentos necesarios',3, 'INICIO',3),
-('comunicar con hacienda','comunicar con hacienda los datos del cliente',5, 'INICIO',4),
-('destruir documentación','destruir documentos no necesarios',6, 'INICIO',3),
-('crear documentación','crear documentos necesarios',3, 'FIN',3),
-('destruir documentación','destruir documentos no necesarios',6, 'FIN',3);
+INSERT INTO tarea (nombre, descripcion, id_proyecto, id_cliente_user_campain, estado, id_user)  
+VALUES('gestión de papeles','llevar papeles al departamento pertinente',2,1, 'INICIO',1),
+('hacer borrador','borrador para el cliente',NULL,2, 'FIN',2),
+('crear documentación','crear documentos necesarios',2,3, 'INICIO',3),
+('comunicar con hacienda','comunicar con hacienda los datos del cliente',2,5, 'INICIO',4),
+('destruir documentación','destruir documentos no necesarios',NULL,6, 'INICIO',3),
+('crear documentación','crear documentos necesarios',NULL,3, 'FIN',3),
+('destruir documentación','destruir documentos no necesarios',NULL,6, 'FIN',3);
 
 
 
@@ -187,17 +198,39 @@ VALUES(2,'se cierra la tarea tras aprobación del encargado'),
 
 /*Tabla archivo*/
 
-INSERT INTO archivo (nombre, id_tarea, rutaRel, rutaAbs)  
-VALUES('json1',1,'//ruta1','/ruta/absoluta'),
-('pdf1',1,'//ruta2' ,'/ruta/absoluta'),
-('word1',1,'//ruta3' ,'/ruta/absoluta'),
-('json2',2,'//ruta1' ,'/ruta/absoluta'),
-('pdf2',2,'//ruta2' ,'/ruta/absoluta'),
-('word2',2,'//ruta3' ,'/ruta/absoluta'),
-('json3',3,'//ruta21' ,'/ruta/absoluta'),
-('pdf3',3,'//ruta2' ,'/ruta/absoluta'),
-('word3',3,'//ruta2', '/ruta/absoluta');
+INSERT INTO archivo (nombre,rutaRel, rutaAbs)  
+VALUES('json1','//ruta1','/ruta/absoluta'),
+('pdf1','//ruta2' ,'/ruta/absoluta'),
+('word1','//ruta3' ,'/ruta/absoluta'),
+('json2','//ruta1' ,'/ruta/absoluta'),
+('pdf2','//ruta2' ,'/ruta/absoluta'),
+('word2','//ruta3' ,'/ruta/absoluta'),
+('json3','//ruta21' ,'/ruta/absoluta'),
+('pdf3','//ruta2' ,'/ruta/absoluta'),
+('word3','//ruta2', '/ruta/absoluta');
 
+
+
+
+/*Tabla tareaArchivo*/
+
+INSERT INTO tareaArchivo (id_tarea, id_archivo)  
+VALUES(1,1),
+(2,2),
+(3,3);
+
+
+
+
+/*Tabla tareaArchivo*/
+
+INSERT INTO tramiteCompraArchivo (id_tramiteCompra, id_archivo)  
+VALUES(1,4),
+(2,5),
+(3,6),
+(4,7),
+(5,8),
+(6,9);
 
 
 

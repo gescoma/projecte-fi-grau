@@ -1,4 +1,3 @@
-import { Session } from "next-auth"
 import { UserImage } from "@/components/user/userImage"
 import { nextUser } from "@/types/nextUser"
 import styles from "./avatar.module.css"
@@ -7,7 +6,7 @@ export function Avatar({
   user,
   size = "normal",
 }: {
-  user: Session["user"] | nextUser
+  user: any
   size?: "normal" | "small" | "large" | "xlarge" | "compressed"
 }) {
   const sizeClassCapitalize = size.charAt(0).toUpperCase() + size.slice(1)
