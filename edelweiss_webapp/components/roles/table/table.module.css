@@ -1,0 +1,5 @@
+.table {
+    border: var(--border);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+  }

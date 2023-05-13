@@ -37,28 +37,20 @@ type PropertiesRow = {
     image: string
   }
 }
-const user = {
-    "id": "74d04474-2d35-4e99-aa93-f2a326f24d05",
-    "updated_at": null,
-    "nombre": "Jaime Vivoy",
-    "apellidos": null,
-    "email": "soviet07@edelweiss.com",
-    "rol": null,
-    "imagen": "https://unavatar.io/soviet07",
-    "website": null,
-    "fecha_creacion": "2023-05-12T15:28:35",
-    "fecha_modificacion": "2023-05-12T15:28:35"
+const rol = {
+    
+ 
 }
 
-export function UserTable({usuarios}:any) {
+export function EntidadesTable({entidades}:any) {
 
 
-  const data = useMemo(() => usuarios, [usuarios])
+  const data = useMemo(() => entidades, [entidades])
   const column = useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "id",
+        Header: "Codigo",
+        accessor: "codigo",
       },
       {
         Header: "Nombre",
@@ -78,27 +70,22 @@ export function UserTable({usuarios}:any) {
         ),
       },*/
       {
-        Header: "Apellidos",
-        accessor: "apellidos",
+        Header: "Color",
+        accessor: "color",
+      },
+        {
+        Header: "Icon",
+        accessor: "icon",
       },
       {
-        Header: "Email",
-        accessor: "email",
+        Header: "Fecha creacion",
+        accessor: "fecha_creacion",
       },
       {
-        Header: "Rol",
-        accessor: "rol",
+        Header: "Fecha modificacion",
+        accessor: "fecha_modificacion",
         disablesortby: true,
       },
-      {
-        Header: "Website",
-        accessor: "website",
-      },
-      /*{
-        Header: "Estado",
-        accessor: "status",
-        disablesortby: true,
-      },*/
     ],
     []
   )
