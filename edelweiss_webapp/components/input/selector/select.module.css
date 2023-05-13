@@ -40,7 +40,7 @@
   );
   background-color: var(--color-black-5);
   border: var(--border);
-  min-width: calc(100% - var(--border-width) * 2);
+  min-width: 100%;
   z-index: 1;
   cursor: pointer;
   border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);

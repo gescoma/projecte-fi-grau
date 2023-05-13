@@ -11,17 +11,14 @@ type MaybeSession = Session | null
 
 type SupabaseContext = {
   supabase: SupabaseClient<Database>
-  session: MaybeSession
 }
 
 const Context = createContext<SupabaseContext | undefined>(undefined)
 
 export default function SupabaseProvider({
   children,
-  session,
 }: {
   children: React.ReactNode
-  session: MaybeSession
 }) {
   const [supabase] = useState(() => createBrowserSupabaseClient())
   const router = useRouter()
@@ -39,7 +36,7 @@ export default function SupabaseProvider({
   }, [router, supabase])
 
   return (
-    <Context.Provider value={{ supabase, session }}>
+    <Context.Provider value={{ supabase }}>
       <>{children}</>
     </Context.Provider>
   )

@@ -18,7 +18,14 @@ export function useClientsContext() {
 }
 
 function useKanban() {
-  const { clients, formatedData, createClient } = useClientsCollection()
+  const {
+    clients,
+    formatedData,
+    owners,
+    entidades,
+    batchDelete,
+    createClient,
+  } = useClientsCollection()
 
   // const addNewTask = useCallback(
   //   // Logica para añadir una nueva tarea en el dom de kanban
@@ -78,11 +85,9 @@ function useKanban() {
   return {
     clients,
     formatedData,
+    entidades,
     createClient,
-    // addNewTask,
-    // getColumnTasks,
-    // updateTask: putTask,
-    // deleteTask: trashTask,
-    // dropTaskFrom,
+    batchDelete,
+    owners,
   }
 }

@@ -4,8 +4,8 @@ import { FiGrid, FiLayout } from "react-icons/fi"
 import { useMemo, useReducer, useState } from "react"
 
 import { Avatar } from "@/components/user/avatar"
-import { ClearFilters } from "@/components/filters/clearFiltersButton"
 import { DropdownBox } from "@/components/filters/dropdownBox"
+import { FiltersButton } from "@/components/filters/filtersButton"
 import { Grid } from "@/components/grid"
 import Image from "next/image"
 import { Property } from "./property"
@@ -266,13 +266,15 @@ export function PropertiesTable({ properties }: { properties: any }) {
             }}
             data={prepareTypes}
           />
-          <ClearFilters
+          <FiltersButton
             disabled={!state.filters && filterInput === ""}
             onClick={() => {
               dispatch({ type: "reset_filters" })
               setFilterInput("")
             }}
-          />
+          >
+            Nuse
+          </FiltersButton>
         </div>
       </div>
       {view === VIEW.TABLE && (

@@ -1,0 +1,17 @@
+.pill {
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+}
+
+.normal {
+  font-size: 0.8rem;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+}
+
+.small {
+  font-size: 0.6rem;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+}
