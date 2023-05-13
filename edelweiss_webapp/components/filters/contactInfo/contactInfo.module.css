@@ -1,0 +1,14 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.group > a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
