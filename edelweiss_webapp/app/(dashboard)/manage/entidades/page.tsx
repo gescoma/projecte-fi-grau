@@ -2,6 +2,8 @@
 
 import { Card } from "@/components/card"
 import { DashboardHead } from "@/components/dashboard/dashboard-head"
+import { EntidadesTable } from "@/components/entidades/table"
+import { RolTable } from "@/components/roles/table"
 import { Table } from "@/components/table"
 import { UserTable } from "@/components/user/table"
 import { useSupabase } from "@/context/AuthContext"
@@ -21,22 +23,22 @@ type ClientRow = {
   }
 }
 
-export default function Users() {
-    const {supabase} = useSupabase()
-  const [userStorage,setUserStorage] = useState<any>()
-  useEffect(()=>{supabase.from("users").select().then(({data,error})=>{
+export default function Entidades() {
+  const {supabase} = useSupabase()
+  const [entidadesStorage,setEntidadesStorage] = useState<any>()
+  useEffect(()=>{supabase.from("entidades").select().then(({data,error})=>{
     if(error){
     throw new Error(error.message) 
   }
   console.log(data)
-  setUserStorage(data)
+  setEntidadesStorage(data)
   })},[])
   return (
     <>
-      <DashboardHead>Gestión de usuarios</DashboardHead>
+      <DashboardHead>Gestión de entidades</DashboardHead>
       <Card>
-        <h2>Gestión de usuarios</h2>
-        {userStorage &&<UserTable usuarios={userStorage}/>}
+        <h2>Gestión de entidades</h2>
+        {entidadesStorage &&<EntidadesTable entidades={entidadesStorage}/>}
       </Card>
     </>
   )
