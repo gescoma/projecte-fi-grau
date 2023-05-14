@@ -7,6 +7,7 @@ import { Avatar } from "@/components/user/avatar"
 import { DropdownBox } from "@/components/filters/dropdownBox"
 import { FiltersButton } from "../filters/filtersButton"
 import { Grid } from "@/components/grid"
+import { Pill } from "@/components/pill"
 import { Property } from "./property"
 import type { PropertyRow } from "@/hooks/usePropertiesCollection"
 import { Sidebar } from "./sidebar"
@@ -142,11 +143,26 @@ export function PropertiesTable() {
       {
         Header: "cliente",
         accessor: "client.name",
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => (
+          <Avatar
+            user={{
+              name: "Alejandro Nanez",
+              username: "alejandronanez",
+              image: "https://unavatar.io/alejandronanez",
+            }}
+            size="compressed"
+          />
+        ),
       },
       {
         Header: "Estado",
         accessor: "status",
         disablesortby: true,
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => (
+          <Pill color="#1abc9c" size="small">
+            Falta documentación
+          </Pill>
+        ),
       },
     ],
     []
