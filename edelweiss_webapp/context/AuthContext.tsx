@@ -31,6 +31,7 @@ export default function SupabaseProvider({
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(false)
   const [profile, setProfile] = useState<any>(null)
+  const [session, setSession] = useState<MaybeSession>(null)
   const router = useRouter()
 
   const handleProfile = async (user: User) => {
@@ -54,6 +55,8 @@ export default function SupabaseProvider({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session)
+      setUser(session?.user ?? null)
       if (event === "SIGNED_OUT") {
         setProfile(null)
         setUser(null)
@@ -66,7 +69,6 @@ export default function SupabaseProvider({
         event === "USER_UPDATED" ||
         event === "SIGNED_IN"
       ) {
-        setUser(session?.user ?? null)
         session &&
           session.user &&
           supabase
