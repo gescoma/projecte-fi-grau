@@ -71,8 +71,7 @@ export function useClientsCollection() {
       users(nombre, apellidos, id, email, imagen)
     `).order("id").then(({ data, error }) => {
       if(error) throw new Error(error.message);
-      setClients(data as any)
-      console.log(data)
+      setClients(data as ClientsMaybe)
     })
 
   }, [supabase])
@@ -124,7 +123,6 @@ export function useClientsCollection() {
       newClients.push(newClient)
       return newClients
     })
-    setFormatedData([...formatedData, formatData([data as any])[0]])
     toaster.success("Cliente creado")
     return {data, error};
   }

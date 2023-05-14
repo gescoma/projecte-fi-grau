@@ -20,13 +20,13 @@ export function GridElement({
   }
 
   return (
-    <article key={item.property.id}>
+    <div key={item.id} className="flex items-stretch" onClick={handleClick}>
       {children}
       {openSidebar && (
         <SidebarLayout closeAction={handleClick}>
           <Sidebar data={item} />
         </SidebarLayout>
       )}
-    </article>
+    </div>
   )
 }

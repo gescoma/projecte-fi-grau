@@ -1,19 +1,20 @@
 "use client"
 
-import { FiGrid, FiLayout } from "react-icons/fi"
 import { useMemo, useReducer, useState } from "react"
 
+import { AddProperty } from "./addProperty"
 import { Avatar } from "@/components/user/avatar"
 import { DropdownBox } from "@/components/filters/dropdownBox"
-import { FiltersButton } from "@/components/filters/filtersButton"
+import { FiltersButton } from "../filters/filtersButton"
 import { Grid } from "@/components/grid"
-import Image from "next/image"
+import { Pill } from "@/components/pill"
 import { Property } from "./property"
-import { SearchBox } from "@/components/filters/searchBox"
+import type { PropertyRow } from "@/hooks/usePropertiesCollection"
 import { Sidebar } from "./sidebar"
 import { TabBox } from "@/components/filters/tabBox"
 import { Table } from "@/components/table"
 import styles from "./table.module.css"
+import { usePropertiesContext } from "@/context/PropertiesContext"
 
 const VIEW = {
   TABLE: "table",
@@ -22,40 +23,13 @@ const VIEW = {
 
 const resetReducer = {
   status: "",
-  type: "",
+  owner: "",
+  // type: "",
   filters: false,
 }
 
-type PropertiesRow = {
-  status: string
-  date: Date
-  property: {
-    id: string
-    address: string
-    city: string
-    state: string
-    zip: string
-    price: string
-    image: string
-  }
-  type: string
-  owner: {
-    id: string
-    name: string
-    surname: string
-    email: string
-    image: string
-  }
-  customer: {
-    id: string
-    name: string
-    surname: string
-    email: string
-    image: string
-  }
-}
-
 function reducer(state: any, action: any) {
+  console.log(action.payload)
   if (action.type === "change_state_view") {
     if (action.payload === "") {
       return {
@@ -86,6 +60,21 @@ function reducer(state: any, action: any) {
     }
   }
 
+  if (action.type === "change_owner") {
+    if (action.payload === "") {
+      return {
+        ...state,
+        filters: false,
+        owner: action.payload,
+      }
+    }
+    return {
+      ...state,
+      filters: true,
+      owner: action.payload,
+    }
+  }
+
   if (action.type === "reset_filters") {
     return resetReducer
   }
@@ -107,166 +96,138 @@ function reducer(state: any, action: any) {
   // throw Error("Unknown action.")
 }
 
-export function PropertiesTable({ properties }: { properties: any }) {
+export function PropertiesTable() {
+  const { formatedData, owners, propertiesStatus, batchDelete } =
+    usePropertiesContext()
   const [view, setView] = useState(VIEW.TABLE)
   const [state, dispatch] = useReducer(reducer, resetReducer)
-  const [filterInput, setFilterInput] = useState("")
-
-  const data = useMemo(() => properties, [properties])
+  const [openModal, setOpenModal] = useState(false)
 
   const column = useMemo(
     () => [
       {
-        Header: "Cliente",
-        accessor: "customer.name",
-        Cell: ({ row: { original } }: { row: { original: PropertiesRow } }) => (
+        Header: "Id de la propiedad",
+        accessor: "id",
+      },
+      {
+        Header: "Dirección",
+        accessor: "address",
+      },
+      {
+        Header: "Precio",
+        accessor: "precio",
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => {
+          return (
+            <span>{original.price ? <span>{original.price} €</span> : ""}</span>
+          )
+        },
+      },
+      {
+        Header: "Responsable",
+        accessor: "owner",
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => (
           <Avatar
             user={{
-              ...original.customer,
-              name: `${original.customer.name}  ${original.customer.surname}`,
+              ...original.owner,
+              image: original.owner.avatar,
+            }}
+            size="small"
+          />
+        ),
+        filter: (rows: any, id: any, filterValue: any) => {
+          return filterValue === ""
+            ? rows
+            : rows.filter((row: any) => row.original.owner.id === filterValue)
+        },
+      },
+      {
+        Header: "cliente",
+        accessor: "client.name",
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => (
+          <Avatar
+            user={{
+              name: "Alejandro Nanez",
+              username: "alejandronanez",
+              image: "https://unavatar.io/alejandronanez",
             }}
             size="compressed"
           />
         ),
       },
       {
-        Header: "Id de la propiedad",
-        accessor: "property.id",
-      },
-      {
-        Header: "Photo",
-        accessor: "property.image",
-        disablesortby: true,
-        Cell: ({ row: { original } }: { row: { original: PropertiesRow } }) => (
-          <Image
-            src={original.property.image}
-            alt={`Image of the building ${original.property.address}`}
-            width={80}
-            height={40}
-          />
-        ),
-      },
-      {
-        Header: "Dirección",
-        accessor: "property.address",
-        Cell: ({ row: { original } }: { row: { original: PropertiesRow } }) => (
-          <>
-            <span>{original.property.address}</span>
-            <span>
-              {original.property.zip} - {original.property.city}
-            </span>
-          </>
-        ),
-      },
-      {
-        Header: "Contrato",
-        accessor: "type",
-        disablesortby: true,
-      },
-      {
-        Header: "Precio",
-        accessor: "property.price",
-      },
-      {
-        Header: "Fecha",
-        accessor: "date",
-        Cell: ({ row: { original } }: { row: { original: PropertiesRow } }) => (
-          <span>{original.date.toLocaleDateString("es-ES")}</span>
-        ),
-      },
-      {
         Header: "Estado",
         accessor: "status",
         disablesortby: true,
+        Cell: ({ row: { original } }: { row: { original: PropertyRow } }) => (
+          <Pill color="#1abc9c" size="small">
+            Falta documentación
+          </Pill>
+        ),
       },
     ],
     []
   )
 
-  // reduce data to et states
-  const prepareData = data
-    .reduce(
-      (acc: any, item: any) => {
-        const index = acc.findIndex((el: any) => el.label === item.status)
-        if (index !== -1) {
-          acc[index].items += 1
-        } else {
-          acc.push({
-            label: item.status,
-            value: item.status,
-            items: 1,
-          })
-        }
-        return acc
-      },
-      [
-        {
-          label: "Todos",
-          value: "",
-        },
-      ]
-    )
-    .sort((a: any, b: any) => a.label.localeCompare(b.label))
-
-  const prepareTypes = data
-    .reduce(
-      (acc: any, item: any) => {
-        const index = acc.findIndex((el: any) => el.label === item.type)
-        if (index !== -1) {
-          acc[index].items += 1
-        } else {
-          acc.push({
-            label: item.type,
-            value: item.type,
-            items: 1,
-          })
-        }
-        return acc
-      },
-      [
-        {
-          label: "Todos",
-          value: "",
-        },
-      ]
-    )
-    .sort((a: any, b: any) => a.label.localeCompare(b.label))
-
   return (
-    <div>
-      <div className={styles.filters}>
-        <div className={styles.select}>
-          <DropdownBox
-            state={state.status}
-            action={(val) => {
-              dispatch({ type: "change_state_view", payload: val })
-            }}
-            data={prepareData}
-          />
-        </div>
-        <div className={styles.tabs}>
-          <TabBox
-            state={view}
-            action={setView}
-            data={[
-              {
-                label: FiLayout,
-                value: VIEW.TABLE,
-              },
-              {
-                label: FiGrid,
-                value: VIEW.GRID,
-              },
-            ]}
-          />
-          <TabBox
+    <>
+      <div>
+        <div className={styles.filters}>
+          <div>
+            <DropdownBox
+              state={state.status}
+              action={(val) => {
+                dispatch({ type: "change_owner", payload: val })
+              }}
+              data={owners}
+            >
+              Responsable:
+            </DropdownBox>
+            <DropdownBox
+              state={state.status}
+              action={(val) => {
+                dispatch({ type: "change_owner", payload: val })
+              }}
+              data={propertiesStatus}
+            >
+              Estado:
+            </DropdownBox>
+          </div>
+          <div>
+            <TabBox
+              state={view}
+              action={setView}
+              data={[
+                {
+                  icon: "FiLayout",
+                  codigo: VIEW.TABLE,
+                },
+                {
+                  icon: "FiGrid",
+                  codigo: VIEW.GRID,
+                },
+              ]}
+            />
+            <FiltersButton onClick={() => setOpenModal(true)}>
+              Añadir vivienda
+            </FiltersButton>
+
+            {/* <TabBox
             state={state.type}
             action={(val) => {
               dispatch({ type: "change_type_view", payload: val })
             }}
-            data={prepareTypes}
-          />
-          <FiltersButton
+            data={[
+              {
+                label: "Alquiler",
+                value: "Alquiler",
+              },
+              {
+                label: "Venta",
+                value: "Venta",
+              },
+            ]}
+          /> */}
+            {/* <FiltersButton
             disabled={!state.filters && filterInput === ""}
             onClick={() => {
               dispatch({ type: "reset_filters" })
@@ -274,32 +235,34 @@ export function PropertiesTable({ properties }: { properties: any }) {
             }}
           >
             Nuse
-          </FiltersButton>
+          </FiltersButton> */}
+          </div>
         </div>
+        {view === VIEW.TABLE && (
+          <section className={styles.table}>
+            <Table
+              data={formatedData || []}
+              columns={column}
+              expandable
+              sidebar={Sidebar}
+              filters={state}
+              batchDelete={batchDelete}
+            />
+          </section>
+        )}
+        {view === VIEW.GRID && (
+          <section className={styles.table}>
+            <Grid
+              data={formatedData || []}
+              expandable
+              sidebar={Sidebar}
+              element={Property}
+              filters={state}
+            />
+          </section>
+        )}
       </div>
-      {view === VIEW.TABLE && (
-        <section className={styles.table}>
-          <Table
-            data={data}
-            columns={column}
-            expandable
-            sidebar={Sidebar}
-            filters={state}
-          />
-        </section>
-      )}
-      {view === VIEW.GRID && (
-        <section className={styles.table}>
-          <Grid
-            data={data}
-            expandable
-            sidebar={Sidebar}
-            element={Property}
-            filters={state}
-            globalFilters={filterInput}
-          />
-        </section>
-      )}
-    </div>
+      <AddProperty isOpen={openModal} setIsOpen={setOpenModal} />
+    </>
   )
 }

@@ -1,5 +1,15 @@
 import styles from "./card.module.css"
 
-export function Card({ children }: { children: React.ReactNode }) {
-  return <article className={styles.card}>{children}</article>
+export function Card({
+  children,
+  clickable = false,
+}: {
+  children: React.ReactNode
+  clickable?: boolean
+}) {
+  return (
+    <article className={`${styles.card} ${clickable && styles.clickable}`}>
+      {children}
+    </article>
+  )
 }

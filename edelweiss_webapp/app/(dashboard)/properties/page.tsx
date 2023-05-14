@@ -1,16 +1,15 @@
 import { Card } from "@/components/card"
 import { DashboardHead } from "@/components/dashboard/dashboard-head"
+import { PropertiesProvider } from "@/context/PropertiesContext"
 import { PropertiesTable } from "@/components/properties/table"
-import { generateProperties } from "@/utils/faker/properties"
 
 export default function PropertiesPage() {
-  const properties = generateProperties()
   return (
-    <>
+    <PropertiesProvider>
       <DashboardHead>Propiedades</DashboardHead>
       <Card>
-        <PropertiesTable properties={properties} />
+        <PropertiesTable />
       </Card>
-    </>
+    </PropertiesProvider>
   )
 }

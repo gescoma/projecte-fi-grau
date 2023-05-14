@@ -2,20 +2,19 @@ import { ComponentType, useEffect, useState } from "react"
 
 import { Footer } from "../filters/footer"
 import { GridElement } from "./gridComponent"
+import { SearchBox } from "../input/searchBox"
 import styles from "./grid.module.css"
 import { useDebounce } from "@/hooks/useDebounce"
 
 export function Grid({
   data,
   filters = {},
-  globalFilters = "",
   sidebar: Sidebar,
   expandable = false,
   element: Element,
 }: {
   data: any
   filters?: any
-  globalFilters?: string
   sidebar?: ComponentType<any>
   expandable?: boolean
   element: ComponentType<any>
@@ -23,6 +22,7 @@ export function Grid({
   const [content, setContent] = useState(data)
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [globalFilters, setGlobalFilters] = useState("")
   const filterData = (data: any, filters: any) => {
     if (!filters.filters && globalFilters === "") return data
     const entries = Object.entries(filters)
@@ -63,13 +63,24 @@ export function Grid({
   const filteredData = useDebounce(() => filterData(data, filters))
 
   useEffect(() => {
-    filteredData().then((res: any) => {
-      setContent(res)
-    })
+    setContent(filteredData)
   }, [filters, globalFilters, filteredData])
 
   return (
     <>
+      <div className={styles.filters}>
+        <div>
+          <SearchBox onChange={setGlobalFilters} value={globalFilters} />
+        </div>
+        <Footer
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          itemsCount={content.length}
+          page={page}
+          setPage={setPage}
+          showPageSize
+        />
+      </div>
       <section className={styles.grid}>
         {content &&
           content
@@ -92,9 +103,6 @@ export function Grid({
         setPageSize={setPageSize}
         itemsCount={content.length}
         showPagination
-        showResults
-        showPageSize
-        showPageSelector
       />
     </>
   )

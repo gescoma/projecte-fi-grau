@@ -26,7 +26,7 @@ export const SidebarElements: menuItem[] = [
   },
   {
     icon: FiHome,
-    text: "Propiedades",
+    text: "Viviendas",
     link: "/properties",
   },
   {
@@ -59,7 +59,7 @@ export const SidebarElements: menuItem[] = [
         link: "/roles",
         icon: FiGrid,
       },
-       {
+      {
         text: "Gestion de entidades",
         link: "/entidades",
         icon: FiGlobe,
