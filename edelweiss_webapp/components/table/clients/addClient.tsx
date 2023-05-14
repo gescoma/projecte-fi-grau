@@ -1,10 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react"
-import { Dispatch, Fragment, SetStateAction } from "react"
+import {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import { ControledSelect } from "@/components/input/selector/controlledSelect"
 import { Input } from "@/components/input"
 import { useClientsContext } from "@/context/ClientsContext"
+import { useSupabase } from "@/context/AuthContext"
 
 type Inputs = {
   name: string
@@ -15,6 +23,8 @@ type Inputs = {
   image: string
   source: string
   owner: string
+  business: string
+  nacionalidad: string
 }
 
 export function AddClient({
@@ -32,9 +42,25 @@ export function AddClient({
     formState: { errors },
   } = useForm<Inputs>()
 
-  const { supabase, save } = useClientsContext()
+  const { entidades, owners, createClient } = useClientsContext()
+  const { supabase } = useSupabase()
+  const [initialOwner, setInitialOwner] = useState<any>("")
+  const [initialEntity, setInitialEntity] = useState<any>("")
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const formatedUser = {
+      nombre: data.name,
+      apellido1: data.surname || "",
+      apellido2: data.secondSurname || "",
+      telefono: data.phone,
+      correo: data.email,
+      imagen: data.image,
+      id_entidad: data.source || initialEntity.codigo,
+      id_propietario: data.owner || initialOwner.id,
+      empresa: data.business,
+      nacionalidad: data.nacionalidad,
+    }
+    createClient(formatedUser)
     closeModal()
   }
 
@@ -45,6 +71,42 @@ export function AddClient({
   function openModal() {
     setIsOpen(true)
   }
+
+  const entidadesLimpias = entidades.filter(
+    (entidad: any) => entidad.codigo !== ""
+  )
+
+  const responsablesLimpios = owners.filter((owner: any) => owner.id !== "")
+
+  const getCurrentUserName = useCallback(async () => {
+    const { data: authData } = await supabase.auth.getUser()
+    if (!authData) return
+    const { data: userData } = await supabase
+      .from("users")
+      .select("nombre, apellidos")
+      .eq("id", authData?.user?.id)
+      .single()
+    return {
+      nombre: `${userData?.nombre || ""}${
+        (userData?.nombre && userData.apellidos && " ") || ""
+      }${userData?.apellidos || ""}`,
+      id: authData?.user?.id,
+    }
+  }, [supabase])
+
+  useEffect(() => {
+    getCurrentUserName().then((name) => setInitialOwner(name))
+  }, [getCurrentUserName])
+
+  useEffect(() => {
+    setInitialEntity(
+      entidadesLimpias.reduce((acc: any, val: any) => {
+        if (acc === "" && val.nombre) acc = val
+        return acc
+      }, "")
+    )
+  }, [entidadesLimpias])
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -74,78 +136,102 @@ export function AddClient({
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-xl leading-6 text-gray-900"
                 >
                   Añadir Cliente
                 </Dialog.Title>
-                <div className="mt-2">
+                <div className="mt-8">
                   <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                      <Input
-                        name="name"
-                        placeholder="Nombre"
-                        register={register}
-                        size="half"
-                      />
-                      <Input
-                        name="surname"
-                        placeholder="Primer Apellido"
-                        register={register}
-                        size="half"
-                      />
-                      <Input
-                        name="secondSurname"
-                        placeholder="Segundo Apellido"
-                        register={register}
-                        size="half"
-                      />
-                    </div>
-                    <div>
-                      <Input
-                        name="phone"
-                        placeholder="Numero de teléfono"
-                        register={register}
-                        size="small"
-                      />
-                      <Input
-                        name="email"
-                        placeholder="Correo electrónico"
-                        register={register}
-                        size="small"
-                      />
-                    </div>
-
-                    <div>
-                      <ControledSelect
-                        options={[
-                          {
-                            label: "Facebook",
-                            value: "FACEBOOK",
-                          },
-                          {
-                            label: "Instagram",
-                            value: "INSTAGRAM",
-                          },
-                        ]}
-                        name="source"
-                        control={control}
-                        defaultValue="Hola"
-                      />
-                      <ControledSelect
-                        options={[
-                          {
-                            label: "Facebook",
-                            value: "FACEBOOK",
-                          },
-                          {
-                            label: "Instagram",
-                            value: "INSTAGRAM",
-                          },
-                        ]}
-                        name="owner"
-                        control={control}
-                        defaultValue="Hola"
-                      />
+                    <div className="flex flex-col gap-8">
+                      <div className="flex flex-col gap-4">
+                        <h6>Nombre y apellidos</h6>
+                        <div className="flex">
+                          <Input
+                            name="name"
+                            placeholder="Nombre"
+                            register={register}
+                            size="full"
+                          />
+                        </div>
+                        <div className="flex columns-2 gap-4">
+                          <Input
+                            name="surname"
+                            placeholder="Primer Apellido"
+                            register={register}
+                            size="full"
+                          />
+                          <Input
+                            name="secondSurname"
+                            placeholder="Segundo Apellido"
+                            register={register}
+                            size="full"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Información de contacto</h6>
+                        <div className="flex columns-2 gap-4">
+                          <Input
+                            name="phone"
+                            placeholder="Numero de teléfono"
+                            register={register}
+                            size="full"
+                          />
+                          <Input
+                            name="email"
+                            placeholder="Correo electrónico"
+                            register={register}
+                            size="full"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Responsable</h6>
+                        <div className="flex columns-2 gap-4">
+                          <ControledSelect
+                            options={responsablesLimpios.map((owner: any) => ({
+                              label: owner.name,
+                              value: owner.id,
+                            }))}
+                            name="owner"
+                            control={control}
+                            defaultValue={initialOwner.nombre}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Tipo de usuario</h6>
+                        <div className="flex columns-2 gap-4">
+                          <ControledSelect
+                            options={entidadesLimpias.map((entidad: any) => ({
+                              label: entidad.nombre,
+                              value: entidad.codigo,
+                            }))}
+                            name="source"
+                            control={control}
+                            defaultValue={initialEntity.nombre}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Información adicional</h6>
+                        <div className="flex columns-2 gap-4">
+                          <Input
+                            name="business"
+                            placeholder="Empresa"
+                            register={register}
+                            size="full"
+                          />
+                        </div>
+                        <div className="flex columns-2 gap-4">
+                          <Input
+                            name="nacionalidad"
+                            placeholder="Nacionalidad"
+                            register={register}
+                            size="full"
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     <div className="mt-4 flex justify-between">

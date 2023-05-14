@@ -15,6 +15,11 @@ export function ControledSelect({
     field: { value, onChange },
   } = useController(props)
   return (
-    <Select defaultValue={defaultValue} options={options} onChange={onChange} />
+    <Select
+      defaultValue={defaultValue}
+      options={options}
+      onChange={onChange}
+      size="big"
+    />
   )
 }

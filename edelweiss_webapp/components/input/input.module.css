@@ -4,7 +4,7 @@
 
   padding: var(--padding-md);
   border: var(--border);
-  border-radius: (--border-radius-md);
+  border-radius: var(--border-radius-xs);
 }
 
 .input::placeholder {
@@ -19,4 +19,8 @@
 
 .half {
   min-width: 50%;
+}
+
+.full {
+  width: 100%;
 }

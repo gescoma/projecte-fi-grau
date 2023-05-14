@@ -72,10 +72,15 @@ export function useClientsCollection() {
     `).order("id").then(({ data, error }) => {
       if(error) throw new Error(error.message);
       setClients(data as any)
-      setFormatedData(formatData(data))
+      console.log(data)
     })
 
   }, [supabase])
+
+  useEffect(() => {
+    if(!clients) return; 
+    setFormatedData(formatData(clients))
+  }, [clients])
 
   const getEntidades = useCallback(async () => {
     const { data, error } = await supabase.from("entidades").select();
@@ -103,17 +108,24 @@ export function useClientsCollection() {
   }, [getOwners])
 
   const createClient = async (client: any) => {
-    const currentUser = await supabase.auth.getUser();
-    const filledClient = {
-      ...client,
-      id_propietario: currentUser.data.user?.id
-    }
-    console.log({filledClient})
     const {data, error} = await supabase.from("cliente").insert(client).select();
     if(error) throw new Error(error.message);
-    console.log({data})
-    setClients([...clients as any, data[0] as any])
+    if(!data) throw new Error("No se ha podido crear el cliente")
+    const newClient:any = structuredClone(data[0])
+    const {data: dataEntidad} = await supabase.from("entidades").select().eq("codigo", client.id_entidad).single()
+    if(!dataEntidad) throw new Error("No se ha podido crear el cliente")
+    const {data: dataOwner} = await supabase.from("users").select().eq("id", client.id_propietario).single()
+    if(!dataOwner) throw new Error("No se ha podido crear el cliente")
+    newClient.entidades = dataEntidad
+    newClient.users = dataOwner
+    setClients((oldClients) => {
+      if(!oldClients) return [newClient]
+      const newClients = structuredClone(oldClients)
+      newClients.push(newClient)
+      return newClients
+    })
     setFormatedData([...formatedData, formatData([data as any])[0]])
+    toaster.success("Cliente creado")
     return data;
   }
 
@@ -129,10 +141,9 @@ export function useClientsCollection() {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const { data, error } = await supabase.from("cliente").delete().in("id", ids).select();
+        const { error } = await supabase.from("cliente").delete().in("id", ids).select();
         if(error) throw new Error(error.message);
         setClients((clients as any).filter((client: any) => !ids.includes(client.id)))
-        setFormatedData((formatedData as any).filter((client: any) => !ids.includes(client.id)))
         toaster.success("Clientes eliminados")
         return
       }

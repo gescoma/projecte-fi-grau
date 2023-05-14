@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react"
+
 import { FiChevronDown } from "react-icons/fi"
 import styles from "./select.module.css"
 import { useClickOutside } from "@/hooks/useClickOutsideRef"
-import { useState } from "react"
 
 export function Select({
   defaultValue,
@@ -9,12 +10,14 @@ export function Select({
   onChange,
   minWidth = "10rem",
   maxWidth = "10rem",
+  size = "normal",
 }: {
   defaultValue: string
   options: { label: string; value: string }[]
   onChange: (value: string) => void
   minWidth?: string
   maxWidth?: string
+  size?: "small" | "big" | "normal"
 }) {
   const [selected, setSelected] = useState<any>(defaultValue)
   const { isOpenRef, handleClose, isOpen } = useClickOutside<HTMLDivElement>()
@@ -28,7 +31,10 @@ export function Select({
   return (
     <div
       className={styles.container}
-      style={{ minWidth: minWidth, maxWidth: maxWidth }}
+      style={{
+        minWidth: size === "big" ? "100%" : minWidth,
+        maxWidth: maxWidth,
+      }}
       ref={isOpenRef}
     >
       <div
