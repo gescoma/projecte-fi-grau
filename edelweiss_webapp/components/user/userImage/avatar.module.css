@@ -1,6 +1,7 @@
 .avatar {
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .normal {

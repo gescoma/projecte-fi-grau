@@ -1,19 +1,32 @@
-import { User } from "@/types/User"
+"use client"
 
-export default async function Roles() {
-  // const users = await fetch(`${process.env.BACKEND_DOMAIN}/clients`)
-  // const usersJson = await users.json()
+import { Card } from "@/components/card"
+import { DashboardHead } from "@/components/dashboard/dashboard-head"
+import { EntidadesTable } from "@/components/entidades/table"
+import { RolTable } from "@/components/roles/table"
+import { Table } from "@/components/table"
+import { UserTable } from "@/components/user/table"
+import { useSupabase } from "@/context/AuthContext"
+import { useEffect, useState } from "react"
 
+
+export default function Roles() {
+  const {supabase} = useSupabase()
+  const [rolesStorage,setRolesStorage] = useState<any>()
+  useEffect(()=>{supabase.from("roles").select().then(({data,error})=>{
+    if(error){
+    throw new Error(error.message) 
+  }
+  console.log(data)
+  setRolesStorage(data)
+  })},[])
   return (
-    <div>
-      <h1>Users</h1>
-      {/* {users &&
-        usersJson.map((user: User) => (
-          <div key={user.name}>
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-          </div>
-        ))} */}
-    </div>
+    <>
+      <DashboardHead>Gestión de roles</DashboardHead>
+      <Card>
+        <h2>Gestión de roles</h2>
+        {rolesStorage &&<RolTable roles={rolesStorage}/>} 
+      </Card>
+    </>
   )
 }
