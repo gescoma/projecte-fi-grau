@@ -1,27 +1,33 @@
+import { Avatar } from "@/components/user/avatar"
 import { Card } from "@/components/card"
 import Image from "next/image"
+import { Pill } from "@/components/pill"
 
 export function Property({ data }: { data: any }) {
   return (
-    <Card>
-      <div>
-        <Image
-          src={data.property.image}
-          alt={`Imagen de la propiedad de ${data.property.address}`}
-          width="200"
-          height="100"
-        />
-      </div>
-      <div>
-        <h2>{data.property.name}</h2>
-        <h3>{data.property.address}</h3>
-        <p>{data.property.description}</p>
-      </div>
-      <div>
-        <p>{data.property.price} €</p>
-      </div>
-      <div>
-        {data.type} - {data.status}
+    <Card clickable>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h2>{data.address}</h2>
+          {data.price && <span>{data.price} €</span>}
+        </div>
+        <div className="flex flex-col gap-2">
+          <h5>Estado de la operación</h5>
+          <Pill color="#1abc9c" size="small">
+            Falta documentación
+          </Pill>
+        </div>
+        <div className="flex flex-col gap-2">
+          <h5>Cliente </h5>
+          <Avatar
+            user={{
+              name: "Alejandro Nanez",
+              username: "alejandronanez",
+              image: "https://unavatar.io/alejandronanez",
+            }}
+            size="compressed"
+          />
+        </div>
       </div>
     </Card>
   )

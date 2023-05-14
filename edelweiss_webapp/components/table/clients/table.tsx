@@ -101,7 +101,6 @@ export function Table() {
     formatedData: users,
     entidades,
     owners,
-    createClient,
     batchDelete,
   } = useClientsContext()
 

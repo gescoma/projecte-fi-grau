@@ -5,3 +5,16 @@
   grid-auto-rows: minmax(100px, auto);
   grid-auto-flow: dense;
 }
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--padding-lg);
+}
+
+.filters > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

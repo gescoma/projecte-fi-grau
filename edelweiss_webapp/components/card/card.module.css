@@ -3,4 +3,14 @@
   background-color: white;
   border-radius: 1rem;
   border: 0.1rem solid var(--color-black-10);
+  flex-grow: 1;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border: 0.1rem solid var(--color-black-20);
+  background-color: var(--color-black-5);
 }
