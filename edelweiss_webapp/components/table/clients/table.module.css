@@ -7,7 +7,7 @@
 .filters > div {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .search {
@@ -20,4 +20,9 @@
   border: var(--border);
   padding: 1rem;
   border-radius: var(--border-radius-md);
+}
+
+.modal {
+  position: relative;
+  z-index: 99999;
 }

@@ -1,0 +1,22 @@
+.icon {
+  width: var(--font-size-filters);
+  height: var(--font-size-filters);
+}
+
+.iconSmall {
+  width: 8px;
+  height: 8px;
+}
+
+.iconGroup {
+  position: relative;
+}
+
+.iconGroup .iconSmall {
+  position: absolute;
+  bottom: 12px;
+  right: -2px;
+  background-color: var(--color-white);
+  border-radius: 100%;
+  stroke-width: 3px;
+}

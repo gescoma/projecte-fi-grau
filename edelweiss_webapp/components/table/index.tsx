@@ -1,13 +1,7 @@
 "use client"
 
-import {
-  ComponentType,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react"
-import { FiArrowDown, FiArrowUp } from "react-icons/fi"
+import { ComponentType, useEffect, useState } from "react"
+import { FiArrowDown, FiArrowUp, FiDelete, FiTrash2 } from "react-icons/fi"
 import {
   useExpanded,
   useFilters,
@@ -18,6 +12,7 @@ import {
   useTable,
 } from "react-table"
 
+import { FiltersButton } from "../filters/filtersButton"
 import { Footer } from "../filters/footer"
 import { IndeterminateCheckbox } from "@/components/filters/selectionBox"
 import { SearchBox } from "../filters/searchBox"
@@ -31,12 +26,14 @@ export function Table({
   filters = {},
   sidebar: Sidebar,
   expandable = false,
+  batchDelete = undefined,
 }: {
   data: any
   columns: any
   filters?: any
   sidebar?: ComponentType<any>
   expandable?: boolean
+  batchDelete?: (data: any) => void
 }) {
   const {
     getTableProps,
@@ -47,9 +44,10 @@ export function Table({
     gotoPage,
     setPageSize,
     rows,
-    state: { pageIndex, pageSize, globalFilter },
+    state: { pageIndex, pageSize },
     setFilter,
     setGlobalFilter,
+    selectedFlatRows,
   } = useTable(
     {
       columns,
@@ -89,7 +87,7 @@ export function Table({
 
   const filterGlobal = useDebounce(globalFilters)
 
-  const debouncedGlobalFilter = useEffect(() => {
+  useEffect(() => {
     Object.entries(filters).forEach(([key, value]) => {
       if (key === "filters") return
       setFilter(key, value)
@@ -99,11 +97,24 @@ export function Table({
   useEffect(() => {
     setGlobalFilter(filterGlobal)
   }, [filterGlobal, setGlobalFilter])
-  
+
+  const handleBatchDelete = () => {
+    if (!batchDelete) return
+    batchDelete(selectedFlatRows.map((row: any) => row.original.id))
+  }
+
   return (
     <>
       <div className={styles.filters}>
-        <SearchBox onChange={setGlobalFilters} value={globalFilters} />
+        <div>
+          <SearchBox onChange={setGlobalFilters} value={globalFilters} />
+
+          {selectedFlatRows.length > 0 && batchDelete && (
+            <FiltersButton onClick={handleBatchDelete} type="error">
+              <FiTrash2 />
+            </FiltersButton>
+          )}
+        </div>
         <Footer
           pageSize={pageSize}
           setPageSize={setPageSize}

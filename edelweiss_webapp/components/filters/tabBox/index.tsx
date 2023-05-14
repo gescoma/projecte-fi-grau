@@ -1,7 +1,21 @@
+import * as Icons from "react-icons/fi/"
+
 import { Dispatch, SetStateAction } from "react"
 
-import { Datatype } from "@/types/filterDataType"
+import { IconType } from "react-icons"
 import styles from "./select.module.css"
+
+const IconComponent = ({
+  type,
+  ...props
+}: {
+  type: any
+  className?: string
+}) => {
+  // @ts-ignore
+  const TheIcon = Icons[type] as IconType
+  return <TheIcon {...props} />
+}
 
 export function TabBox({
   state,
@@ -10,24 +24,36 @@ export function TabBox({
 }: {
   state: string
   action: Dispatch<SetStateAction<string>>
-  data: Datatype[]
+  data: any
 }) {
   return (
     <div className={styles.container}>
-      {data.map(({ label, value, items }) => (
-        <button
-          className={`${styles.button} ${value === state ? styles.active : ""}`}
-          key={value}
-          onClick={() => action(value)}
-          disabled={value === state}
-        >
-          {typeof label === "string"
-            ? label
-            : label({
-                className: styles.icon,
-              })}
-        </button>
-      ))}
+      {data.map(
+        ({
+          nombre,
+          codigo,
+          icon,
+        }: {
+          nombre: string
+          codigo: string
+          icon: string
+        }) => (
+          <button
+            className={`${styles.button} ${
+              codigo === state ? styles.active : ""
+            }`}
+            key={codigo}
+            onClick={() => action(codigo)}
+            disabled={codigo === state}
+          >
+            {icon ? (
+              <IconComponent type={icon} className={styles.icon} />
+            ) : (
+              nombre
+            )}
+          </button>
+        )
+      )}
     </div>
   )
 }

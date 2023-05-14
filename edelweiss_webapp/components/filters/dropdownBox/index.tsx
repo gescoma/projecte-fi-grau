@@ -1,8 +1,5 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, useCallback } from "react"
 
-import { Datatype } from "@/types/filterDataType"
-import { FiChevronDown } from "react-icons/fi"
-import { IconType } from "react-icons"
 import { Select } from "@/components/input/selector"
 import styles from "./dropdown.module.css"
 
@@ -10,30 +7,44 @@ export function DropdownBox({
   data,
   action,
   state,
-  ...restOfProps
+  children,
 }: {
-  data: Datatype[]
+  data: any
   action: Dispatch<SetStateAction<string>>
   state: any
+  children?: ReactNode
 }) {
   const handleClick = (value: string) => {
     action(value)
   }
 
+  const getActualValue = useCallback(
+    (value: string) => {
+      const actualValue = data.filter(
+        ({ name }: { name: string }) => name === value
+      )
+      if (actualValue[0]) {
+        return actualValue[0].id
+      }
+      return "Todos"
+    },
+    [data]
+  )
+
   return (
     <>
       <div className={styles.select}>
-        <span>Owners:</span>
-        <Select
-          defaultValue={
-            data.filter((item) => item.value === state)[0].label as string
-          }
-          options={data.map((item) => ({
-            label: item.label as string,
-            value: item.value,
-          }))}
-          onChange={handleClick}
-        />
+        {children && <span>{children}</span>}
+        {data && (
+          <Select
+            defaultValue={getActualValue(state)}
+            options={data.map(({ name, id }: { name: string; id: string }) => ({
+              label: name,
+              value: id,
+            }))}
+            onChange={handleClick}
+          />
+        )}
       </div>
     </>
   )

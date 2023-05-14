@@ -1,13 +1,26 @@
 .input {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--color-black);
 
-  padding: calc(1rem - 2px) calc(2rem - 2px);
-  border: 2px solid var(--color-black-10);
-  border-radius: 0.5rem;
+  padding: var(--padding-md);
+  border: var(--border);
+  border-radius: var(--border-radius-xs);
 }
 
 .input::placeholder {
   color: var(--color-black-20);
   opacity: 1;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-black-30);
+}
+
+.half {
+  min-width: calc(50% - var(--padding-md) * 2);
+}
+
+.full {
+  width: calc(100% - var(--padding-md) * 2);
 }

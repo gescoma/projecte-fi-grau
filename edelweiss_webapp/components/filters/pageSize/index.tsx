@@ -23,8 +23,8 @@ export function PageSize({
           { label: "50", value: "50" },
         ]}
         onChange={(value) => setPageSize(Number(value))}
-        minWidth={10}
-        maxWidth={46}
+        minWidth="2rem"
+        maxWidth="3rem"
       />
       <span> de {total} resultados</span>
     </div>

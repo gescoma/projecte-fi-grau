@@ -14,9 +14,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   gap: var(--padding-xs);
   transition: background-color 0.2s ease-in-out;
+}
+
+.active {
+  cursor: pointer;
 }
 
 .active:hover {
@@ -28,25 +31,14 @@
   outline-offset: -2px;
 }
 
-.icon {
-  width: var(--font-size-filters);
-  height: var(--font-size-filters);
+.error {
+  color: var(--color-danger);
 }
 
-.iconSmall {
-  width: 8px;
-  height: 8px;
+.error:hover {
+  background-color: var(--color-danger-10);
 }
 
-.iconGroup {
-  position: relative;
-}
-
-.iconGroup .iconSmall {
-  position: absolute;
-  bottom: 12px;
-  right: -2px;
-  background-color: var(--color-white);
-  border-radius: 100%;
-  stroke-width: 3px;
+.normal {
+  padding: var(--padding-xs) var(--padding-md);
 }

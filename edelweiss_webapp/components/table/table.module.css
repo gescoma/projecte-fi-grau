@@ -31,6 +31,12 @@
   margin-bottom: var(--padding-lg);
 }
 
+.filters > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .tableHead th:first-child > div {
   border-left: var(--border);
   border-radius: var(--border-radius-xs) 0 0 var(--border-radius-xs);

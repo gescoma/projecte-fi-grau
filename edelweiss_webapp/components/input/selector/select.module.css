@@ -25,7 +25,6 @@
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   border-radius: var(--border-radius-xs);
-  z-index: 2;
 }
 
 .input {
@@ -35,13 +34,10 @@
 
 .optionsContainer {
   position: absolute;
-  top: calc(
-    calc(var(--font-size-filters) + var(--padding-xs)) + var(--border-width)
-  );
   background-color: var(--color-black-5);
   border: var(--border);
-  min-width: calc(100% - var(--border-width) * 2);
-  z-index: 1;
+  min-width: calc(100% - calc(var(--border-width) * 2));
+  z-index: 5;
   cursor: pointer;
   border-radius: 0 0 var(--border-radius-xs) var(--border-radius-xs);
   padding-top: var(--border-radius-xs);
