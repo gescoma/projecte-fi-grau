@@ -43,33 +43,40 @@ export function AddClient({
   } = useForm<Inputs>()
 
   const { entidades, owners, createClient } = useClientsContext()
-  const { supabase } = useSupabase()
+  const { supabase, user: authUser } = useSupabase()
   const [initialOwner, setInitialOwner] = useState<any>("")
   const [initialEntity, setInitialEntity] = useState<any>("")
+  const [error, setError] = useState<string | undefined>(undefined)
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const formatedUser = {
-      nombre: data.name,
-      apellido1: data.surname || "",
-      apellido2: data.secondSurname || "",
-      telefono: data.phone,
-      correo: data.email,
-      imagen: data.image,
-      id_entidad: data.source || initialEntity.codigo,
-      id_propietario: data.owner || initialOwner.id,
-      empresa: data.business,
-      nacionalidad: data.nacionalidad,
+    try {
+      setError(undefined)
+      const formatedUser = {
+        nombre: data.name,
+        apellido1: data.surname || "",
+        apellido2: data.secondSurname || "",
+        telefono: data.phone,
+        correo: data.email,
+        imagen: data.image,
+        id_entidad: data.source || initialEntity.codigo,
+        id_propietario: data.owner || initialOwner.id,
+        empresa: data.business,
+        nacionalidad: data.nacionalidad,
+      }
+      const { error } = createClient(formatedUser)
+      if (error) {
+        setError(error.message)
+        return
+      }
+      closeModal()
+    } catch (e: any) {
+      console.log("here")
+      setError(e.message)
     }
-    createClient(formatedUser)
-    closeModal()
   }
 
   function closeModal() {
     setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
   }
 
   const entidadesLimpias = entidades.filter(
@@ -79,20 +86,19 @@ export function AddClient({
   const responsablesLimpios = owners.filter((owner: any) => owner.id !== "")
 
   const getCurrentUserName = useCallback(async () => {
-    const { data: authData } = await supabase.auth.getUser()
-    if (!authData) return
-    const { data: userData } = await supabase
+    const authData = authUser
+    const { data: userData, error } = await supabase
       .from("users")
-      .select("nombre, apellidos")
-      .eq("id", authData?.user?.id)
+      .select()
+      .eq("id", authData?.id)
       .single()
     return {
       nombre: `${userData?.nombre || ""}${
         (userData?.nombre && userData.apellidos && " ") || ""
       }${userData?.apellidos || ""}`,
-      id: authData?.user?.id,
+      id: authData?.id,
     }
-  }, [supabase])
+  }, [supabase, authUser])
 
   useEffect(() => {
     getCurrentUserName().then((name) => setInitialOwner(name))
@@ -146,26 +152,44 @@ export function AddClient({
                       <div className="flex flex-col gap-4">
                         <h6>Nombre y apellidos</h6>
                         <div className="flex">
-                          <Input
-                            name="name"
-                            placeholder="Nombre"
-                            register={register}
-                            size="full"
-                          />
+                          <div className="flex flex-col w-full">
+                            <Input
+                              name="name"
+                              placeholder="Nombre"
+                              register={register}
+                              size="full"
+                              options={{ required: true }}
+                            />
+                            {errors.name && (
+                              <div className="mt-2 ml-1 text-xs text-red-500">
+                                El campo Nombre es obligatorio
+                              </div>
+                            )}
+                          </div>
                         </div>
                         <div className="flex columns-2 gap-4">
-                          <Input
-                            name="surname"
-                            placeholder="Primer Apellido"
-                            register={register}
-                            size="full"
-                          />
-                          <Input
-                            name="secondSurname"
-                            placeholder="Segundo Apellido"
-                            register={register}
-                            size="full"
-                          />
+                          <div className="flex flex-col w-full">
+                            <Input
+                              name="surname"
+                              placeholder="Primer Apellido"
+                              register={register}
+                              size="full"
+                              options={{ required: true }}
+                            />
+                            {errors.surname && (
+                              <div className="mt-2 ml-1 text-xs text-red-500">
+                                El campo Apellido es obligatorio
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex flex-col w-full">
+                            <Input
+                              name="secondSurname"
+                              placeholder="Segundo Apellido"
+                              register={register}
+                              size="full"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div className="flex flex-col gap-4">
@@ -233,6 +257,7 @@ export function AddClient({
                         </div>
                       </div>
                     </div>
+                    {error && <span>{error}</span>}
 
                     <div className="mt-4 flex justify-between">
                       <button

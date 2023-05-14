@@ -126,7 +126,7 @@ export function useClientsCollection() {
     })
     setFormatedData([...formatedData, formatData([data as any])[0]])
     toaster.success("Cliente creado")
-    return data;
+    return {data, error};
   }
 
   const batchDelete = (ids: string[]) => {

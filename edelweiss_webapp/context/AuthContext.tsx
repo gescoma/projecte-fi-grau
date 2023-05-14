@@ -59,7 +59,6 @@ export default function SupabaseProvider({
       setUser(session?.user ?? null)
       if (event === "SIGNED_OUT") {
         setProfile(null)
-        setUser(null)
         router.push("/")
         return
       }
