@@ -5,7 +5,7 @@ export function Card({
   clickable = false,
 }: {
   children: React.ReactNode
-  clickable: boolean
+  clickable?: boolean
 }) {
   return (
     <article className={`${styles.card} ${clickable && styles.clickable}`}>
