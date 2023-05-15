@@ -15,6 +15,7 @@ import { TabBox } from "@/components/filters/tabBox"
 import { Table } from "@/components/table"
 import styles from "./table.module.css"
 import { usePropertiesContext } from "@/context/PropertiesContext"
+import { ClearFiltersIcon } from "../icons/clearFiltersIcon"
 
 const VIEW = {
   TABLE: "table",
@@ -29,7 +30,6 @@ const resetReducer = {
 }
 
 function reducer(state: any, action: any) {
-  console.log(action.payload)
   if (action.type === "change_state_view") {
     if (action.payload === "") {
       return {
@@ -191,6 +191,15 @@ export function PropertiesTable() {
             >
               Estado:
             </DropdownBox>
+            <FiltersButton
+              disabled={!state.filters}
+              onClick={() => {
+                dispatch({ type: "reset_filters" })
+              }}
+            >
+              Limpiar filtros
+              <ClearFiltersIcon />
+            </FiltersButton>
           </div>
           <div>
             <TabBox
@@ -210,32 +219,6 @@ export function PropertiesTable() {
             <FiltersButton onClick={() => setOpenModal(true)}>
               Añadir vivienda
             </FiltersButton>
-
-            {/* <TabBox
-            state={state.type}
-            action={(val) => {
-              dispatch({ type: "change_type_view", payload: val })
-            }}
-            data={[
-              {
-                label: "Alquiler",
-                value: "Alquiler",
-              },
-              {
-                label: "Venta",
-                value: "Venta",
-              },
-            ]}
-          /> */}
-            {/* <FiltersButton
-            disabled={!state.filters && filterInput === ""}
-            onClick={() => {
-              dispatch({ type: "reset_filters" })
-              setFilterInput("")
-            }}
-          >
-            Nuse
-          </FiltersButton> */}
           </div>
         </div>
         {view === VIEW.TABLE && (

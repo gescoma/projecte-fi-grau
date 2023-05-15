@@ -1,29 +1,40 @@
 "use client"
 
-import { ColumnType } from "@/utils/kanban/enums"
 import { Task } from "./Task"
 import { TaskModel } from "@/utils/kanban/models"
 import styles from "./column.module.css"
 import { useColumnDrop } from "@/hooks/useColumnDrop"
-import { useKanbanContext } from "@/context/kanbanContext"
+import { useComprasContext } from "@/context/ComprasContext"
+import { ComponentType } from "react"
+import { Sidebar as DefaultSidebar } from "./sidebar"
 
-export function Column({ column }: { column: ColumnType }) {
-  const { getColumnTasks, addNewTask, dropTaskFrom } = useKanbanContext()
-  const ColumnTasks = getColumnTasks(column)
-  const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom)
+export function Column({
+  column,
+  sidebar: Sidebar = DefaultSidebar,
+}: {
+  column: {
+    id: string
+    title: string
+  }
+  sidebar?: ComponentType<any>
+}) {
+  const { tasks: AllTasks, dropTaskFrom } = useComprasContext()
+  const column_id = column.id
+  const ColumnTasks = (AllTasks && AllTasks[column_id]) || []
+
+  const { dropRef, isOver } = useColumnDrop(column.id, dropTaskFrom)
 
   const tasks =
     ColumnTasks && ColumnTasks.length > 0
       ? ColumnTasks.map((task: TaskModel, index: number) => (
-          <Task key={task.id} index={index} task={task} />
+          <Task sidebar={Sidebar} key={task.id} index={index} task={task} />
         ))
       : "No hay tares en esta columna"
 
   return (
     <article className={styles.column}>
       <header>
-        <h1>{column}</h1>
-        <button onClick={() => addNewTask(column)}>+</button>
+        <h3>{column.title}</h3>
       </header>
       <section className={styles.tasks} ref={dropRef}>
         {tasks}

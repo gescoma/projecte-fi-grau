@@ -9,18 +9,34 @@ import {
 } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 
-import { ControledSelect } from "@/components/input/selector/controlledSelect"
+import { ControledAutocomplete } from "../input/autocomplete/controlledAutocomplete"
 import { Input } from "@/components/input"
-import { usePropertiesContext } from "@/context/PropertiesContext"
+import { useComprasContext } from "@/context/ComprasContext"
 import { useSupabase } from "@/context/AuthContext"
 
 type Inputs = {
-  address: string
-  price: string
-  owner: string
+  id_user: {
+    label: string
+    value: string
+  }
+  id_cliente: {
+    label: string
+    value: string
+  }
+  id_vivienda: {
+    label: string
+    value: string
+  }
+  nombre: string
+  descripcion: string
 }
 
-export function AddProperty({
+const defaultCurrentUser = {
+  label: "Propietario",
+  value: "id",
+}
+
+export function AddCompra({
   isOpen,
   setIsOpen,
 }: {
@@ -34,24 +50,34 @@ export function AddProperty({
     formState: { errors },
   } = useForm<Inputs>()
 
-  const { owners, createProperty } = usePropertiesContext()
-  const { supabase, user: authUser } = useSupabase()
-  const [initialOwner, setInitialOwner] = useState<any>("")
   const [error, setError] = useState<string | undefined>(undefined)
+  const [currentUser, setCurrentUser] = useState(defaultCurrentUser)
+  const { owners, viviendas, clientes, createCompra } = useComprasContext()
+  const { profile, user: supabaseUser } = useSupabase()
+
+  useEffect(() => {
+    let user = {
+      ...defaultCurrentUser,
+    }
+    if (profile && supabaseUser) {
+      user = {
+        label: profile.name,
+        value: supabaseUser.id,
+      }
+    }
+    setCurrentUser(user)
+  }, [profile, supabaseUser])
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     try {
       setError(undefined)
-      const formatedUser = {
-        direccion: data.address,
-        precio: data.price,
-        id_usuario: data.owner || initialOwner.id,
-      }
-      const { error } = createProperty(formatedUser)
-      if (error) {
-        setError(error.message)
-        return
-      }
+      createCompra({
+        id_user: data.id_user?.value || currentUser.value,
+        id_cliente: data.id_cliente?.value || clientes[0].value,
+        id_vivienda: data.id_vivienda?.value || viviendas[0].value,
+        nombre: data.nombre,
+        descripcion: data.descripcion,
+      })
       closeModal()
     } catch (e: any) {
       setError(e.message)
@@ -61,27 +87,6 @@ export function AddProperty({
   function closeModal() {
     setIsOpen(false)
   }
-
-  const responsablesLimpios = owners.filter((owner: any) => owner.id !== "")
-
-  const getCurrentUserName = useCallback(async () => {
-    const authData = authUser
-    const { data: userData, error } = await supabase
-      .from("users")
-      .select()
-      .eq("id", authData?.id)
-      .single()
-    return {
-      nombre: `${userData?.nombre || ""}${
-        (userData?.nombre && userData.apellidos && " ") || ""
-      }${userData?.apellidos || ""}`,
-      id: authData?.id,
-    }
-  }, [supabase, authUser])
-
-  useEffect(() => {
-    getCurrentUserName().then((name) => setInitialOwner(name))
-  }, [getCurrentUserName])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -114,25 +119,25 @@ export function AddProperty({
                   as="h3"
                   className="text-xl leading-6 text-gray-900"
                 >
-                  Añadir Propiedad
+                  Añadir Compra
                 </Dialog.Title>
                 <div className="mt-8">
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-8">
                       <div className="flex flex-col gap-4">
-                        <h6>Información de la propriedad</h6>
+                        <h6>Información de la compra</h6>
                         <div className="flex">
                           <div className="flex flex-col w-full">
                             <Input
-                              name="address"
-                              placeholder="Dirección"
+                              name="nombre"
+                              placeholder="Nombre de la venta"
                               register={register}
                               size="full"
                               options={{ required: true }}
                             />
-                            {errors.address && (
+                            {errors.nombre && (
                               <div className="mt-2 ml-1 text-xs text-red-500">
-                                El campo Direccion es obligatorio
+                                El campo nombre de la compra es obligatorio
                               </div>
                             )}
                           </div>
@@ -140,25 +145,58 @@ export function AddProperty({
                         <div className="flex gap-4">
                           <div className="flex flex-col w-full">
                             <Input
-                              name="precio"
-                              placeholder="Precio de la propiedad"
+                              name="descripcion"
+                              placeholder="Descripción de la venta"
                               register={register}
                               size="full"
+                              options={{ required: true }}
                             />
+                            {errors.descripcion && (
+                              <div className="mt-2 ml-1 text-xs text-red-500">
+                                El campo descripcion de la compra es obligatorio
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
                       <div className="flex flex-col gap-4">
-                        <h6>Responsable</h6>
-                        <div className="flex columns-2 gap-4">
-                          <ControledSelect
-                            options={responsablesLimpios.map((owner: any) => ({
-                              label: owner.name,
-                              value: owner.id,
-                            }))}
-                            name="owner"
+                        <h6>Vivienda</h6>
+                        <div className="flex flex-col gap-4">
+                          <ControledAutocomplete
+                            options={viviendas}
+                            name="id_vivienda"
                             control={control}
-                            defaultValue={initialOwner.nombre}
+                            defaultValue={viviendas[0]}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Cliente de la compra</h6>
+                        <div className="flex flex-col gap-4">
+                          <ControledAutocomplete
+                            options={clientes}
+                            name="id_cliente"
+                            control={control}
+                            defaultValue={clientes[1]}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h6>Responsable de la compra</h6>
+                        <div className="flex flex-col gap-4">
+                          <ControledAutocomplete
+                            options={owners
+                              .filter((val: any) => {
+                                if (val.name === "Todos") return false
+                                return true
+                              })
+                              .map((val: any) => ({
+                                label: val.name,
+                                value: val.id,
+                              }))}
+                            name="id_user"
+                            control={control}
+                            defaultValue={currentUser}
                           />
                         </div>
                       </div>
@@ -170,7 +208,7 @@ export function AddProperty({
                         type="submit"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       >
-                        Crear propiedad
+                        Crear compra
                       </button>
                       <button
                         type="button"

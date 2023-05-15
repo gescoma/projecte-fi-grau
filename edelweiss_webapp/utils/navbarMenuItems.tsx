@@ -32,7 +32,7 @@ export const SidebarElements: menuItem[] = [
   {
     icon: FiShoppingBag,
     text: "Compras",
-    link: "/profile",
+    link: "/compras",
   },
   {
     icon: FiBriefcase,

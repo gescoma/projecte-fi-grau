@@ -1,29 +1,29 @@
 import { TaskModel } from "@/utils/kanban/models"
 
-export function Sidebar({ item }: { item: TaskModel }) {
+export function Sidebar({ data }: { data: TaskModel }) {
   return (
     <>
-      <h1>{item.title}</h1>
+      <h1>Default sidebar</h1>
       <div
         style={{
           width: "2rem",
           height: "2rem",
-          background: `${item.color}`,
+          background: `${data.color}`,
         }}
       ></div>
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}v v{JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}v{JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
-      {JSON.stringify(item, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}v v{JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}v{JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
+      {JSON.stringify(data, null, "  ")}
       <var>hello</var>
     </>
   )
