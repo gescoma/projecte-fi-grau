@@ -108,7 +108,7 @@ export function usePropertiesCollection() {
       newClients.push(newClient)
       return newClients
     })
-    toaster.success("Cliente creado")
+    toaster.success("Vivienda creada")
     return { data, error }
   }
   

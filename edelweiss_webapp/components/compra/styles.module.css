@@ -1,0 +1,18 @@
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filters > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.table {
+  border: var(--border);
+  padding: 1rem;
+  border-radius: var(--border-radius-md);
+}

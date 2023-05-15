@@ -1,7 +1,8 @@
 export function Sidebar({ data }: { data: any }) {
   return (
     <>
-      <h1>Vivienda</h1>
+      <h1>Compra</h1>
+      <h2>{data.id}</h2>
       {JSON.stringify(data, null, "  ")}
       {JSON.stringify(data, null, "  ")}
       {JSON.stringify(data, null, "  ")}
@@ -22,7 +23,7 @@ export function Sidebar({ data }: { data: any }) {
       {JSON.stringify(data, null, "  ")}
       {JSON.stringify(data, null, "  ")}
       {JSON.stringify(data, null, "  ")}
-      <div>hello</div>
+      <var>hello</var>
     </>
   )
 }

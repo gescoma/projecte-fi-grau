@@ -120,6 +120,38 @@ export interface Database {
           id_users?: string | null
         }
       }
+      compra: {
+        Row: {
+          descripcion: string | null
+          fecha_creacion: string | null
+          fecha_modificacion: string | null
+          id: number
+          id_cliente: number
+          id_user: string | null
+          id_vivienda: number
+          nombre: string | null
+        }
+        Insert: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_cliente: number
+          id_user?: string | null
+          id_vivienda: number
+          nombre?: string | null
+        }
+        Update: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_cliente?: number
+          id_user?: string | null
+          id_vivienda?: number
+          nombre?: string | null
+        }
+      }
       entidades: {
         Row: {
           codigo: string
@@ -178,6 +210,67 @@ export interface Database {
           orden?: number
         }
       }
+      estadocompra: {
+        Row: {
+          codigo: string
+          color: string | null
+          fecha_creacion: string | null
+          fecha_modificacion: string | null
+          icon: string | null
+          nombre: string
+          orden: number
+        }
+        Insert: {
+          codigo: string
+          color?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          icon?: string | null
+          nombre: string
+          orden: number
+        }
+        Update: {
+          codigo?: string
+          color?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          icon?: string | null
+          nombre?: string
+          orden?: number
+        }
+      }
+      proyecto: {
+        Row: {
+          descripcion: string | null
+          fecha_creacion: string | null
+          fecha_modificacion: string | null
+          id: number
+          id_cliente_user_campain: number | null
+          id_compra: number | null
+          id_user: string | null
+          nombre: string
+        }
+        Insert: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_cliente_user_campain?: number | null
+          id_compra?: number | null
+          id_user?: string | null
+          nombre: string
+        }
+        Update: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_cliente_user_campain?: number | null
+          id_compra?: number | null
+          id_user?: string | null
+          nombre?: string
+        }
+      }
       rolentidad: {
         Row: {
           entidad: string
@@ -224,6 +317,41 @@ export interface Database {
           descripcion?: string
           fecha_creacion?: string | null
           fecha_modificacion?: string | null
+          nombre?: string
+        }
+      }
+      tramitecompra: {
+        Row: {
+          descripcion: string | null
+          fecha_creacion: string | null
+          fecha_modificacion: string | null
+          id: number
+          id_compra: number
+          id_estado: string
+          id_proyecto: number | null
+          id_user: string | null
+          nombre: string
+        }
+        Insert: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_compra: number
+          id_estado: string
+          id_proyecto?: number | null
+          id_user?: string | null
+          nombre: string
+        }
+        Update: {
+          descripcion?: string | null
+          fecha_creacion?: string | null
+          fecha_modificacion?: string | null
+          id?: number
+          id_compra?: number
+          id_estado?: string
+          id_proyecto?: number | null
+          id_user?: string | null
           nombre?: string
         }
       }
@@ -299,7 +427,6 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      estado: "INICIO" | "ACTUALIZADA" | "FIN"
       permiso: "LEER" | "ESCRIBIR"
     }
     CompositeTypes: {

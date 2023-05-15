@@ -5,14 +5,30 @@ import { HTML5Backend } from "react-dnd-html5-backend"
 import { KanbanProvider } from "@/context/kanbanContext"
 import styles from "./kanban.module.css"
 
-export function Kanban() {
+export function Kanban({
+  columns,
+}: {
+  columns: [
+    {
+      id: string
+      name: string
+    }
+  ]
+}) {
   return (
     <DndProvider backend={HTML5Backend}>
       <KanbanProvider>
         <section className={styles.grid}>
-          <Column column={ColumnType.INICIO} />
-          <Column column={ColumnType.ACTUALIZADA} />
-          <Column column={ColumnType.FIN} />
+          <Column
+            column={{ id: ColumnType.INICIO, title: ColumnType.INICIO }}
+          />
+          <Column
+            column={{
+              id: ColumnType.ACTUALIZADA,
+              title: ColumnType.ACTUALIZADA,
+            }}
+          />
+          <Column column={{ id: ColumnType.FIN, title: ColumnType.FIN }} />
         </section>
       </KanbanProvider>
     </DndProvider>

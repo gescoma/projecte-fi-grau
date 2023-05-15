@@ -4,8 +4,8 @@ import { DragItem, TaskModel } from "@/utils/kanban/models";
 import { useDrop } from "react-dnd";
 
 export function useColumnDrop(
-  column: ColumnType,
-  handleDrop: (fromColumn: ColumnType, taskId: TaskModel["id"], to: ColumnType) => void
+  column: string,
+  handleDrop: (fromColumn: string, taskId: TaskModel["id"], to: ColumnType) => void
   ) {
     const [{ isOver }, dropRef] = useDrop<DragItem, void, { isOver: boolean }>({
       accept: ItemType.TASK,
@@ -13,7 +13,7 @@ export function useColumnDrop(
         if(!dragItem || dragItem.from === column) {
           return;
         }
-        handleDrop(dragItem.from, dragItem.id, column)
+        handleDrop(dragItem.from, dragItem.id, column as any)
       },
       collect: (monitor) => ({
         isOver: monitor.isOver()
